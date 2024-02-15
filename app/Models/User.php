@@ -59,4 +59,8 @@ class User extends Authenticatable
     {
         return $this->user_type === 'client';
     }
+    public function companies()
+    {
+        return $this->hasMany(Company::class, 'main_contact_id');
+    }
 }

@@ -7,6 +7,12 @@ use App\Models\Company;
 
 class CompanyController extends Controller
 {
+    public function overview()
+    {
+        $user = auth()->user();
+        $company = $user->company;
+        return view('companies.company', compact('company'));
+    }
     public function index()
     {
         $companies = Company::all();
