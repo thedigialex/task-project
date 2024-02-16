@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -13,58 +14,63 @@ class ProjectController extends Controller
         return view('projects.index', compact('projects'));
     }
 
-    public function show($id)
+    public function show($id, $tab = 'pending')
     {
         $project = Project::findOrFail($id);
-        return view('projects.show', compact('project'));
+        return view('projects.show', compact('project', 'tab'));
+
     }
 
     public function create()
     {
-        return view('projects.create');
+        return view('projects.edit');
     }
-
-    public function store(Request $request)
+    public function destroy($id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            // Add more validation rules as needed
-        ]);
+        $project = Project::findOrFail($id);
+        $project->delete();
 
-        // Retrieve the company ID from the authenticated user or the form data
-        $companyId = auth()->user()->company_id; // Assuming the user is associated with a company
+        $user = auth()->user();
+        $company = $user->company;
 
-        // Create a new project with the associated company ID
-        $project = Project::create([
-            'name' => $validatedData['name'],
-            'company_id' => $companyId,
-        ]);
-
-        return redirect()->route('projects.show', ['id' => $project->id])
-        ->with('success', 'Project created successfully');
-
+        return redirect()->route('companies.company', ['id' => $company->id])->with('success', 'Project deleted successfully');
     }
-
     public function edit($id)
     {
         $project = Project::findOrFail($id);
         return view('projects.edit', compact('project'));
     }
+    public function save(Request $request, $id = null)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'completion_date' => 'nullable|date',
+            'hours' => 'nullable|integer',
+            'main_contact' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
 
-    public function update(Request $request, $id)
-{
-    // Validate request data
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        // Add more validation rules as needed
-    ]);
+        $companyId = auth()->user()->company_id;
 
-    // Update the project
-    $project = Project::findOrFail($id);
-    $project->update($validatedData);
+        if ($id === null) {
+            $project = Project::create([
+                'name' => $validatedData['name'],
+                'company_id' => $companyId,
+                'description' => $validatedData['description'],
+                'completion_date' => $validatedData['completion_date'],
+                'hours' => $validatedData['hours'],
+                'main_contact' => $validatedData['main_contact'],
+                'notes' => $validatedData['notes'],
+            ]);
+            $message = 'Project created successfully';
+        } else {
+            $project = Project::findOrFail($id);
+            $project->update($validatedData);
+            $message = 'Project updated successfully';
+        }
 
-    return redirect()->route('projects.show', ['id' => $project->id])
-        ->with('success', 'Project updated successfully');
-}
-
+        return redirect()->route('projects.show', ['id' => $project->id])
+            ->with('success', $message);
+    }
 }

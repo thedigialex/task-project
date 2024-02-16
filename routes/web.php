@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProjectController;
 
 /*
@@ -39,19 +40,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/users/{id?}', [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{id}', [UserController::class, 'store'])->name('users.update');
 
-     // Projects
-     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-     Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
-     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
-     Route::get('/projects/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
-     Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
-     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
- 
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::put('/projects/{id}', [ProjectController::class, 'save'])->name('projects.update');
+    Route::post('/projects', [ProjectController::class, 'save'])->name('projects.save');    
+
+    Route::get('/tasks/create/{projectId}', [TaskController::class, 'create'])->name('tasks.create');
+    Route::get('/tasks/{projectId}', [TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
+    Route::get('/tasks/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::put('/tasks/{id}', [TaskController::class, 'save'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::post('/tasks/{projectId}', [TaskController::class, 'save'])->name('tasks.save');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

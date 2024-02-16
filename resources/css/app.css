@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.edit-link {
+    color: #1a4a8a;
+    /* Change the color to your preference */
+    font-weight: bold;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+    /* Optional: Add a smooth color transition effect */
+}
+
+.edit-link:hover {
+    color: #15537e;
+    /* Change the hover color to your preference */
+}

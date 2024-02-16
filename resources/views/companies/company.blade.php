@@ -20,7 +20,26 @@
                         <ul>
                             @foreach ($company->projects as $project)
                                 <li>
-                                    <a href="{{ route('projects.show', ['id' => $project->id]) }}">{{ $project->name }}</a>
+                                    <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                                        {{ $project->name }}
+                                    </a>
+                                    - Completion Status:
+                                    @if ($project->tasks->count() > 0)
+                                        @php
+                                            $completionPercentage = round(($project->tasks->where('status', 'completed')->count() / $project->tasks->count()) * 100);
+                                        @endphp
+                                        @if ($completionPercentage === 100)
+                                            <span class="text-green-500">
+                                                {{ $completionPercentage }}% Completed
+                                            </span>
+                                        @else
+                                            <span class="text-yellow-500">
+                                                {{ $completionPercentage }}%
+                                            </span>
+                                        @endif
+                                    @else
+                                        <span class="text-gray-500">{{ __('No tasks') }}</span>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>

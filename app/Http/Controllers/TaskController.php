@@ -21,49 +21,52 @@ class TaskController extends Controller
 
     public function create($projectId)
     {
-        return view('tasks.create', compact('projectId'));
+        return view('tasks.edit', compact('projectId'));
     }
 
-    public function store(Request $request, $projectId)
+    public function destroy($id)
     {
-        // Validate request data
-        $validatedData = $request->validate([
-            'description' => 'required|string|max:255',
-            'status' => 'required|in:todo,in_progress,completed',
-            // Add more validation rules as needed
-        ]);
+        $task = Task::findOrFail($id);
+        $task->delete();
 
-        // Create a new task for the project
-        $task = Task::create([
-            'project_id' => $projectId,
-            'description' => $validatedData['description'],
-            'status' => $validatedData['status'],
-        ]);
-
-        return redirect()->route('tasks.index', ['projectId' => $projectId])
-            ->with('success', 'Task created successfully');
+        return redirect()->route('projects.show', ['id' => $task->project_id])
+            ->with('success', 'Task deleted successfully');
     }
 
     public function edit($id)
     {
         $task = Task::findOrFail($id);
-        return view('tasks.edit', compact('task'));
+        $projectId = $task->project_id;
+        return view('tasks.edit', compact('task', 'projectId'));
     }
 
-    public function update(Request $request, $id)
+    public function save(Request $request, $id = null)
     {
-        // Validate request data
         $validatedData = $request->validate([
-            'description' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'priority' => 'required|string|max:255',
+            'completion_expected_date' => 'required|date',
+            'hours_required' => 'required|integer',
+            'technological_level' => 'required|string|max:255',
             'status' => 'required|in:todo,in_progress,completed',
-            // Add more validation rules as needed
         ]);
 
-        // Update the task
-        $task = Task::findOrFail($id);
-        $task->update($validatedData);
+        $projectId = $request->input('projectId');
 
-        return redirect()->route('tasks.index', ['projectId' => $task->project_id])
-            ->with('success', 'Task updated successfully');
+        if (!$projectId) {
+            $projectId = $id;
+            $data = array_merge($validatedData, ['project_id' => $projectId]);
+            $task = Task::create($data);
+            $message = 'Task created successfully';
+        } else {
+            $data = array_merge($validatedData, ['project_id' => $projectId]);
+            $task = Task::findOrFail($id);
+            $task->update($data);
+            $message = 'Task updated successfully';
+        }
+
+        return redirect()->route('projects.show', ['id' => $task->project_id])
+            ->with('success', $message);
     }
 }
