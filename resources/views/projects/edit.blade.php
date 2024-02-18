@@ -34,13 +34,14 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="hours" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Hours') }}:</label>
-                        <input type="number" name="hours" id="hours" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($project) ? $project->hours : old('hours') }}" />
-                    </div>
-
-                    <div class="mb-4">
                         <label for="main_contact" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Main Contact') }}:</label>
-                        <input type="text" name="main_contact" id="main_contact" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($project) ? $project->main_contact : old('main_contact') }}" />
+                        <select name="main_contact" id="main_contact" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ (isset($project) && $project->main_contact == $user->id) ? 'selected' : '' }}>
+                                {{ $user->name }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="mb-4">

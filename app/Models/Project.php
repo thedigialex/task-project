@@ -12,7 +12,6 @@ class Project extends Model
         'company_id',
         'description',
         'completion_date',
-        'hours',
         'main_contact',
         'notes'
     ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -11,12 +12,6 @@ class TaskController extends Controller
     {
         $tasks = Task::where('project_id', $projectId)->get();
         return view('tasks.index', compact('tasks', 'projectId'));
-    }
-
-    public function show($id)
-    {
-        $task = Task::findOrFail($id);
-        return view('tasks.show', compact('task'));
     }
 
     public function create($projectId)
@@ -27,8 +22,10 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
+        if ($task->image_path) {
+            Storage::disk('public')->delete($task->image_path);
+        }
         $task->delete();
-
         return redirect()->route('projects.show', ['id' => $task->project_id])
             ->with('success', 'Task deleted successfully');
     }
@@ -50,7 +47,14 @@ class TaskController extends Controller
             'hours_required' => 'required|integer',
             'technological_level' => 'required|string|max:255',
             'status' => 'required|in:todo,in_progress,completed',
+            'flag' => 'nullable',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('task_images', 'public');
+            $validatedData['image_path'] = $imagePath;
+        }
 
         $projectId = $request->input('projectId');
 

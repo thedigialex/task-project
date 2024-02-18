@@ -50,7 +50,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/tasks/create/{projectId}', [TaskController::class, 'create'])->name('tasks.create');
     Route::get('/tasks/{projectId}', [TaskController::class, 'index'])->name('tasks.index');
-    Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::get('/tasks/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::put('/tasks/{id}', [TaskController::class, 'save'])->name('tasks.update');
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
