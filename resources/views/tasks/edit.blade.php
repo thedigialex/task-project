@@ -4,7 +4,7 @@
             @if(isset($task))
             {{ __('Edit Task: ') . $task->title }}
             @else
-            {{ __('Create New Task for Project') . $projectId }}
+            {{ __('Create New Task for Phase') . $phaseId }}
             @endif
         </h2>
     </x-slot>
@@ -13,7 +13,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ isset($task) ? route('tasks.update', ['projectId' => $task->project_id, 'id' => $task->id]) : route('tasks.save', ['projectId' => $projectId]) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ isset($task) ? route('tasks.update', ['taskId' => $task->id]) : route('tasks.store', ['phaseId' => $phaseId]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if(isset($task))
                         @method('PUT')
@@ -93,7 +93,7 @@
                         </div>
                     </form>
                     @if(isset($task))
-                    <form method="POST" action="{{ route('tasks.destroy', ['id' => $task->id]) }}" class="inline">
+                    <form method="POST" action="{{ route('tasks.destroy', ['taskId' => $task->id]) }}" class="inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-red-500 hover:underline">{{ __('Delete Task') }}</button>

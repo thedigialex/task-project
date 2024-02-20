@@ -2,27 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
     protected $fillable = [
         'name',
-        'company_id',
         'description',
         'completion_date',
         'main_contact',
         'notes'
     ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function tasks()
+    public function phases()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Phase::class);
     }
-    
 }

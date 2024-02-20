@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->constrained(); // Assuming tasks belong to a project
+            $table->string('title');
             $table->string('description');
             $table->enum('status', ['todo', 'in_progress', 'completed']);
+            $table->string('priority');
+            $table->integer('hours_required');
+            $table->string('flag')->nullable();
+            $table->string('technological_level');
+            $table->string('image_path')->nullable();
+            $table->date('completion_expected_date')->nullable();
             $table->timestamps();
         });
     }

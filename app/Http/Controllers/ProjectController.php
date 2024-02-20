@@ -4,53 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function create($companyId)
     {
-        $projects = Project::all();
-        return view('projects.index', compact('projects'));
+        $company = Company::find($companyId);
+        $users = $company->users;
+
+        return view('projects.edit', compact('company', 'users'));
     }
 
-    public function show($id, $tab = 'pending')
+    public function edit($projectId)
     {
-        $project = Project::findOrFail($id);
-        $remainingTaskTime = 0;
-        $completedTaskTime = 0;
-        foreach ($project->tasks as $task) {
-            if ($task->status === 'completed') {
-                $completedTaskTime += $task->hours_required;
-            }
-            $remainingTaskTime += $task->hours_required;
-        }
-        $mainContactUser = User::find($project->main_contact);
-        return view('projects.show', compact('project', 'tab', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser'));
-    }
+        $project = Project::findOrFail($projectId);
+        $users = $project->company->users;
 
-    public function create()
-    {
-        $companyId = auth()->user()->company_id;
-        $users = User::where('company_id', $companyId)->get();
-        return view('projects.edit', compact('users'));
-    }
-    public function destroy($id)
-    {
-        $project = Project::findOrFail($id);
-        $project->delete();
-
-        $user = auth()->user();
-        $company = $user->company;
-
-        return redirect()->route('companies.company', ['id' => $company->id])->with('success', 'Project deleted successfully');
-    }
-    public function edit($id)
-    {
-        $project = Project::findOrFail($id);
-        $users = User::where('company_id', $project->company_id)->get();
         return view('projects.edit', compact('project', 'users'));
     }
+    
+    public function store(Request $request, $companyId)
+    {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'completion_date' => 'nullable|date',
+            'main_contact' => 'required|exists:users,id',
+            'notes' => 'nullable|string',
+        ];
+
+        $request->validate($rules);
+        $projectData = [
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'completion_date' => $request->input('completion_date'),
+            'main_contact' => $request->input('main_contact'),
+            'notes' => $request->input('notes'),
+        ];
+        $project = Project::create($projectData);
+        $company = Company::find($companyId);
+        $project->company()->associate($company);
+        $project->save(); 
+
+        return redirect()->route('projects.edit', ['projectId' => $project->id])
+            ->with('success', 'Project created successfully');
+    }
+
+
+
+
 
     public function save(Request $request, $id = null)
     {
@@ -82,5 +86,23 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.show', ['id' => $project->id])
             ->with('success', $message);
+    }
+
+    public function show($projectId)
+    {
+        $project = Project::findOrFail($projectId);
+        $mainContactUser = User::find($project->main_contact);
+        return view('projects.show', compact('project', 'mainContactUser'));
+    }
+
+    public function destroy($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->delete();
+
+        $user = auth()->user();
+        $company = $user->company;
+
+        return redirect()->route('companies.company', ['id' => $company->id])->with('success', 'Project deleted successfully');
     }
 }

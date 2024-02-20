@@ -11,7 +11,7 @@ class CompanyController extends Controller
     {
         $user = auth()->user();
         $company = $user->company;
-        return view('companies.company', compact('company'));
+        return view('companies.show', compact('company'));
     }
     public function index()
     {
