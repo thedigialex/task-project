@@ -1,16 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            @php
-                $method = 'POST'
-            @endphp
+
             @if(isset($project))
-            {{ __('Edit Project') }}: {{ $project->name }}
-            @php
-                $method = 'PUT'
-            @endphp
+                {{ __('Edit Project') }}: {{ $project->name }}
             @else
-            {{ __('Create New Project') }}
+                {{ __('Create New Project') }}
             @endif
         </h2>
     </x-slot>
@@ -18,8 +13,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <form method={{$method}}  action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store', ['companyId' => $company->id]) }}">
+                <form method='POST'  action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store', ['companyId' => $company->id]) }}">
                     @csrf
+                    @if(isset($project))
+                        @method('PUT')
+                    @endif
 
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Project Name') }}:</label>
@@ -57,9 +55,9 @@
                         <textarea name="notes" id="notes" class="form-input rounded-md shadow-sm mt-1 block w-full" rows="3">{{ isset($project) ? $project->notes : old('notes') }}</textarea>
                     </div>
                     {{-- Secretly pass company id for updating projects correctly --}}
-                    @if(!isset($project))
+                    @if(isset($project))
                         <div class="mb-4">
-                            <input type="hidden" name="company_id" value="{{ $company->id }}">
+                            <input type="hidden" name="company_id" value="{{ $project->company_id }}">
                         </div>
                     @endif
 
