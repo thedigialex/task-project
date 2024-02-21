@@ -24,85 +24,59 @@ class ProjectController extends Controller
 
         return view('projects.edit', compact('project', 'users'));
     }
-    
+
     public function store(Request $request, $companyId)
     {
-        $rules = [
+        $validatedData = $this->validateProjectRequest($request);
+        $project = Project::create($validatedData);
+        $this->associateProjectWithCompany($project, $companyId);
+
+        return redirect()->route('projects.show', ['projectId' => $project->id])
+            ->with('success', 'Project created successfully');
+    }
+
+    public function update(Request $request, $projectId)
+    {
+        $validatedData = $this->validateProjectRequest($request);
+        $project = Project::findOrFail($projectId);
+        $project->update($validatedData);
+        $message = 'Project updated successfully';
+
+        return redirect()->route('projects.show', ['projectId' => $project->id])
+            ->with('success', $message);
+    }
+
+    private function validateProjectRequest(Request $request)
+    {
+        return $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'completion_date' => 'nullable|date',
             'main_contact' => 'required|exists:users,id',
             'notes' => 'nullable|string',
-        ];
-
-        $request->validate($rules);
-        $projectData = [
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'completion_date' => $request->input('completion_date'),
-            'main_contact' => $request->input('main_contact'),
-            'notes' => $request->input('notes'),
-        ];
-        $project = Project::create($projectData);
-        $company = Company::find($companyId);
-        $project->company()->associate($company);
-        $project->save(); 
-
-        return redirect()->route('projects.edit', ['projectId' => $project->id])
-            ->with('success', 'Project created successfully');
+        ]);
     }
 
-
-
-
-
-    public function save(Request $request, $id = null)
+    private function associateProjectWithCompany(Project $project, $companyId)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'completion_date' => 'nullable|date',
-            'main_contact' => 'nullable|string|max:255',
-            'notes' => 'nullable|string',
-        ]);
-
-        $companyId = auth()->user()->company_id;
-
-        if ($id === null) {
-            $project = Project::create([
-                'name' => $validatedData['name'],
-                'company_id' => $companyId,
-                'description' => $validatedData['description'],
-                'completion_date' => $validatedData['completion_date'],
-                'main_contact' => $validatedData['main_contact'],
-                'notes' => $validatedData['notes'],
-            ]);
-            $message = 'Project created successfully';
-        } else {
-            $project = Project::findOrFail($id);
-            $project->update($validatedData);
-            $message = 'Project updated successfully';
-        }
-
-        return redirect()->route('projects.show', ['id' => $project->id])
-            ->with('success', $message);
+        $company = Company::find($companyId);
+        $project->company()->associate($company);
+        $project->save();
     }
 
     public function show($projectId)
     {
         $project = Project::findOrFail($projectId);
         $mainContactUser = User::find($project->main_contact);
+
         return view('projects.show', compact('project', 'mainContactUser'));
     }
 
-    public function destroy($id)
+    public function destroy($projectId)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($projectId);
         $project->delete();
 
-        $user = auth()->user();
-        $company = $user->company;
-
-        return redirect()->route('companies.company', ['id' => $company->id])->with('success', 'Project deleted successfully');
+        return redirect()->route('companies.company')->with('success', 'Project deleted successfully');
     }
 }

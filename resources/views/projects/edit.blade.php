@@ -60,7 +60,7 @@
                     </div>
                 </form>
                 @if(isset($project))
-                <form method="POST" action="{{ route('projects.destroy', ['id' => $project->id]) }}" class="inline">
+                <form method="POST" action="{{ route('projects.destroy', ['projectId' => $project->id]) }}" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-red-500 hover:underline">{{ __('Delete Project') }}</button>

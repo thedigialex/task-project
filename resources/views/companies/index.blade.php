@@ -12,7 +12,7 @@
                     @foreach($companies as $company)
                     <li>
                         {{ $company->name }}
-                        <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('companies.edit', ['companyId' => $company->id]) }}" class="btn btn-primary">Edit</a>
                     </li>
                     @endforeach
                 </ul>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('hours')->nullable();
             $table->string('main_contact')->nullable();
             $table->text('notes')->nullable();
+            $table->foreignId('company_id')->nullable()->constrained('companies');
         });
     }
 

@@ -34,7 +34,7 @@ class PhaseController extends Controller
         $phase->project()->associate($project);
         $phase->save();
 
-        return redirect()->route('projects.show', ['id' => $projectId])
+        return redirect()->route('projects.show', ['projectId' => $projectId])
             ->with('success', 'Phase created successfully');
     }
 
@@ -90,9 +90,10 @@ class PhaseController extends Controller
             }
         }
         $phase->tasks()->delete();
+        $projectId = $phase->project->id;
         $phase->delete();
 
-        return redirect()->route('projects.show', ['id' => $phase->project->id])
+        return redirect()->route('projects.show', ['projectId' => $projectId])
             ->with('success', 'Phase and associated tasks deleted successfully');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\User;
 
 class CompanyController extends Controller
 {
@@ -11,7 +12,8 @@ class CompanyController extends Controller
     {
         $user = auth()->user();
         $company = $user->company;
-        return view('companies.show', compact('company'));
+        $projects = $company->projects;
+        return view('companies.show', compact('company', 'projects'));
     }
     public function index()
     {
@@ -20,35 +22,39 @@ class CompanyController extends Controller
     }
     public function create()
     {
-        return view('companies.create');
+        return view('companies.edit');
     }
-    public function edit($id)
+    public function edit($companyId)
     {
-        $company = Company::findOrFail($id);
-        if (auth()->user()->user_type === 'Client' && auth()->user()->company_id !== $company->id) {
-            abort(404);
-        }
+        $company = Company::findOrFail($companyId);
+
         return view('companies.edit', compact('company'));
     }
-    public function store(Request $request, $id = null)
+
+    public function store(Request $request)
+    {
+        return $this->saveCompany($request);
+    }
+
+    public function update(Request $request, $companyId)
+    {
+        $company = Company::findOrFail($companyId);
+
+        return $this->saveCompany($request, $company);
+    }
+    
+    private function saveCompany(Request $request, $company = null)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
         ]);
-        if ($id) {
-            $company = Company::findOrFail($id);
-            $company->name = $validatedData['name'];
-            $company->save();
-            $message = 'Company updated successfully';
-        } else {
+        if (!$company) {
             $company = new Company();
-            $company->name = $validatedData['name'];
-            $company->save();
-            $message = 'Company created successfully';
         }
-        if (auth()->user()->user_type === 'Client') {
-            return redirect()->route('company')->with('success', $message);
-        }
+        $company->fill($validatedData);
+        $company->save();
+        $message = $company->wasRecentlyCreated ? 'Company created successfully' : 'Company updated successfully';
+
         return redirect()->route('companies.index')->with('success', $message);
     }
 }

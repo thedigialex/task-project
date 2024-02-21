@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -20,47 +19,42 @@ class UserController extends Controller
         $companies = Company::all();
         return view('users.edit', compact('companies'));
     }
-    public function edit($id)
+    public function edit($userId)
     {
         $companies = Company::all();
-        $user = User::findOrFail($id);
-        if (auth()->user()->user_type === 'Client' && auth()->user()->company_id !== $user->id) {
-            abort(404);
-        }
+        $user = User::findOrFail($userId);
+
         return view('users.edit', compact('user'), compact('companies'));
     }
-    public function store(Request $request, $id = null)
+    private function saveUser(Request $request, $user = null)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:8',
-            'role' => 'required',
-            'company' => 'required_if:role,client',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : null),
+            'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
+            'role' => 'required|in:client,staff',
+            'company_id' => 'nullable|exists:companies,id',
         ]);
-
-        if ($id) {
-            $user = User::findOrFail($id);
-            $user->name = $validatedData['name'];
-            $user->save();
-            $message = 'User updated successfully';
-        } else {
-            $user = User::create([
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'password' => Hash::make($validatedData['password']),
-                'user_type' => $validatedData['role'],
-                'company_id' => $validatedData['company'] ?? null,
-            ]);
-
-            event(new Registered($user));
-
-            $message = 'User created successfully';
+        if (!$user) {
+            $user = new User();
+            $user->password = Hash::make($validatedData['password']);
         }
+        $user->fill($validatedData);
+        $user->save();
+        $message = $user->wasRecentlyCreated ? 'User created successfully' : 'User updated successfully';
 
-        if (auth()->user()->user_type === 'Client') {
-            return redirect()->route('company')->with('success', $message);
-        }
         return redirect()->route('users.index')->with('success', $message);
+    }
+
+    public function store(Request $request)
+    {
+        return $this->saveUser($request);
+    }
+
+    public function update(Request $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        return $this->saveUser($request, $user);
     }
 }

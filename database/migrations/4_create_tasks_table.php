@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('technological_level');
             $table->string('image_path')->nullable();
             $table->date('completion_expected_date')->nullable();
+            $table->foreignId('phase_id')->nullable()->constrained('phases');
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@
                     @foreach($users as $user)
                     <li>
                         {{ $user->name }}
-                        <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('users.edit', ['userId' => $user->id]) }}" class="btn btn-primary">Edit</a>
                     </li>
                     @endforeach
                 </ul>

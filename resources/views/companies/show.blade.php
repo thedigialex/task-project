@@ -17,9 +17,19 @@
 
                     {{-- List of projects --}}
                     <h2 class="mt-4">{{ __('Projects') }}</h2>
+                    @if ($projects->count() > 0)
                     <ul>
-                        
+                        @foreach ($projects as $project)
+                        <li>
+                            <strong><a href="{{ route('projects.show', ['projectId' => $project->id]) }}">{{ $project->name }}</a></strong> - {{ $project->description }}
+                            {{-- Add more project information as needed --}}
+                        </li>
+                        @endforeach
+
                     </ul>
+                    @else
+                    <p>{{ __('No projects available for this company') }}</p>
+                    @endif
                     @else
                     <p>{{ __('Company information not available') }}</p>
                     @endif

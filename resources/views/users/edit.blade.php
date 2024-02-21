@@ -8,10 +8,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <form method="POST" action="{{ isset($user) ? route('users.update', ['id' => $user->id]) : route('users.store') }}">
+                <form method="POST" action="{{ isset($user) ? route('users.update', ['userId' => $user->id]) : route('users.store') }}">
                     @csrf
                     @if(isset($user))
-                        @method('PUT') {{-- For editing, use the PUT method --}}
+                    @method('PUT')
                     @endif
                     <div class="mb-3">
                         <label for="name" class="form-label">{{ __('Name') }}</label>
@@ -23,28 +23,28 @@
                         <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', isset($user) ? $user->email : '') }}" required>
 
                         @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                     </div>
 
                     @unless(isset($user))
-                        <div class="mb-3">
-                            <label for="password" class="form-label">{{ __('Password') }}</label>
-                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">{{ __('Password') }}</label>
+                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required>
 
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                        </div>
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                    </div>
                     @endunless
 
                     <div class="mb-3">
@@ -60,7 +60,7 @@
                         <select name="company" id="company" class="form-control">
                             <option value="N/A">N/A</option>
                             @foreach($companies as $company)
-                                <option value="{{ $company->id }}" {{ old('company', isset($user) && $user->company_id == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
+                            <option value="{{ $company->id }}" {{ old('company', isset($user) && $user->company_id == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
                             @endforeach
                         </select>
                     </div>

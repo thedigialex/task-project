@@ -28,35 +28,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/company', [CompanyController::class, 'overview'])->name('companies.company');
-    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
-    Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
-    Route::get('/companies/edit/{id}', [CompanyController::class, 'edit'])->name('companies.edit');
-    Route::post('/companies/{id?}', [CompanyController::class, 'store'])->name('companies.store');
-    Route::put('/companies/{id}', [CompanyController::class, 'store'])->name('companies.update');
-
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-    Route::post('/users/{id?}', [UserController::class, 'store'])->name('users.store');
-    Route::put('/users/{id}', [UserController::class, 'store'])->name('users.update');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::put('/users/{userId}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/users/edit/{userId}', [UserController::class, 'edit'])->name('users.edit');
 
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-   
-    
-    Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-    Route::put('/projects/{id}', [ProjectController::class, 'save'])->name('projects.update');
-    Route::post('/projects', [ProjectController::class, 'save'])->name('projects.save');    
+    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
+    Route::post('/company', [CompanyController::class, 'store'])->name('companies.store');
+    Route::get('/company', [CompanyController::class, 'overview'])->name('companies.company');
+    Route::get('/company/create', [CompanyController::class, 'create'])->name('companies.create');
+    Route::get('/company/edit/{companyId}', [CompanyController::class, 'edit'])->name('companies.edit');
+    Route::put('/companies/{companyId}', [CompanyController::class, 'update'])->name('companies.update');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
+    Route::put('/projects/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/projects/create/{companyId}', [ProjectController::class, 'create'])->name('projects.create');
     Route::get('/projects/edit/{projectId}', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::post('/projects/{companyId}', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/projects/{projectId}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::delete('/projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     Route::get('/tasks/create/{phaseId}', [TaskController::class, 'create'])->name('tasks.create');
     Route::get('/tasks/edit/{taskId}', [TaskController::class, 'edit'])->name('tasks.edit');
@@ -70,6 +60,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/phases/{phaseId}', [PhaseController::class, 'update'])->name('phases.update');
     Route::get('/phases/{phaseId}', [PhaseController::class, 'show'])->name('phases.show');
     Route::delete('/phases/{phaseId}', [PhaseController::class, 'destroy'])->name('phases.destroy');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';
