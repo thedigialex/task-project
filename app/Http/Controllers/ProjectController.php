@@ -49,10 +49,12 @@ class ProjectController extends Controller
     private function validateProjectRequest(Request $request)
     {
         return $request->validate([
+            'company_id' => 'required|int',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'completion_date' => 'nullable|date',
             'main_contact' => 'required|exists:users,id',
+            'hours' => 'nullable|int',
             'notes' => 'nullable|string',
         ]);
     }

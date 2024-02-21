@@ -15,7 +15,7 @@
                 <form method="POST" action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store', ['companyId' => $company->id]) }}">
                     @csrf
                     @if(isset($project))
-                    @method('PUT')
+                        @method('PUT')
                     @endif
 
                     <div class="mb-4">
@@ -34,6 +34,11 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="hours" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Hours') }}:</label>
+                        <input type="number" name="hours" id="hours" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($project) ? $project->hours : old('hours') }}" />
+                    </div>
+
+                    <div class="mb-4">
                         <label for="main_contact" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Main Contact') }}:</label>
                         <select name="main_contact" id="main_contact" class="form-select rounded-md shadow-sm mt-1 block w-full">
                             @foreach($users as $user)
@@ -48,6 +53,12 @@
                         <label for="notes" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Notes') }}:</label>
                         <textarea name="notes" id="notes" class="form-input rounded-md shadow-sm mt-1 block w-full" rows="3">{{ isset($project) ? $project->notes : old('notes') }}</textarea>
                     </div>
+                    {{-- Secretly pass company id --}}
+                    @if(!isset($project))
+                        <div class="mb-4">
+                            <input type="hidden" name="company_id" value="{{ $company->id }}">
+                        </div>
+                    @endif
 
                     <div class="flex items-center justify-end mt-4">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
