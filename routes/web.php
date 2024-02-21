@@ -41,7 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/company/edit/{companyId}', [CompanyController::class, 'edit'])->name('companies.edit');
     Route::put('/companies/{companyId}', [CompanyController::class, 'update'])->name('companies.update');
 
-    Route::put('/projects/edit/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::put('/projects/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/projects/create/{companyId}', [ProjectController::class, 'create'])->name('projects.create');
     Route::get('/projects/edit/{projectId}', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::post('/projects/{companyId}', [ProjectController::class, 'store'])->name('projects.store');
