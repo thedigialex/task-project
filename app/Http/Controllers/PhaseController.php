@@ -78,7 +78,11 @@ class PhaseController extends Controller
         $tasks = $phase->tasks;
         $mainContactUser = User::find($project->main_contact);
 
-        return view('phases.show', compact('phase', 'project', 'tab', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'tasks'));
+        $sortedTasks = $phase->tasks->sortBy(function ($task) {
+            return array_search($task->priority, ['urgent', 'high', 'medium', 'low']);
+        });
+
+        return view('phases.show', compact('phase', 'project', 'tab', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'tasks', 'sortedTasks'));
     }
 
     public function destroy($phaseId)

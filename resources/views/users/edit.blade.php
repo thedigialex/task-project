@@ -56,8 +56,8 @@
                     </div>
 
                     <div class="mb-3" id="companyDropdown">
-                        <label for="company" class="form-label">{{ __('Company') }}</label>
-                        <select name="company" id="company" class="form-control">
+                        <label for="company_id" class="form-label">{{ __('Company') }}</label>
+                        <select name="company_id" id="company_id" class="form-control">
                             <option value="N/A">N/A</option>
                             @foreach($companies as $company)
                             <option value="{{ $company->id }}" {{ old('company', isset($user) && $user->company_id == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
