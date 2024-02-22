@@ -36,7 +36,7 @@
                 <a href="{{ route('tasks.create', ['phaseId' => $phase->id]) }}" class="text-blue-500 hover:underline">{{ __('Create New Task') }}</a>
             </div>
         </div>
-        
+
         <div x-show="activeTab === 'table'">
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -42,7 +42,7 @@ class CompanyController extends Controller
 
         return $this->saveCompany($request, $company);
     }
-    
+
     private function saveCompany(Request $request, $company = null)
     {
         $validatedData = $request->validate([
