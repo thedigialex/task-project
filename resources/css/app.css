@@ -12,6 +12,7 @@
 .edit-link:hover {
     color: #15537e;
 }
+
 .modal {
     display: none;
     position: fixed;
@@ -43,4 +44,12 @@
     right: 10px;
     font-size: 20px;
     cursor: pointer;
+}
+
+.fc-row.fc-week.fc-widget-content {
+    height: 100px !important;
+}
+
+.fc-scroller {
+    height: 460px !important;
 }

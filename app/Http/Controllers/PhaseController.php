@@ -70,7 +70,6 @@ class PhaseController extends Controller
 
     public function show($phaseId)
     {
-        $tab = 'pending';
         $phase = Phase::findOrFail($phaseId);
         $completedTaskTime = $phase->tasks->where('status', 'completed')->sum('hours_required');
         $remainingTaskTime = $phase->tasks->where('status', '!=', 'completed')->sum('hours_required');
@@ -78,7 +77,7 @@ class PhaseController extends Controller
         $tasks = $phase->tasks;
         $mainContactUser = User::find($project->main_contact);
 
-        return view('phases.show', compact('phase', 'project', 'tab', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'tasks'));
+        return view('phases.show', compact('phase', 'project', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'tasks'));
     }
 
     public function destroy($phaseId)
