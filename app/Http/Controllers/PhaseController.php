@@ -74,10 +74,12 @@ class PhaseController extends Controller
         $completedTaskTime = $phase->tasks->where('status', 'completed')->sum('hours_required');
         $remainingTaskTime = $phase->tasks->where('status', '!=', 'completed')->sum('hours_required');
         $project = $phase->project;
-        $tasks = $phase->tasks;
         $mainContactUser = User::find($project->main_contact);
+        $sortedTasks = $phase->tasks->sortBy(function ($task) {
+            return array_search($task->priority, ['urgent', 'high', 'medium', 'low']);
+        });
 
-        return view('phases.show', compact('phase', 'project', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'tasks'));
+        return view('phases.show', compact('phase', 'project', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'sortedTasks'));
     }
 
     public function destroy($phaseId)
