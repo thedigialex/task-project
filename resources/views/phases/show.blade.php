@@ -66,7 +66,7 @@
             </div>
         </div>
         <template x-if="taskButtonClicked">
-            @include('tasks.show', ['task' => $task])
+            @include('tasks.show', ['tasks' => $tasks])
         </template>
     </div>
 </x-app-layout>
