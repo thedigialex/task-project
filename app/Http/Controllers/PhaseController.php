@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PhaseController extends Controller
 {
-
     public function create($projectId)
     {
         $project = Project::find($projectId);
@@ -46,7 +45,7 @@ class PhaseController extends Controller
         $this->createOrUpdatePhase($phase, $request);
         $phase->save();
 
-        return redirect()->route('projects.show', ['id' => $phase->project->id])
+        return redirect()->route('projects.show', ['projectId' => $phase->project->id])
             ->with('success', 'Phase created successfully');
     }
 

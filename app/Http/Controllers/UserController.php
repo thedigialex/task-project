@@ -32,7 +32,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : null),
             'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
-            'role' => 'required|in:client,staff',
+            'user_type' => 'required|in:client,staff',
             'company_id' => 'nullable|exists:companies,id',
         ]);
         if (!$user) {

@@ -4,14 +4,13 @@
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     {{ $project->name }}
+                    <a href="{{ route('projects.edit', ['projectId' => $project->id]) }}" class="inline-block text-blue-500 hover:underline">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
                 </h2>
                 <p class="text-sm text-gray-500 dark:text-gray-300">
                     Completion Date: {{ $project->completion_date }}
                 </p>
-            </div>
-            <div>
-                <a href="{{ route('projects.edit', ['projectId' => $project->id]) }}" class="block text-blue-500 hover:underline">{{ __('+') }}</a>
-                <a href="{{ route('phases.create', ['projectId' => $project->id]) }}" class="text-blue-500 hover:underline">{{ __('Create New Phase') }}</a>
             </div>
         </div>
     </x-slot>
@@ -38,7 +37,6 @@
                     <div class="mb-4 border p-4 rounded">
                         <h3>
                             <a href="{{ route('phases.show', ['phaseId' => $phase->id]) }}">{{ $phase->name }}</a>
-                            <a href="{{ route('phases.edit', ['phaseId' => $phase->id]) }}" class="text-blue-500 hover:underline ml-2">{{ __('Edit') }}</a>
                         </h3>
                         - Completion Status:
                         @if ($phase->tasks->count() > 0)
@@ -59,6 +57,9 @@
                         @endif
                     </div>
                     @endforeach
+                    <div class="flex justify-center">
+                        <a href="{{  route('phases.create', ['projectId' => $project->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Phase') }}</a>
+                    </div>
                 </div>
             </div>
         </div>

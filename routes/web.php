@@ -24,9 +24,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -34,12 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/users/{userId}', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/edit/{userId}', [UserController::class, 'edit'])->name('users.edit');
 
-    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
-    Route::post('/company', [CompanyController::class, 'store'])->name('companies.store');
-    Route::get('/company', [CompanyController::class, 'overview'])->name('companies.company');
-    Route::get('/company/create', [CompanyController::class, 'create'])->name('companies.create');
-    Route::get('/company/edit/{companyId}', [CompanyController::class, 'edit'])->name('companies.edit');
-    Route::put('/companies/{companyId}', [CompanyController::class, 'update'])->name('companies.update');
+    Route::resource('companies', CompanyController::class);
+    Route::get('/company/{company}', [CompanyController::class, 'adminview'])->name('companies.admin');
 
     Route::put('/projects/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/projects/create/{companyId}', [ProjectController::class, 'create'])->name('projects.create');

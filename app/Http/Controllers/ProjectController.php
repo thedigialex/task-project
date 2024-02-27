@@ -77,6 +77,6 @@ class ProjectController extends Controller
         $project = Project::findOrFail($projectId);
         $project->delete();
 
-        return redirect()->route('companies.company')->with('success', 'Project deleted successfully');
+        return redirect()->route('companies.show')->with('success', 'Project deleted successfully');
     }
 }

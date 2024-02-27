@@ -1,15 +1,12 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-
 <x-app-layout>
-
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     {{ $phase->name }}
+                    <a href="{{ route('phases.edit', ['phaseId' => $phase->id]) }}" class="inline-block text-blue-500 hover:underline">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
                 </h2>
                 <p class="text-sm text-gray-500 dark:text-gray-300">
                     Targeted Date: {{ $phase->targeted_end_date }}
@@ -31,9 +28,6 @@
             <div class="flex space-x-4">
                 <button @click="activeTab = 'table'" :class="{ 'bg-blue-500': activeTab === 'table' }" class="text-white px-4 py-2 rounded">Task Table</button>
                 <button @click="activeTab = 'calendar'" :class="{ 'bg-blue-500': activeTab === 'calendar' }" class="text-white px-4 py-2 rounded">Calendar</button>
-            </div>
-            <div>
-                <a href="{{ route('tasks.create', ['phaseId' => $phase->id]) }}" class="text-blue-500 hover:underline">{{ __('Create New Task') }}</a>
             </div>
         </div>
         
