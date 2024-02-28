@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -77,8 +78,19 @@ class ProjectController extends Controller
     public function destroy($projectId)
     {
         $project = Project::findOrFail($projectId);
+        $company = $project->company;
+        $phases = $project->phases;
+        foreach ($phases as $phase) {
+            foreach ($phase->tasks as $task) {
+                if ($task->image_path) {
+                    Storage::disk('public')->delete($task->image_path);
+                }
+            }
+            $phase->tasks()->delete();
+            $phase->delete();
+        }
         $project->delete();
 
-        return redirect()->route('companies.company')->with('success', 'Project deleted successfully');
+        return redirect()->route('companies.show', ['company' => $company->id])->with('success', 'Project deleted successfully');
     }
 }

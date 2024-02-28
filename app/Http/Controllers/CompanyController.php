@@ -8,10 +8,22 @@ use App\Models\User;
 
 class CompanyController extends Controller
 {
-    public function overview()
+    public function __construct()
     {
-        $user = auth()->user();
-        $company = $user->company;
+        //$this->middleware('admin')->except('index');
+    }
+    
+    public function show(Request $request, Company $company)
+    {
+        if(!is_null($company)){
+            $projects = $company->projects;
+            return view('companies.show', compact('company', 'projects'));
+        }
+        return view('companies.show', compact('company'));
+    }
+    public function adminview($companyId)
+    {
+        $company = Company::findOrFail($companyId);
         $projects = $company->projects;
         return view('companies.show', compact('company', 'projects'));
     }

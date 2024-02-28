@@ -8,16 +8,23 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <ul>
-                    @foreach($companies as $company)
-                    <li>
-                        {{ $company->name }}
-                        <a href="{{ route('companies.edit', ['companyId' => $company->id]) }}" class="btn btn-primary">Edit</a>
-                    </li>
-                    @endforeach
-                </ul>
-                <a href="{{ route('companies.create') }}" class="btn btn-primary">Create New Company</a>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <ul>
+                        @foreach ($companies as $company)
+                            <li>
+                                <a href="{{ route('companies.admin', ['company' => $company->id]) }}">
+                                    {{ $company->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="flex justify-center">
+                        <a href="{{ route('companies.create') }}"
+                            class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Company') }}</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </x-app-layout>

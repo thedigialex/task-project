@@ -48,10 +48,10 @@
                     @endunless
 
                     <div class="mb-3">
-                        <label for="role" class="form-label">{{ __('Role') }}</label>
-                        <select name="role" id="role" class="form-control" onchange="toggleCompanyDropdown()">
-                            <option value="client" {{ old('role', isset($user) && $user->role === 'client' ? 'selected' : '') }}>Client</option>
-                            <option value="staff" {{ old('role', isset($user) && $user->role === 'staff' ? 'selected' : '') }}>Staff</option>
+                        <label for="user_type" class="form-label">{{ __('Role') }}</label>
+                        <select name="user_type" id="user_type" class="form-control" onchange="toggleCompanyDropdown()">
+                            <option value="client" {{ old('role', isset($user) && $user->user_type === 'client' ? 'selected' : '') }}>Client</option>
+                            <option value="staff" {{ old('role', isset($user) && $user->user_type === 'staff' ? 'selected' : '') }}>Staff</option>
                         </select>
                     </div>
 
