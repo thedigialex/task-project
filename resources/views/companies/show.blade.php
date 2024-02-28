@@ -4,8 +4,7 @@
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     {{ $company->name ?? __('Awaiting account to be assigned a company') }}
-                    <a href="{{ route('companies.edit', ['company' => $company->id]) }}"
-                        class="inline-block text-blue-500 hover:underline">
+                    <a href="{{ route('companies.edit', ['company' => $company->id]) }}" class="inline-block text-blue-500 hover:underline">
                         <i class="fas fa-pencil-alt"></i>
                     </a>
                 </h2>
@@ -24,21 +23,21 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h2 class="mt-4">{{ __('Projects') }}</h2>
                     @if ($projects->count() > 0)
-                        <ul>
-                            @foreach ($projects as $project)
-                                <li>
-                                    <strong><a
-                                            href="{{ route('projects.show', ['projectId' => $project->id]) }}">{{ $project->name }}</a></strong>
-                                    - {{ $project->description }}
-                                </li>
-                            @endforeach
-                        </ul>
+                    <div class="projects-container">
+                        @foreach ($projects as $project)
+                        <a href="{{ route('projects.show', ['projectId' => $project->id]) }}" class="project-card">
+                            <div class="project-content">
+                                <strong>{{ $project->name }}</strong>
+                                <p>{{ $project->description }}</p>
+                            </div>
+                        </a>
+                        @endforeach
+                    </div>
                     @else
-                        <p>{{ __('No projects available for this company') }}</p>
+                    <p>{{ __('No projects available for this company') }}</p>
                     @endif
                     <div class="flex justify-center">
-                        <a href="{{ route('projects.create', ['companyId' => $company->id]) }}"
-                            class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Project') }}</a>
+                        <a href="{{ route('projects.create', ['companyId' => $company->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Project') }}</a>
                     </div>
                 </div>
             </div>

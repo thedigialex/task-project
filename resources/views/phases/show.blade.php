@@ -30,9 +30,9 @@
                 <button @click="activeTab = 'calendar'" :class="{ 'bg-blue-500': activeTab === 'calendar' }" class="text-white px-4 py-2 rounded">Calendar</button>
             </div>
         </div>
-        
+
         <div x-show="activeTab === 'table'">
-            <div class="py-12">
+            <div class="py-12" x-data="{ taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 dark:text-gray-100 flex justify-between items-center">
@@ -73,8 +73,10 @@
                         </div>
                     </div>
                 </div>
+                <template x-if="taskButtonClicked">
+                    @include('tasks.show', ['tasks' => $sortedTasks])
+                </template>
             </div>
-            @include('tasks.show', ['tasks' => $sortedTasks])
         </div>
         <div x-show="activeTab === 'calendar'">
             <div id="calendar"></div>
