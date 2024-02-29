@@ -1,6 +1,6 @@
-<div x-data="{ showModal: false, task: {} }" x-init="document.addEventListener('task-info-click', event => { 
-                showModal = true; 
-                task = event.detail; 
+<div x-data="{ showModal: false, task: {} }" x-init="document.addEventListener('task-info-click', event => {
+                showModal = true;
+                task = event.detail;
               })">
     <div x-show="showModal" class="modal flex text-center justify-center">
         <div class="modal-content flex flex-col self-center bg-gray-100 dark:bg-gray-200 p-2 rounded-lg w-full max-w-[500px]">

@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <ul>
                         @foreach ($companies as $company)
-                            <li>
+                            <li class="hover:font-bold transition">
                                 <a href="{{ route('companies.admin', ['company' => $company->id]) }}">
                                     {{ $company->name }}
                                 </a>
