@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PhaseController;
+use App\Http\Controllers\BugController;
+use App\Models\Bug;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/bugs/create/{projectId}', [BugController::class, 'create'])->name('bugs.create');
+    Route::post('/bugs/{projectId}', [BugController::class, 'store'])->name('bugs.store');
+    Route::put('/bugs/{bugId}', [BugController::class, 'update'])->name('bugs.update');
+    Route::get('/bugs/edit/{bugId}', [BugController::class, 'edit'])->name('bugs.edit');
+    Route::delete('/bugs/{bugId}', [BugController::class, 'destroy'])->name('bugs.destroy');
 });
 
 require __DIR__ . '/auth.php';

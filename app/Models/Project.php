@@ -25,4 +25,9 @@ class Project extends Model
     {
         return $this->hasMany(Phase::class);
     }
+    
+    public function bugs()
+    {
+        return $this->hasMany(Bug::class);
+    }
 }

@@ -22,4 +22,5 @@ class Task extends Model
     {
         return $this->belongsTo(Phase::class);
     }
+    
 }

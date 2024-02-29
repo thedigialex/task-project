@@ -89,6 +89,7 @@ class ProjectController extends Controller
             $phase->tasks()->delete();
             $phase->delete();
         }
+        $project->bugs()->delete();
         $project->delete();
 
         return redirect()->route('companies.show', ['company' => $company->id])->with('success', 'Project deleted successfully');
