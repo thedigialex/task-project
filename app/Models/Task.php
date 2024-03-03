@@ -22,5 +22,8 @@ class Task extends Model
     {
         return $this->belongsTo(Phase::class);
     }
-    
+    public function subTasks()
+    {
+        return $this->hasMany(SubTask::class);
+    }
 }

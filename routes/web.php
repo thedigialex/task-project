@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SubTaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\BugController;
@@ -65,6 +66,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/bugs/{bugId}', [BugController::class, 'update'])->name('bugs.update');
     Route::get('/bugs/edit/{bugId}', [BugController::class, 'edit'])->name('bugs.edit');
     Route::delete('/bugs/{bugId}', [BugController::class, 'destroy'])->name('bugs.destroy');
+
+    Route::get('/tasks/{taskId}/subtasks', [SubTaskController::class, 'index'])->name('subtasks.index');
+    Route::post('/tasks/{taskId}/subtasks', [SubTaskController::class, 'store'])->name('subtasks.store');
+    Route::get('/tasks/{taskId}/subtasks/create', [SubTaskController::class, 'create'])->name('subtasks.create');
+    Route::put('/subtasks/{subtaskId}', [SubTaskController::class, 'update'])->name('subtasks.update');
+    Route::get('/subtasks/{subtaskId}/edit', [SubTaskController::class, 'edit'])->name('subtasks.edit');
+    Route::delete('/subtasks/{subtaskId}', [SubTaskController::class, 'destroy'])->name('subtasks.destroy');
 });
 
 require __DIR__ . '/auth.php';
