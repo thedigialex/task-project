@@ -4,21 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Phase;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
 class TaskController extends Controller
 {
 
     public function create($phaseId)
     {
-        return view('tasks.edit', compact('phaseId'));
+        $staffUsers = User::where('user_type', 'staff')->get();
+        return view('tasks.edit', compact('phaseId', 'staffUsers'));
     }
 
     public function edit($taskId)
     {
         $task = Task::findOrFail($taskId);
-        return view('tasks.edit', compact('task'));
+        $staffUsers = User::where('user_type', 'staff')->get();
+        return view('tasks.edit', compact('task', 'staffUsers'));
     }
 
     public function store(Request $request, $phaseId)
@@ -49,6 +51,7 @@ class TaskController extends Controller
             'completion_expected_date' => 'required|date',
             'hours_required' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'user_id' => 'nullable|exists:users,id',
         ];
         $request->validate($rules);
         if (!$task) {
@@ -66,7 +69,9 @@ class TaskController extends Controller
             $task->image_path = $imagePath;
         }
         $phase = Phase::findOrFail($phaseId);
+        $user = User::findOrFail($request->input('user_id'));
         $task->phase()->associate($phase);
+        $task->user()->associate($user); 
         $task->save();
 
         return $task;

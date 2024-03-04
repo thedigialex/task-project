@@ -28,6 +28,16 @@
                             <input type="text" name="description" id="description" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($task) ? $task->description : '' }}" required />
                         </div>
 
+                        <div class="mb-4">
+                            <label for="user_id" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Assign to Staff:</label>
+                            <select name="user_id" id="user_id" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                                <option value="">Select Staff</option>
+                                @foreach ($staffUsers as $user)
+                                <option value="{{ $user->id }}" {{ (isset($task) && $task->user_id == $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="flex space-x-4">
                             <div class="mb-4 flex-1">
                                 <label for="status" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Status:</label>
@@ -71,7 +81,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="completion_expected_date" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Completion Expected Date:</label>
+                            <label for="completion_expected_date" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Due Date:</label>
                             <input type="date" name="completion_expected_date" id="completion_expected_date" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($task) ? $task->completion_expected_date : '' }}" required />
                         </div>
 

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable()->after('id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->string('description');
             $table->enum('status', ['todo', 'in_progress', 'completed']);

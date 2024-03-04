@@ -73,6 +73,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/subtasks/{subtaskId}', [SubTaskController::class, 'update'])->name('subtasks.update');
     Route::get('/subtasks/{subtaskId}/edit', [SubTaskController::class, 'edit'])->name('subtasks.edit');
     Route::delete('/subtasks/{subtaskId}', [SubTaskController::class, 'destroy'])->name('subtasks.destroy');
+    Route::patch('/subtasks/{subtask}/toggle',  [SubTaskController::class, 'toggleComplete'])->name('subtasks.toggleComplete');
+
 });
 
 require __DIR__ . '/auth.php';
