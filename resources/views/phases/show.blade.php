@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header" >
+    <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline">
@@ -48,26 +48,52 @@
                             <table class="min-w-full border rounded-md">
                                 <thead>
                                     <tr>
-                                        <th class="border p-2 w-1/3 dark:text-gray-400">{{ __('Title') }}</th>
-                                        <th class="border p-2 w-1/3 dark:text-gray-400">{{ __('Priority') }}</th>
-                                        <th class="border p-2 w-1/3 dark:text-gray-400">{{ __('Hours Required') }}</th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Title') }}</th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Priority') }}</th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Hours Required') }}</th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($sortedTasks as $task)
-                                    <tr x-show="tab === 'pending' && '{{ $task->status }}' === 'todo' || tab === 'completed' && '{{ $task->status }}' === 'completed' || tab === 'in_progress' && '{{ $task->status }}' === 'in_progress'" x-transition.duration.300ms>
+                                    <tr>
                                         <td class="border p-2 dark:text-gray-400">
                                             <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', completion_expected_date:'{{ $task->completion_expected_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-blue-500 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
                                                 {{ $task->title }}
                                             </a>
-
                                         </td>
                                         <td class="border p-2 dark:text-gray-400">{{ $task->priority }}</td>
                                         <td class="border p-2 dark:text-gray-400">{{ $task->hours_required }}</td>
+                                        <td class="border p-2 dark:text-gray-400">
+                                            <button onclick="toggleSubTasks(this)">▼</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="sub-task-row hidden">
+                                        <td colspan="4" class="border p-2 dark:text-gray-400">
+                                            <table class="min-w-full">
+                                                <tbody>
+                                                    @foreach($task->subTasks as $subTask)
+                                                    <tr class="{{ $subTask->is_completed ? 'bg-green-100' : '' }}">
+                                                        <td class="p-2">{{ $subTask->name }}</a></td>
+                                                        <td class="p-2">{{ $subTask->is_completed ? 'Completed' : 'Pending' }}</td>
+                                                        <td><a href="{{ route('subtasks.edit', ['subtaskId' => $subTask->id]) }}">edit</a></td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <a href="{{ route('subtasks.create', ['taskId' => $task->id]) }}">Create New Subtask</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <script>
+                                function toggleSubTasks(button) {
+                                    var subTaskRow = button.closest('tr').nextElementSibling;
+                                    subTaskRow.classList.toggle('hidden');
+                                    button.textContent = subTaskRow.classList.contains('hidden') ? '▼' : '▲';
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>
