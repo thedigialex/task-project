@@ -46,10 +46,10 @@
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                     </div>
                     @endunless
-
+                    @if(auth()->user()->user_type == 'staff')
                     <div class="mb-3">
                         <label for="user_type" class="form-label">{{ __('Role') }}</label>
-                        <select name="user_type" id="user_type" class="form-control" onchange="toggleCompanyDropdown()">
+                        <select name="user_type" id="user_type" class="form-control">
                             <option value="client" {{ old('role', isset($user) && $user->user_type === 'client' ? 'selected' : '') }}>Client</option>
                             <option value="staff" {{ old('role', isset($user) && $user->user_type === 'staff' ? 'selected' : '') }}>Staff</option>
                         </select>
@@ -58,15 +58,16 @@
                     <div class="mb-3" id="companyDropdown">
                         <label for="company" class="form-label">{{ __('Company') }}</label>
                         <select name="company_id" id="company_id" class="form-control">
-                            <option value="N/A">N/A</option>
+                            <option value="">N/A</option>
                             @foreach($companies as $company)
                             <option value="{{ $company->id }}" {{ old('company', isset($user) && $user->company_id == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">{{ isset($user) ? __('Update User') : __('Create User') }}</button>
+                    @endif
+                    <div class="flex justify-center pt-4">
+                        <x-button>{{ isset($user) ? __('Update User') : __('Create User') }}
+                        </x-button>
                     </div>
                 </form>
             </div>

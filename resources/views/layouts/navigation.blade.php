@@ -12,15 +12,18 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @if(auth()->user()->user_type == 'client')
                     <x-nav-link :href="route('companies.show', ['company' => auth()->user()->company])" :active="request()->routeIs('companies.show')">
                         {{ __('Company') }}
                     </x-nav-link>
+                    @else
                     <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies')">
                         {{ __('All Companies') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">
                         {{ __('All Users') }}
                     </x-nav-link>
+                    @endif
                 </div>
             </div>
 

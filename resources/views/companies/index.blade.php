@@ -11,16 +11,17 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <ul>
                         @foreach ($companies as $company)
-                            <li class="hover:font-bold transition">
-                                <a href="{{ route('companies.admin', ['company' => $company->id]) }}">
-                                    {{ $company->name }}
-                                </a>
-                            </li>
+                        <li class="hover:font-bold transition">
+                            <a href="{{ route('companies.admin', ['company' => $company->id]) }}">
+                                {{ $company->name }}
+                            </a>
+                        </li>
                         @endforeach
                     </ul>
                     <div class="flex justify-center">
-                        <a href="{{ route('companies.create') }}"
-                            class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Company') }}</a>
+                        <x-button>
+                            <a href="{{ route('companies.create') }}">{{ __('New Company') }}</a>
+                        </x-button>
                     </div>
                 </div>
             </div>
