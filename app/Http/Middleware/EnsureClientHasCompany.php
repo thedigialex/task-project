@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class EnsureClientHasCompany
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         $user = auth()->user();
 
-        if ($user->user_type == 'client') {
+        if ($user && $user->user_type == 'client' && is_null($user->company_id)) {
             return redirect(RouteServiceProvider::HOME);
         }
 

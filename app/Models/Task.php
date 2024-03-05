@@ -15,13 +15,20 @@ class Task extends Model
         'technological_level',
         'status',
         'flag',
-        'image_path'
+        'image_path',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function phase()
     {
         return $this->belongsTo(Phase::class);
     }
+
     public function subTasks()
     {
         return $this->hasMany(SubTask::class);

@@ -21,6 +21,32 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h2 class="text-xl">{{ __('Clients') }}</h2>
+                    @if ($users->count() > 0)
+                    <div class="flex flex-wrap gap-5">
+                        @foreach ($users as $user)
+                        <div class="project-content">
+                        <a href="{{ route('users.edit', ['userId' => $user->id]) }}">
+                            <strong>{{ $user->name }}</strong></a>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <p>{{ __('No Users available for this company') }}</p>
+                    @endif
+                    <div class="flex justify-center pt-4">
+                        <x-button>
+                            <a href="{{ route('users.create') }}">{{ __('New User') }}</a>
+                        </x-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h2 class="text-xl">{{ __('Projects') }}</h2>
                     @if ($projects->count() > 0)
                     <div class="flex flex-wrap gap-5">
@@ -37,7 +63,9 @@
                     <p>{{ __('No projects available for this company') }}</p>
                     @endif
                     <div class="flex justify-center pt-4">
-                        <a href="{{ route('projects.create', ['companyId' => $company->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200 ring-1 ring-gray-200 hover:ring-gray-400">{{ __('Create New Project') }}</a>
+                        <x-button>
+                            <a href="{{ route('projects.create', ['companyId' => $company->id]) }}">{{ __('New Project') }}</a>
+                        </x-button>
                     </div>
                 </div>
             </div>

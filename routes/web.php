@@ -26,17 +26,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/company/{company}', [CompanyController::class, 'adminview'])->name('companies.admin');
+    });
 
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');    
     Route::put('/users/{userId}', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/edit/{userId}', [UserController::class, 'edit'])->name('users.edit');
-
     Route::resource('companies', CompanyController::class);
-    Route::get('/company/{company}', [CompanyController::class, 'adminview'])->name('companies.admin');
-
+    
     Route::put('/projects/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/projects/create/{companyId}', [ProjectController::class, 'create'])->name('projects.create');
     Route::get('/projects/edit/{projectId}', [ProjectController::class, 'edit'])->name('projects.edit');
@@ -73,6 +75,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/subtasks/{subtaskId}', [SubTaskController::class, 'update'])->name('subtasks.update');
     Route::get('/subtasks/{subtaskId}/edit', [SubTaskController::class, 'edit'])->name('subtasks.edit');
     Route::delete('/subtasks/{subtaskId}', [SubTaskController::class, 'destroy'])->name('subtasks.destroy');
+    Route::patch('/subtasks/{subtask}/toggle',  [SubTaskController::class, 'toggleComplete'])->name('subtasks.toggleComplete');
+
 });
 
 require __DIR__ . '/auth.php';

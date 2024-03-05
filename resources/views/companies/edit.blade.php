@@ -22,15 +22,14 @@
                         <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Company Name:</label>
                         <input type="text" name="name" id="name" class="form-input rounded-md shadow-sm mt-1 block w-full" required value="{{ isset($company) ? $company->name : old('name') }}" />
                     </div>
-
-                    <div class="flex items-center justify-end mt-4">
-                        <button type="submit">
-                            @if(isset($company))
+                    <div>
+                        <x-button>
+                        @if(isset($company))
                                 {{ __('Update') }}
                             @else
                                 {{ __('Create') }}
                             @endif
-                        </button>
+                        </x-button>
                     </div>
                 </form>
             </div>

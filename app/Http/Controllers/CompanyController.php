@@ -12,20 +12,20 @@ class CompanyController extends Controller
     {
         //$this->middleware('admin')->except('index');
     }
-    
+
     public function show(Request $request, Company $company)
     {
-        if(!is_null($company)){
-            $projects = $company->projects;
-            return view('companies.show', compact('company', 'projects'));
-        }
-        return view('companies.show', compact('company'));
+        $projects = $company->projects;
+        $users = $company->users;
+        return view('companies.show', compact('company', 'projects', 'users'));
+        
     }
     public function adminview($companyId)
     {
         $company = Company::findOrFail($companyId);
         $projects = $company->projects;
-        return view('companies.show', compact('company', 'projects'));
+        $users = $company->users;
+        return view('companies.show', compact('company', 'projects', 'users'));
     }
     public function index()
     {
@@ -66,7 +66,9 @@ class CompanyController extends Controller
         $company->fill($validatedData);
         $company->save();
         $message = $company->wasRecentlyCreated ? 'Company created successfully' : 'Company updated successfully';
-
+        if(auth()->user()->user_type == 'client'){
+            return redirect()->route('companies.show', ['company' => $company->company_id])->with('success', $message);
+        }
         return redirect()->route('companies.index')->with('success', $message);
     }
 }

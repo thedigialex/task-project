@@ -60,15 +60,14 @@
                         </a>
                         @endforeach
                     </div>
-                    <div class="flex justify-center mt-4">
-                        <a href="{{ route('phases.create', ['projectId' => $project->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Phase') }}</a>
-                    </div>
                     @else
                     <p>{{ __('No phase currently for this project') }}</p>
-                    <div class="flex justify-center mt-4">
-                        <a href="{{ route('phases.create', ['projectId' => $project->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Phase') }}</a>
-                    </div>
                     @endif
+                    <div class="flex justify-center mt-4">
+                        <x-button>
+                            <a href="{{ route('phases.create', ['projectId' => $project->id]) }}">{{ __('New Phase') }}</a>
+                        </x-button>
+                    </div>
                 </div>
             </div>
 
@@ -77,7 +76,9 @@
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">{{ __('Bugs/Issues') }}</h3>
                         <div class="flex justify-center mt-4">
-                            <a href="{{ route('bugs.create', ['projectId' => $project->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Bug') }}</a>
+                            <x-button>
+                                <a href="{{ route('bugs.create', ['projectId' => $project->id]) }}">{{ __('New Bug') }}</a>
+                            </x-button>
                         </div>
                     </div>
                     @if ($project->bugs->isNotEmpty())

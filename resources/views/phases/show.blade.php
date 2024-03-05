@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header" >
+    <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline">
@@ -48,26 +48,53 @@
                             <table class="min-w-full border rounded-md">
                                 <thead>
                                     <tr>
-                                        <th class="border p-2 w-1/3 dark:text-gray-400">{{ __('Title') }}</th>
-                                        <th class="border p-2 w-1/3 dark:text-gray-400">{{ __('Priority') }}</th>
-                                        <th class="border p-2 w-1/3 dark:text-gray-400">{{ __('Hours Required') }}</th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400"></th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Assigned To') }}</th>
+                                        <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Due Date') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($sortedTasks as $task)
                                     <tr x-show="tab === 'pending' && '{{ $task->status }}' === 'todo' || tab === 'completed' && '{{ $task->status }}' === 'completed' || tab === 'in_progress' && '{{ $task->status }}' === 'in_progress'" x-transition.duration.300ms>
                                         <td class="border p-2 dark:text-gray-400">
+                                            <button onclick="toggleSubTasks(this)">▼</button>
                                             <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', completion_expected_date:'{{ $task->completion_expected_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-blue-500 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
                                                 {{ $task->title }}
                                             </a>
-
                                         </td>
-                                        <td class="border p-2 dark:text-gray-400">{{ $task->priority }}</td>
-                                        <td class="border p-2 dark:text-gray-400">{{ $task->hours_required }}</td>
+                                        <td class="border p-2 dark:text-gray-400">{{ $task->user->name ?? 'Unassigned' }}</td>
+                                        <td class="border p-2 dark:text-gray-400">{{ $task->completion_expected_date }}</td>
+                                    </tr>
+                                    <tr class="sub-task-row hidden">
+                                        <td colspan="4" class="border p-2 dark:text-gray-400">
+                                            <table class="min-w-full">
+                                                <tbody>
+                                                    @foreach($task->subTasks as $subTask)
+                                                    <tr>
+                                                        <td class="p-2 flex items-center">
+                                                            <button type="button" class="toggle-status py-3 px-6 rounded transition-colors duration-100 {{ $subTask->is_complete ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600' }}" data-subtask-id="{{ $subTask->id }}" data-subtask-status="{{ $subTask->is_complete }}">
+                                                            </button>
+                                                            <a href="{{ route('subtasks.edit', ['subtaskId' => $subTask->id]) }}" class="ps-8 inline text-blue-500 hover:underline">
+                                                                {{ $subTask->name }}
+                                                            </a>: {{ $subTask->description }}
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <a href="{{ route('subtasks.create', ['taskId' => $task->id]) }}" class="block mx-auto py-2 px-4 dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 rounded transition ease-in-out duration-200">{{ __('Create New SubTask') }}</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <script>
+                                function toggleSubTasks(button) {
+                                    var subTaskRow = button.closest('tr').nextElementSibling;
+                                    subTaskRow.classList.toggle('hidden');
+                                    button.textContent = subTaskRow.classList.contains('hidden') ? '▼' : '▲';
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -79,7 +106,6 @@
         <div x-show="activeTab === 'calendar'">
             <div id="calendar"></div>
         </div>
-
     </div>
 
     <script>
@@ -99,6 +125,30 @@
                 events: events,
             });
         });
-    </script>
+        $(document).ready(function() {
+            $('.toggle-status').on('click', function() {
+                var button = $(this);
+                var subtaskId = button.data('subtask-id');
+                var isCompleted = button.data('subtask-status');
 
+                $.ajax({
+                    url: '/subtasks/' + subtaskId + '/toggle',
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        _method: 'PATCH',
+                        is_completed: !isCompleted
+                    },
+                    success: function(response) {
+                        if (isCompleted) {
+                            button.removeClass('bg-green-500 hover:bg-green-600').addClass('bg-red-500 hover:bg-red-600');
+                        } else {
+                            button.removeClass('bg-red-500 hover:bg-red-600').addClass('bg-green-500 hover:bg-green-600');
+                        }
+                        button.data('subtask-status', !isCompleted);
+                    }
+                });
+            });
+        });
+    </script>
 </x-app-layout>

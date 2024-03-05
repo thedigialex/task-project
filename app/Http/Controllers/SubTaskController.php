@@ -6,6 +6,7 @@ use App\Models\SubTask;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class SubTaskController extends Controller
 {
     /**
@@ -96,6 +97,13 @@ class SubTaskController extends Controller
         $subtask->delete();
 
         return redirect()->route('subtasks.index', ['taskId' => $taskId])->with('success', 'Subtask deleted successfully');
+    }
+    
+    public function toggleComplete(SubTask $subtask)
+    {
+        $subtask->is_complete = !$subtask->is_complete;
+        $subtask->save();
 
+        return back();
     }
 }
