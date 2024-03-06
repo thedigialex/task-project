@@ -77,24 +77,19 @@
                                     <option value="on_hold" {{ isset($task) && $task->flag === 'on_hold' ? 'selected' : '' }}>On Hold</option>
                                 </select>
                             </div>
-
                         </div>
-
                         <div class="mb-4">
                             <label for="completion_expected_date" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Due Date:</label>
                             <input type="date" name="completion_expected_date" id="completion_expected_date" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($task) ? $task->completion_expected_date : '' }}" required />
                         </div>
-
                         <div class="mb-4">
                             <label for="hours_required" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Hours Required:</label>
                             <input type="number" name="hours_required" id="hours_required" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($task) ? $task->hours_required : '' }}" required />
                         </div>
-
                         <div class="mb-4 flex-1">
                             <label for="image" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Image:</label>
                             <input type="file" name="image" id="image" class="form-input rounded-md shadow-sm mt-1 block w-full" accept="image/*" />
                         </div>
-
                         <div class="flex items-center justify-end mt-4">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ring">
                                 {{ isset($task) ? __('Save Task') : __('Create Task') }}

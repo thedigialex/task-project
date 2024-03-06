@@ -35,8 +35,10 @@
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 dark:text-gray-100 flex justify-between items-center">
                             <h2 class="text-xl font-bold">{{ __('Tasks') }}</h2>
+                            <x-button>
+                                <a href="{{ route('tasks.create', ['phaseId' => $phase->id]) }}">{{ __('New Task') }}</a>
+                            </x-button>
                             {{-- Create Task --}}
-                            <a href="{{ route('tasks.create', ['phaseId' => $phase->id]) }}" class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200">{{ __('Create New Task') }}</a>
                         </div>
                         <div x-data="{ tab: 'pending' }" class="p-6 flex flex-col ">
                             <div class="p-2 flex-row bg-gray-400 dark:bg-gray-700 space-x-4">
