@@ -28,36 +28,33 @@ class UserController extends Controller
     }
     private function saveUser(Request $request, $user = null)
     {
-        if(auth()->user()->user_type == 'client'){
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : null),
-                'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
-            ]);
-        }
-        else{
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : null),
-                'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : ''),
+            'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
+        ];
+        if (auth()->user()->user_type !== 'client') {
+            $rules += [
                 'user_type' => 'required|in:client,staff',
                 'company_id' => 'nullable|exists:companies,id',
-            ]);
+            ];
         }
+        $validatedData = $request->validate($rules);
         if (!$user) {
             $user = new User();
             $user->password = Hash::make($validatedData['password']);
-            $user->user_type = auth()->user()->user_type;
-            $user->company_id = auth()->user()->company->id;
+
+            if (auth()->user()->user_type === 'client') {
+                $user->user_type = auth()->user()->user_type;
+                $user->company_id = auth()->user()->company->id;
+            }
         }
         $user->fill($validatedData);
         $user->save();
         $message = $user->wasRecentlyCreated ? 'User created successfully' : 'User updated successfully';
-
-        if(auth()->user()->user_type == 'client'){
-            return redirect()->route('companies.show', ['company' => $user->company_id])->with('success', $message);
-        }
-        return redirect()->route('users.index')->with('success', $message);
+        return auth()->user()->user_type === 'client'
+            ? redirect()->route('companies.show', ['company' => $user->company_id])->with('success', $message)
+            : redirect()->route('users.index')->with('success', $message);
     }
 
     public function store(Request $request)

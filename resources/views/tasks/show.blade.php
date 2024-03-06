@@ -41,15 +41,9 @@
                             <img x-bind:src="task.image_path ? ('/storage/' + task.image_path) : ''" alt="Task Image" class="max-w-full h-auto mb-4" x-show="task.image_path && task.image_path !== ''">
                         </div>
                         <div class="flex flex-row justify-evenly">
-                            <button class="text-white bg-gray-600 hover:bg-gray-500 dark:bg-gray-500 dark:hover:bg-gray-600 shadow shadow-gray-400  hover:shadow-md hover:shadow-gray-400 hover:cursor-pointer rounded px-4 transition duration-150">
+                            <x-button>
                                 <a :href="'{{ route('tasks.edit', ['taskId' => 'TASK_ID']) }}'.replace('TASK_ID', task.id)">Edit</a>
-                            </button>
-                            <button class="text-white bg-gray-600 hover:bg-gray-500 dark:bg-gray-500 dark:hover:bg-gray-600 shadow shadow-gray-400  hover:shadow-md hover:shadow-gray-400 hover:cursor-pointer rounded px-4 transition duration-150">
-                                <a :href="'{{ route('subtasks.index', ['taskId' => 'TASK_ID']) }}'.replace('TASK_ID', task.id)">Subtasks</a>
-                            </button>
-                            <button class="close text-white bg-gray-600 hover:bg-gray-500 dark:bg-gray-500 dark:hover:bg-gray-600 shadow shadow-gray-400 hover:shadow-md hover:shadow-gray-400  rounded hover:cursor-pointer px-4 transition duration-150" @click="showModal = false">
-                                Close
-                            </button>
+                            </x-button>
                         </div>
                     </div>
                 </div>

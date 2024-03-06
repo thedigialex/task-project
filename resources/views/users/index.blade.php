@@ -8,18 +8,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <ul>
+                    <h2 class="text-xl">{{ __('Users') }}</h2>
+                    <div class="flex flex-wrap gap-5">
                         @foreach ($users as $user)
-                            <li>
-                                <h6 class="inline text-xl">{{ $user->name }}</h6>
-                                <a href="{{ route('users.edit', ['userId' => $user->id]) }}"
-                                    class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-0.5 rounded transition ease-in-out duration-200">Edit</a>
-                            </li>
+                        <x-user-card :name="$user->name" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+                        </x-user-card>
                         @endforeach
-                    </ul>
-                    <div class="flex justify-center">
-                        <a href="{{ route('users.create') }}"
-                            class="dark:text-black bg-gray-200 hover:bg-gray-400 hover:text-white shadow shadow-gray-200 hover:shadow-gray-400 p-1 rounded transition ease-in-out duration-200 ring-1 ring-gray-200 hover:ring-gray-400">{{ __('Create New User') }}</a>
+                    </div>
+                    <div class="flex justify-center pt-4">
+                        <x-button>
+                            <a href="{{ route('users.create') }}">{{ __('New User') }}</a>
+                        </x-button>
                     </div>
                 </div>
             </div>

@@ -34,29 +34,9 @@
                     @if ($project->phases->count() > 0)
                     <div class="projects-container">
                         @foreach($project->phases as $phase)
-                        <a href="{{ route('phases.show', ['phaseId' => $phase->id]) }}" class="project-card hover:border-gray-500">
-                            <div class="project-content dark:text-white">
-                                <strong>{{ $phase->name }}</strong>
-                                <br />
-                                <p>Status:
-                                    @if ($phase->tasks->count() > 0)
-                                    @php
-                                    $completionPercentage = round(($phase->tasks->where('status', 'completed')->count() / $phase->tasks->count()) * 100);
-                                    @endphp
-                                    @if ($completionPercentage == 100)
-                                    <span class="text-green-500">
-                                        {{ $completionPercentage }}%
-                                    </span>
-                                    @else
-                                    <span class="text-yellow-500">
-                                        {{ $completionPercentage }}%
-                                    </span>
-                                    @endif
-                                    @else
-                                    <span class="text-gray-500">{{ __('No tasks') }}</span>
-                                    @endif
-                                </p>
-                            </div>
+                        <a href="{{ route('phases.show', ['phaseId' => $phase->id]) }}">
+                            <x-phase-card :phaseName="$phase->name" :phaseDescription="$phase->description" :completionPercentage="$phase->getCompletionPercentage()">
+                            </x-phase-card>
                         </a>
                         @endforeach
                     </div>
@@ -88,8 +68,7 @@
                             <span>Status: {{ ucfirst($bug->status) }}</span><br />
                             <a href="{{ route('bugs.edit', $bug->id) }}">
                                 {{ $bug->title }} - {{ $bug->description }}
-                            </a><br /><br />
-
+                            </a>
                         </li>
                         @endforeach
                     </ul>

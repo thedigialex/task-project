@@ -25,10 +25,8 @@
                     @if ($users->count() > 0)
                     <div class="flex flex-wrap gap-5">
                         @foreach ($users as $user)
-                        <div class="project-content">
-                        <a href="{{ route('users.edit', ['userId' => $user->id]) }}">
-                            <strong>{{ $user->name }}</strong></a>
-                        </div>
+                        <x-user-card :name="$user->name" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+                        </x-user-card>
                         @endforeach
                     </div>
                     @else
@@ -51,11 +49,9 @@
                     @if ($projects->count() > 0)
                     <div class="flex flex-wrap gap-5">
                         @foreach ($projects as $project)
-                        <a href="{{ route('projects.show', ['projectId' => $project->id]) }}" class="project-card hover:border-gray-500">
-                            <div class="project-content">
-                                <strong>{{ $project->name }}</strong>
-                                <p>{{ $project->description }}</p>
-                            </div>
+                        <a href="{{ route('projects.show', ['projectId' => $project->id]) }}">
+                            <x-project-card :projectName="$project->name" :description="$project->description">
+                            </x-project-card>
                         </a>
                         @endforeach
                     </div>
