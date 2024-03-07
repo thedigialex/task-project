@@ -42,9 +42,12 @@
                             <div class="mb-4 flex-1">
                                 <label for="status" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Status:</label>
                                 <select name="status" id="status" class="form-select rounded-md shadow-sm mt-1 block w-full" required>
-                                    <option value="todo" {{ isset($task) && $task->status === 'todo' ? 'selected' : '' }}>To Do</option>
-                                    <option value="in_progress" {{ isset($task) && $task->status === 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                                    <option value="completed" {{ isset($task) && $task->status === 'completed' ? 'selected' : '' }}>Completed</option>
+                                    <option value="new" {{ isset($task) && $task->status === 'new' ? 'selected' : '' }}>New</option>
+                                    <option value="info" {{ isset($task) && $task->status === 'info' ? 'selected' : '' }}>Require More Info</option>
+                                    <option value="progress" {{ isset($task) && $task->status === 'progress' ? 'selected' : '' }}>In Progress</option>
+                                    <option value="testing" {{ isset($task) && $task->status === 'testing' ? 'selected' : '' }}>Internal Testing</option>
+                                    <option value="approval" {{ isset($task) && $task->status === 'approval' ? 'selected' : '' }}>Require Approval</option>
+                                    <option value="complete" {{ isset($task) && $task->status === 'completed' ? 'selected' : '' }}>Completed</option>  
                                 </select>
                             </div>
 
@@ -67,16 +70,6 @@
                                 </select>
                             </div>
 
-                            <div class="mb-4 flex-1">
-                                <label for="flag" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Flag:</label>
-                                <select name="flag" id="flag" class="form-select rounded-md shadow-sm mt-1 block w-full">
-                                    <option value="" {{ !isset($task) || $task->flag === null ? 'selected' : '' }}>Select Flag</option>
-                                    <option value="waiting_for_client_approval" {{ isset($task) && $task->flag === 'waiting_for_client_approval' ? 'selected' : '' }}>Waiting for Client Approval</option>
-                                    <option value="require_more_information" {{ isset($task) && $task->flag === 'require_more_information' ? 'selected' : '' }}>Require More Information</option>
-                                    <option value="internal_testing" {{ isset($task) && $task->flag === 'internal_testing' ? 'selected' : '' }}>Internal Testing</option>
-                                    <option value="on_hold" {{ isset($task) && $task->flag === 'on_hold' ? 'selected' : '' }}>On Hold</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="mb-4">
                             <label for="completion_expected_date" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Due Date:</label>

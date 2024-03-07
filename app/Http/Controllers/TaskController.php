@@ -7,6 +7,7 @@ use App\Models\Phase;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class TaskController extends Controller
 {
 
@@ -14,6 +15,32 @@ class TaskController extends Controller
     {
         $staffUsers = User::where('user_type', 'staff')->get();
         return view('tasks.edit', compact('phaseId', 'staffUsers'));
+    }
+
+    public function index($userId)
+    {
+        $user = User::findOrFail($userId);
+        $sortedTasks = [];
+        if($user->user_type == 'staff'){
+            $sortedTasks = $user->tasks;
+        }
+        else{
+            $projects = $user->company->projects;
+            foreach($projects as $project) {
+                $phases = $project->phases;
+                foreach($phases as $phase) {
+                    $tasks = $phase->tasks;
+                    foreach ($tasks as $task) {
+                        $sortedTasks[] = $task;
+                    }
+                }
+            }
+        }
+       
+      
+        $statuses = ['new', 'info', 'progress', 'testing', 'approval','complete'];
+        
+        return view('tasks.index', compact('sortedTasks', 'statuses'));
     }
 
     public function edit($taskId)
@@ -45,7 +72,7 @@ class TaskController extends Controller
         $rules = [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required|in:todo,in_progress,completed',
+            'status' => 'required|string|in:new,info,hold,progress,testing,approval,complete',
             'priority' => 'required|in:low,medium,high,urgent',
             'technological_level' => 'required|in:low,medium,high',
             'completion_expected_date' => 'required|date',
@@ -69,9 +96,10 @@ class TaskController extends Controller
             $task->image_path = $imagePath;
         }
         $phase = Phase::findOrFail($phaseId);
-        $user = User::findOrFail($request->input('user_id'));
         $task->phase()->associate($phase);
-        $task->user()->associate($user); 
+        $user_id = $request->input('user_id');
+        $user = $user_id ? User::findOrFail($user_id) : null;
+        $task->user()->associate($user);
         $task->save();
 
         return $task;

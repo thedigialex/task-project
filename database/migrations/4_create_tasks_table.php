@@ -17,10 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->string('description');
-            $table->enum('status', ['todo', 'in_progress', 'completed']);
+            $table->string('status');
             $table->string('priority');
             $table->integer('hours_required');
-            $table->string('flag')->nullable();
             $table->string('technological_level');
             $table->string('image_path')->nullable();
             $table->date('completion_expected_date')->nullable();

@@ -24,6 +24,9 @@
                         {{ __('All Users') }}
                     </x-nav-link>
                     @endif
+                    <x-nav-link :href="route('tasks.index',  ['userId' => auth()->user()->id])">
+                        {{ __('Tasks') }}
+                    </x-nav-link>
                 </div>
             </div>
 
