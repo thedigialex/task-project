@@ -14,7 +14,6 @@ class Task extends Model
         'hours_required',
         'technological_level',
         'status',
-        'flag',
         'image_path',
         'user_id'
     ];

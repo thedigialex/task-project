@@ -50,6 +50,7 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
     Route::get('/tasks/edit/{taskId}', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::post('/tasks/{phaseId}', [TaskController::class, 'store'])->name('tasks.store');
     Route::put('/tasks/{taskId}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::get('/tasks/{userId}', [TaskController::class, 'index'])->name('tasks.index');
     Route::delete('/tasks/{taskId}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
     Route::get('/phases/create/{projectId}', [PhaseController::class, 'create'])->name('phases.create');
