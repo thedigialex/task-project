@@ -38,10 +38,8 @@
                     @if ($project->phases->count() > 0)
                     <div class="projects-container">
                         @foreach($project->phases as $phase)
-                        <a href="{{ route('phases.show', ['phaseId' => $phase->id]) }}">
-                            <x-phase-card :phaseName="$phase->name" :phaseDescription="$phase->description" :completionPercentage="$phase->getCompletionPercentage()">
-                            </x-phase-card>
-                        </a>
+                        <x-card :name="$phase->name" :Url="route('phases.show', ['phaseId' => $phase->id])" :imageUrl="'storage/project_images/' . $phase->imageUrl" :description="$phase->getCompletionPercentage()">
+                        </x-card>
                         @endforeach
                     </div>
                     @else

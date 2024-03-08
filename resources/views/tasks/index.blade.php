@@ -26,7 +26,7 @@
                         <tr>
                             <th class="border p-2 w-1/4 dark:text-gray-400"></th>
                             <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Assigned To') }}</th>
-                            <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Due Date') }}</th>
+                            <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Project') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,12 +34,12 @@
                         <tr x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
                             <td class="border p-2 dark:text-gray-400">
                                 <button onclick="toggleSubTasks(this)">▼</button>
-                                <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', completion_expected_date:'{{ $task->completion_expected_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-blue-500 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
+                                <a >
                                     {{ $task->title }}
                                 </a>
                             </td>
                             <td class="border p-2 dark:text-gray-400">{{ $task->user->name ?? 'Unassigned' }}</td>
-                            <td class="border p-2 dark:text-gray-400">{{ $task->completion_expected_date }}</td>
+                            <td class="border p-2 dark:text-gray-400">{{ $task->phase->project->name }}</td>
                         </tr>
                         <tr class="hidden">
                             <td colspan="4" class="border p-2 dark:text-gray-400">

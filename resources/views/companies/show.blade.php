@@ -49,8 +49,8 @@
                     @if ($projects->count() > 0)
                     <div class="flex flex-wrap gap-5">
                         @foreach ($projects as $project)
-                        <x-project-card :projectName="$project->name" :projectUrl="route('projects.show', ['projectId' => $project->id])" :imageUrl="'storage/project_images/' . $project->imageUrl">
-                        </x-project-card>
+                        <x-card :name="$project->name" :Url="route('projects.show', ['projectId' => $project->id])" :imageUrl="'storage/project_images/' . $project->imageUrl" >
+                        </x-card>
                         @endforeach
                     </div>
                     @else
