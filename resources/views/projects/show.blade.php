@@ -24,7 +24,11 @@
                     <div class="mt-4">
                         <h3 class="text-lg font-semibold dark:text-white">{{ __('Main Contact') }}</h3>
                         <p class="text-gray-700 dark:text-gray-300">
+                            @if($mainContactUser)
                             <a href="mailto:{{ $mainContactUser->email }}" class="text-blue-500 hover:underline">{{ $mainContactUser->name }}</a>
+                            @else
+                            <span>No contact available</span>
+                            @endif
                         </p>
                     </div>
                 </div>

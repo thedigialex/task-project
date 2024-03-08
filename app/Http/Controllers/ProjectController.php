@@ -55,7 +55,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'completion_date' => 'nullable|date',
             'hours' => 'nullable|int',
-            'main_contact' => 'required|exists:users,id',
+            'main_contact' => 'nullable|exists:users,id',
             'notes' => 'nullable|string',
         ]);
     }
