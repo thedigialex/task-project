@@ -1,13 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline">
-                    {{ __('Assigned Tasks') }}
-                </h2>
-            </div>
-        </div>
-    </x-slot>
+    <x-header :headerTitle="'Tasks'"></x-header>
     <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{ taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
         <x-round-div>
             <div class="dark:text-gray-100 flex justify-between items-center">

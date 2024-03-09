@@ -1,27 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline">
-                    {{ $phase->name }}
-                    <a href="{{ route('phases.edit', ['phaseId' => $phase->id]) }}" class="inline text-blue-500 hover:underline">
-                        <i class="fas fa-pencil-alt ml-2"></i>
-                    </a>
-                </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-300">
-                    Targeted Date: {{ $phase->targeted_end_date }}
-                </p>
-            </div>
-            <div>
-                <p class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    {{ $completedTaskTime }} / {{ $remainingTaskTime }} Hours
-                </p>
-                <p class="text-sm text-gray-500 dark:text-gray-300">
-                    Completed / Remaining Task Time
-                </p>
-            </div>
-        </div>
-    </x-slot>
+    <x-header :headerTitle="$phase->name" :linkUrl="route('phases.edit', ['phaseId' => $phase->id])" :subTitle="'Targeted Date: ' . $phase->targeted_end_date" :completedTaskTime="$completedTaskTime" :remainingTaskTime="$remainingTaskTime">
+    </x-header>
     {{-- Task or Calendar selection --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{ activeTab: 'table' }">
         <div class="flex flex-row p-4 justify-evenly dark:text-gray-400 bg-gray-200 dark:bg-gray-700 space-x-4">

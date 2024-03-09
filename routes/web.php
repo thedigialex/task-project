@@ -29,21 +29,23 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
 
     Route::middleware(['admin'])->group(function () {
-        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+       
         Route::get('/company/{company}', [CompanyController::class, 'adminview'])->name('companies.admin');
     });
 
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');    
     Route::put('/users/{userId}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/edit/{userId}', [UserController::class, 'edit'])->name('users.edit');
     Route::resource('companies', CompanyController::class);
     
     Route::put('/projects/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::get('/projects/create/{companyId}', [ProjectController::class, 'create'])->name('projects.create');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::get('/projects/edit/{projectId}', [ProjectController::class, 'edit'])->name('projects.edit');
-    Route::post('/projects/{companyId}', [ProjectController::class, 'store'])->name('projects.store');
+    Route::post('/projects/', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/projects/{projectId}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::delete('/projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     Route::get('/tasks/create/{phaseId}', [TaskController::class, 'create'])->name('tasks.create');

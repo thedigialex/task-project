@@ -1,14 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            @if(isset($phase))
-            {{ __('Edit Phase') }}
-            @else
-            {{ __('Create New Phase') }}
-            @endif
-        </h2>
-    </x-slot>
-
+    @if(isset($phase))
+    <x-header :headerTitle="'Edit Phase'"></x-header>
+    @else
+    <x-header :headerTitle="'Create Phase'"></x-header>
+    @endif
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
             <form action="{{ isset($phase) ? route('phases.update', ['phaseId' => $phase->id]) : route('phases.store', ['projectId' => $project->id]) }}" method="post">
