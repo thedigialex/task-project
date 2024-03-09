@@ -91,10 +91,16 @@ class TaskController extends Controller
         $task->technological_level = $request->input('technological_level');
         $task->completion_expected_date = $request->input('completion_expected_date');
         $task->hours_required = $request->input('hours_required');
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('task_images', 'public');
+        $image = $request->file('image');
+        if ($image) {
+            $existingImagePath = $task->image_path;
+            if ($existingImagePath && Storage::disk('public')->exists($existingImagePath)) {
+                Storage::disk('public')->delete($existingImagePath);
+            }
+            $imagePath = $image->store('task_images', 'public');
             $task->image_path = $imagePath;
         }
+
         $phase = Phase::findOrFail($phaseId);
         $task->phase()->associate($phase);
         $user_id = $request->input('user_id');

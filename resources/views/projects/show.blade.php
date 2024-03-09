@@ -1,20 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    {{ $project->name }}
-                    <a href="{{ route('projects.edit', ['projectId' => $project->id]) }}" class="inline-block text-blue-500 hover:underline">
-                        <i class="fas fa-pencil-alt ml-2"></i>
-                    </a>
-                </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-300">
-                    Completion Date: {{ $project->completion_date }}
-                </p>
-            </div>
-        </div>
-    </x-slot>
-
+    <x-header :headerTitle="$project->name" :linkUrl="route('projects.edit', ['projectId' => $project->id])" :subTitle="'Completion Date: ' . $project->completion_date">
+    </x-header>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="flex flex-wrap -mx-3">
             <div class="w-full px-3 mb-6">
@@ -24,7 +10,11 @@
                     <div class="mt-4">
                         <h3 class="text-lg font-semibold dark:text-white">{{ __('Main Contact') }}</h3>
                         <p class="text-gray-700 dark:text-gray-300">
+                            @if($mainContactUser)
                             <a href="mailto:{{ $mainContactUser->email }}" class="text-blue-500 hover:underline">{{ $mainContactUser->name }}</a>
+                            @else
+                            <span>No contact available</span>
+                            @endif
                         </p>
                     </div>
                 </div>
@@ -34,10 +24,8 @@
                     @if ($project->phases->count() > 0)
                     <div class="projects-container">
                         @foreach($project->phases as $phase)
-                        <a href="{{ route('phases.show', ['phaseId' => $phase->id]) }}">
-                            <x-phase-card :phaseName="$phase->name" :phaseDescription="$phase->description" :completionPercentage="$phase->getCompletionPercentage()">
-                            </x-phase-card>
-                        </a>
+                        <x-card :name="$phase->name" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :imageUrl="'storage/project_images/' . $phase->imageUrl" :description="$phase->getCompletionPercentage()">
+                        </x-card>
                         @endforeach
                     </div>
                     @else

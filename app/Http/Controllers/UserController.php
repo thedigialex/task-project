@@ -11,7 +11,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $user = auth()->user();
+        if ($user->user_type === 'client') {
+            $users = $user->company->users;
+        }
+        else {
+            $users = User::all();
+        }
         return view('users.index', compact('users'));
     }
     public function create()

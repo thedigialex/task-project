@@ -1,13 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline">
-                    {{ __('Assigned Tasks') }}
-                </h2>
-            </div>
-        </div>
-    </x-slot>
+    <x-header :headerTitle="'Tasks'"></x-header>
     <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{ taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
         <x-round-div>
             <div class="dark:text-gray-100 flex justify-between items-center">
@@ -26,7 +18,7 @@
                         <tr>
                             <th class="border p-2 w-1/4 dark:text-gray-400"></th>
                             <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Assigned To') }}</th>
-                            <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Due Date') }}</th>
+                            <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Project') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,12 +26,12 @@
                         <tr x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
                             <td class="border p-2 dark:text-gray-400">
                                 <button onclick="toggleSubTasks(this)">▼</button>
-                                <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', completion_expected_date:'{{ $task->completion_expected_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-blue-500 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
+                                <a >
                                     {{ $task->title }}
                                 </a>
                             </td>
                             <td class="border p-2 dark:text-gray-400">{{ $task->user->name ?? 'Unassigned' }}</td>
-                            <td class="border p-2 dark:text-gray-400">{{ $task->completion_expected_date }}</td>
+                            <td class="border p-2 dark:text-gray-400">{{ $task->phase->project->name }}</td>
                         </tr>
                         <tr class="hidden">
                             <td colspan="4" class="border p-2 dark:text-gray-400">

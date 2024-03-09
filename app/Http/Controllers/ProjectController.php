@@ -10,12 +10,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    public function create($companyId)
+    public function create()
     {
-        $company = Company::find($companyId);
-        $users = $company->users;
-
-        return view('projects.edit', compact('company', 'users'));
+        $user = auth()->user();
+        if ($user->user_type === 'client') {
+            $users = $user->company->users;
+            return view('projects.edit', compact('users'));
+        } else {
+            $companies = Company::all();
+            return view('projects.edit', compact('companies'));
+        }
     }
 
     public function edit($projectId)
@@ -26,11 +30,13 @@ class ProjectController extends Controller
         return view('projects.edit', compact('project', 'users'));
     }
 
-    public function store(Request $request, $companyId)
+    public function store(Request $request)
     {
         $validatedData = $this->validateProjectRequest($request);
         $project = Project::create($validatedData);
-        $this->associateProjectWithCompany($project, $companyId);
+        $company = $request->input('company', auth()->user()->company);
+        $project->company()->associate($company);
+        $project->save();
 
         return redirect()->route('projects.show', ['projectId' => $project->id])
             ->with('success', 'Project created successfully');
@@ -41,6 +47,7 @@ class ProjectController extends Controller
         $validatedData = $this->validateProjectRequest($request);
         $project = Project::findOrFail($projectId);
         $project->update($validatedData);
+
         $message = 'Project updated successfully';
 
         return redirect()->route('projects.show', ['projectId' => $project->id])
@@ -50,21 +57,18 @@ class ProjectController extends Controller
     private function validateProjectRequest(Request $request)
     {
         return $request->validate([
-            'company_id' => 'required|int',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'completion_date' => 'nullable|date',
             'hours' => 'nullable|int',
-            'main_contact' => 'required|exists:users,id',
+            'main_contact' => 'nullable|exists:users,id',
             'notes' => 'nullable|string',
+            'company' => function ($attribute, $value, $fail) use ($request) {
+                if ($request->has('company') && is_null($value)) {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            },
         ]);
-    }
-
-    private function associateProjectWithCompany(Project $project, $companyId)
-    {
-        $company = Company::find($companyId);
-        $project->company()->associate($company);
-        $project->save();
     }
 
     public function show($projectId)
@@ -73,6 +77,18 @@ class ProjectController extends Controller
         $mainContactUser = User::find($project->main_contact);
 
         return view('projects.show', compact('project', 'mainContactUser'));
+    }
+
+    public function index()
+    {
+        $user = auth()->user();
+        if ($user->user_type === 'client') {
+            $projects = $user->company->projects;
+            return view('projects.index', compact('projects'));
+        } else {
+            $projects = Project::all();
+            return view('projects.index', compact('projects'));
+        }
     }
 
     public function destroy($projectId)
