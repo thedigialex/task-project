@@ -4,42 +4,51 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
-use App\Models\User;
 
 class CompanyController extends Controller
 {
-    public function __construct()
+
+    public function show(Request $request)
     {
-        //$this->middleware('admin')->except('index');
+        $user = auth()->user();
+        if ($user->user_type == 'client') {
+            $company = $user->company;
+        } else {
+            $companyId = $request->query('companyId');
+            $company = Company::find($companyId);
+            if (!$company) {
+                $companies = Company::all();
+                return view('companies.index', compact('companies'));
+            }
+        }
+        $projects = $company->projects;
+        $users = $company->users;
+        return view('companies.show', compact('company', 'projects', 'users'));
     }
 
-    public function show(Request $request, Company $company)
-    {
-        $projects = $company->projects;
-        $users = $company->users;
-        return view('companies.show', compact('company', 'projects', 'users'));
-        
-    }
-    public function adminview($companyId)
-    {
-        $company = Company::findOrFail($companyId);
-        $projects = $company->projects;
-        $users = $company->users;
-        return view('companies.show', compact('company', 'projects', 'users'));
-    }
     public function index()
     {
         $companies = Company::all();
         return view('companies.index', compact('companies'));
     }
+
     public function create()
     {
         return view('companies.edit');
     }
+
     public function edit($companyId)
     {
-        $company = Company::findOrFail($companyId);
-
+        $user = auth()->user();
+        if ($user->user_type == 'client') {
+            $company = $user->company;
+        } else {
+            $company = Company::find($companyId);
+            if (!$company) {
+                $companies = Company::all();
+                return view('companies.index', compact('companies'));
+            }
+        }
         return view('companies.edit', compact('company'));
     }
 
@@ -51,7 +60,6 @@ class CompanyController extends Controller
     public function update(Request $request, $companyId)
     {
         $company = Company::findOrFail($companyId);
-
         return $this->saveCompany($request, $company);
     }
 
@@ -66,8 +74,8 @@ class CompanyController extends Controller
         $company->fill($validatedData);
         $company->save();
         $message = $company->wasRecentlyCreated ? 'Company created successfully' : 'Company updated successfully';
-        if(auth()->user()->user_type == 'client'){
-            return redirect()->route('companies.show', ['company' => $company->company_id])->with('success', $message);
+        if (auth()->user()->user_type == 'client') {
+            return redirect()->route('companies.show', ['companyId' => $company->id])->with('success', $message);
         }
         return redirect()->route('companies.index')->with('success', $message);
     }

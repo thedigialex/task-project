@@ -24,9 +24,16 @@ class ProjectController extends Controller
 
     public function edit($projectId)
     {
+        $user = auth()->user();
         $project = Project::findOrFail($projectId);
+        $mainContactUser = $project->main_contact;
         $users = $project->company->users;
-
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            if (!$projects->contains($project)) {
+                return view('projects.index', compact('projects'));
+            }
+        }
         return view('projects.edit', compact('project', 'users'));
     }
 
@@ -38,8 +45,7 @@ class ProjectController extends Controller
         $project->company()->associate($company);
         $project->save();
 
-        return redirect()->route('projects.show', ['projectId' => $project->id])
-            ->with('success', 'Project created successfully');
+        return redirect()->route('projects.show', ['projectId' => $project->id]);
     }
 
     public function update(Request $request, $projectId)
@@ -47,11 +53,7 @@ class ProjectController extends Controller
         $validatedData = $this->validateProjectRequest($request);
         $project = Project::findOrFail($projectId);
         $project->update($validatedData);
-
-        $message = 'Project updated successfully';
-
-        return redirect()->route('projects.show', ['projectId' => $project->id])
-            ->with('success', $message);
+        return redirect()->route('projects.show', ['projectId' => $project->id]);
     }
 
     private function validateProjectRequest(Request $request)
@@ -73,9 +75,15 @@ class ProjectController extends Controller
 
     public function show($projectId)
     {
+        $user = auth()->user();
         $project = Project::findOrFail($projectId);
         $mainContactUser = User::find($project->main_contact);
-
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            if (!$projects->contains($project)) {
+                return view('projects.index', compact('projects'));
+            }
+        }
         return view('projects.show', compact('project', 'mainContactUser'));
     }
 
@@ -108,6 +116,13 @@ class ProjectController extends Controller
         $project->bugs()->delete();
         $project->delete();
 
-        return redirect()->route('companies.show', ['company' => $company->id])->with('success', 'Project deleted successfully');
+        $user = auth()->user();
+        if ($user->user_type === 'client') {
+            $projects = $user->company->projects;
+            return view('projects.index', compact('projects'));
+        } else {
+            $projects = Project::all();
+            return view('projects.index', compact('projects'));
+        }
     }
 }

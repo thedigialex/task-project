@@ -18,9 +18,15 @@ class PhaseController extends Controller
 
     public function edit($phaseId)
     {
+        $user = auth()->user();
         $phase = Phase::findOrFail($phaseId);
         $project = $phase->project;
-
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            if (!$projects->contains($project)) {
+                return redirect()->route('projects.show', ['projectId' => $phase->project->id]);
+            }
+        }
         return view('phases.edit', compact('phase'));
     }
 
@@ -69,11 +75,18 @@ class PhaseController extends Controller
 
     public function show($phaseId)
     {
+        $user = auth()->user();
         $phase = Phase::with('tasks')->findOrFail($phaseId);
         $completedTaskTime = $phase->tasks->filter(fn($task) => $task->status == 'complete')->sum('hours_required');
         $remainingTaskTime = $phase->tasks->filter(fn($task) => $task->status != 'complete')->sum('hours_required');
         $project = $phase->project;
         $mainContactUser = User::find($project->main_contact);
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            if (!$projects->contains($project)) {
+                return redirect()->route('projects.show', ['projectId' => $phase->project->id]);
+            }
+        }
         $sortedTasks = $phase->tasks->sortBy(function ($task) {
             return array_search($task->priority, ['urgent', 'high', 'medium', 'low']);
         });
@@ -89,8 +102,9 @@ class PhaseController extends Controller
             if ($task->image_path) {
                 Storage::disk('public')->delete($task->image_path);
             }
+            $task->subtasks()->delete();
+            $task->delete();
         }
-        $phase->tasks()->delete();
         $projectId = $phase->project->id;
         $phase->delete();
 
