@@ -14,24 +14,63 @@ class UserController extends Controller
         $user = auth()->user();
         if ($user->user_type === 'client') {
             $users = $user->company->users;
+            return view('users.index', compact('users'));
+        } else {
+            $allUsers = User::all();
+
+            $usersNeedingCompany = [];
+            $staffUsers = [];
+            $otherUsers = [];
+
+            foreach ($allUsers as $user) {
+                if (!$user->company && $user->user_type !== 'staff') {
+                    $usersNeedingCompany[] = $user;
+                } elseif ($user->user_type === 'staff') {
+                    $staffUsers[] = $user;
+                } else {
+                    $otherUsers[] = $user;
+                }
+            }
+
+            $groupedOtherUsers = collect($otherUsers)->groupBy(function ($user) {
+                return $user->company->name ?? 'No Company';
+            });
+
+            $usersNeedingCompany = collect($usersNeedingCompany);
+            $staffUsers = collect($staffUsers);
+            $otherUsers = collect($otherUsers);
+
+            return view('users.index', compact('usersNeedingCompany', 'staffUsers', 'otherUsers'));
         }
-        else {
-            $users = User::all();
-        }
-        return view('users.index', compact('users'));
     }
+
     public function create()
     {
         $companies = Company::all();
         return view('users.edit', compact('companies'));
     }
+
     public function edit($userId)
     {
+        $userEditor = auth()->user();
+        if ($userEditor->user_type == 'client') {
+            $company = $userEditor->company;
+            $users = $company->users;
+            $user = User::find($userId);
+            if ($user && $users->contains($user)) {
+                return view('users.edit', compact('user'));
+            } else {
+                return redirect()->route('users.index');
+            }
+        }
         $companies = Company::all();
-        $user = User::findOrFail($userId);
-
-        return view('users.edit', compact('user'), compact('companies'));
+        $user = User::find($userId);
+        if (!$user) {
+            return redirect()->route('users.index');
+        }
+        return view('users.edit', compact('user', 'companies'));
     }
+
     private function saveUser(Request $request, $user = null)
     {
         $rules = [
@@ -57,10 +96,7 @@ class UserController extends Controller
         }
         $user->fill($validatedData);
         $user->save();
-        $message = $user->wasRecentlyCreated ? 'User created successfully' : 'User updated successfully';
-        return auth()->user()->user_type === 'client'
-            ? redirect()->route('companies.show', ['company' => $user->company_id])->with('success', $message)
-            : redirect()->route('users.index')->with('success', $message);
+        return redirect()->route('users.index');
     }
 
     public function store(Request $request)
@@ -71,7 +107,6 @@ class UserController extends Controller
     public function update(Request $request, $userId)
     {
         $user = User::findOrFail($userId);
-
         return $this->saveUser($request, $user);
     }
 }

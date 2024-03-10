@@ -17,8 +17,8 @@
                     <thead>
                         <tr>
                             <th class="border p-2 w-1/4 dark:text-gray-400"></th>
+                            <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Project - Phase') }}</th>
                             <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Assigned To') }}</th>
-                            <th class="border p-2 w-1/4 dark:text-gray-400">{{ __('Project') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,12 +26,16 @@
                         <tr x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
                             <td class="border p-2 dark:text-gray-400">
                                 <button onclick="toggleSubTasks(this)">▼</button>
-                                <a >
+                                <a>
                                     {{ $task->title }}
                                 </a>
                             </td>
+                            <td class="border p-2 dark:text-gray-400">
+                                <a href="{{ route('projects.show', ['projectId' => $task->phase->project->id]) }}">
+                                    {{ $task->phase->project->name }} - {{ $task->phase->name }}
+                                </a>
+                            </td>
                             <td class="border p-2 dark:text-gray-400">{{ $task->user->name ?? 'Unassigned' }}</td>
-                            <td class="border p-2 dark:text-gray-400">{{ $task->phase->project->name }}</td>
                         </tr>
                         <tr class="hidden">
                             <td colspan="4" class="border p-2 dark:text-gray-400">

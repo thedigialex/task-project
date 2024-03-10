@@ -17,9 +17,9 @@ class TaskController extends Controller
         return view('tasks.edit', compact('phaseId', 'staffUsers'));
     }
 
-    public function index($userId)
+    public function index()
     {
-        $user = User::findOrFail($userId);
+        $user = auth()->user();
         $sortedTasks = [];
         if($user->user_type == 'staff'){
             $sortedTasks = $user->tasks;
@@ -36,8 +36,6 @@ class TaskController extends Controller
                 }
             }
         }
-       
-      
         $statuses = ['new', 'info', 'progress', 'testing', 'approval','complete'];
         
         return view('tasks.index', compact('sortedTasks', 'statuses'));
@@ -45,7 +43,15 @@ class TaskController extends Controller
 
     public function edit($taskId)
     {
+        $user = auth()->user();
         $task = Task::findOrFail($taskId);
+        $project = $task->phase->project;
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            if (!$projects->contains($project)) {
+                return redirect()->route('phases.show', ['phaseId' => $task->phase->id]);
+            }
+        }
         $staffUsers = User::where('user_type', 'staff')->get();
         return view('tasks.edit', compact('task', 'staffUsers'));
     }
@@ -53,9 +59,7 @@ class TaskController extends Controller
     public function store(Request $request, $phaseId)
     {
         $task = $this->validateAndSaveTask($request, $phaseId);
-
-        return redirect()->route('phases.show', ['phaseId' => $task->phase->id])
-            ->with('success', 'Task updated successfully');
+        return redirect()->route('phases.show', ['phaseId' => $task->phase->id]);
     }
 
     public function update(Request $request, $taskId)
@@ -117,6 +121,7 @@ class TaskController extends Controller
         if ($task->image_path) {
             Storage::disk('public')->delete($task->image_path);
         }
+        $task->subtasks()->delete();
         $phaseId =  $task->phase->id;
         $task->delete();
 

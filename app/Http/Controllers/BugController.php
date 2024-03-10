@@ -17,7 +17,15 @@ class BugController extends Controller
     public function edit($bugId)
     {
         $bug = Bug::findOrFail($bugId);
-
+        $user = auth()->user();
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            $bugProjectId = $bug->project_id;
+            $belongsToProject = $projects->contains('id', $bugProjectId);
+            if (!$belongsToProject) {
+                return redirect()->route('projects.show', ['projectId' => $bugProjectId]);
+            }
+        }
         return view('bugs.edit', compact('bug'));
     }
 

@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class SubTaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index($taskId)
     {
         $task = Task::findOrFail($taskId);
@@ -21,32 +19,21 @@ class SubTaskController extends Controller
         return view('subtasks.index', compact('subtasks', 'taskName', 'task'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create($taskId)
     {
         $taskName = Task::findOrFail($taskId)->title;
         return view('subtasks.edit', compact('taskId', 'taskName'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request, $taskId)
     {
-
         $data = $this->validateData($request);
-
         $subTask = new SubTask($data);
         $task = Task::findOrFail($taskId);
         $subTask->task()->associate($task)->save();
-        return redirect()->route('subtasks.index', ['taskId' => $taskId])->with('success', 'Subtask created successfully');
+        return redirect()->route('phases.show', ['phaseId' => $task->phase->id]);
     }
 
-    /**
-     * Validate Data
-     */
     public function validateData(Request $request)
     {
         return $request->validate([
@@ -55,55 +42,43 @@ class SubTaskController extends Controller
             'is_complete' => 'required|boolean',
         ]);
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(SubTask $subTasks)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($subtaskId)
     {
+        $user = auth()->user();
         $subtask = SubTask::findOrFail($subtaskId);
+        $phase = $subtask->task->phase;
+        $project = $phase->project;
+        if ($user->user_type == 'client') {
+            $projects = $user->company->projects;
+            if (!$projects->contains($project)) {
+                return redirect()->route('phases.show', ['phaseId' => $phase->id]);
+            }
+        }
         return view('subtasks.edit', compact('subtask'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $subtaskId)
     {
         $subTask = SubTask::findOrFail($subtaskId);
-
         $data = $this->validateData($request);
-        $taskId = $subTask->task_id;
-
+        $phaseId = $subTask->task->phase->id;
         $subTask->update($data);
-        return redirect()->route('subtasks.index', ['taskId' => $taskId])->with('success', 'Subtask updated successfully');
+        return redirect()->route('phases.show', ['phaseId' => $phaseId]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($subtaskId)
     {
         $subtask = SubTask::findOrFail($subtaskId);
-
-        $taskId = $subtask->taskId;
+        $phaseId = $subtask->task->phase->id;
         $subtask->delete();
-
-        return redirect()->route('subtasks.index', ['taskId' => $taskId])->with('success', 'Subtask deleted successfully');
+        return redirect()->route('phases.show', ['phaseId' => $phaseId]);
     }
     
     public function toggleComplete(SubTask $subtask)
     {
         $subtask->is_complete = !$subtask->is_complete;
         $subtask->save();
-
         return back();
     }
 }

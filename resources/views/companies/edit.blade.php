@@ -7,7 +7,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <form method="POST" action="{{ isset($company) ? route('companies.update', ['company' => $company->id]) : route('companies.store') }}">
+                <form method="POST" action="{{ isset($company) ? route('companies.update', ['companyId' => $company->id]) : route('companies.store') }}">
                     @csrf
                     @if(isset($company))
                         @method('PUT')

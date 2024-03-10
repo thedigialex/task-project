@@ -5,7 +5,7 @@
             @if ($companies->count() > 0)
             <div class="projects-container">
                 @foreach($companies as $company)
-                <x-card :name="$company->name" :linkUrl="route('companies.admin', ['company' => $company->id])" :imageUrl="'storage/project_images/' . $company->imageUrl">
+                <x-card :name="$company->name" :linkUrl="route('companies.show', ['companyId' => $company->id])" :imageUrl="'storage/project_images/' . $company->imageUrl">
                 </x-card>
                 @endforeach
             </div>
