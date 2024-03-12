@@ -12,23 +12,7 @@
     height: 100%;
     z-index: 999;
 }
-.projects-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.project-card {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    transition: transform 0.2s;
-    width: 200px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.project-card:hover {
-    transform: scale(1.05);
-}
-/* Full Calendar Styles*/
+
 .fc-row.fc-week.fc-widget-content {
     height: 100px !important;
 }

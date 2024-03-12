@@ -21,7 +21,7 @@
                     @if(auth()->user()->user_type == 'staff')
                         <a href="{{ route('companies.index') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Go to Companies') }}</a>
                     @elseif(auth()->user()->company)
-                        <x-nav-link :href="route('companies.show', ['companyId' => auth()->user()->company->id])" :active="request()->routeIs('companies.show')">
+                        <x-nav-link :href="route('companies.show')" :active="request()->routeIs('companies.show')">
                             {{ __('Company') }}
                         </x-nav-link>
                     @else

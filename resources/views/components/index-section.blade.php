@@ -1,4 +1,4 @@
-@props(['title', 'linkText', 'linkUrl', 'companies', 'projects', 'users', 'phases', 'bugs'])
+@props(['title', 'linkText', 'linkUrl', 'companies', 'projects', 'users', 'phases', 'bugs', 'tasks', 'statuses'])
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -23,7 +23,7 @@
                     @isset($projects)
                     @if ($projects->count() > 0)
                     @foreach ($projects as $project)
-                    <x-card :name="$project->name" :linkUrl="route('projects.show', ['projectId' => $project->id])" :imageUrl="'storage/project_images/' . $project->imageUrl">
+                    <x-card :name="$project->name" :linkUrl="route('projects.show', ['projectId' => $project->id])" :fa_icon="'fa fa-sitemap'">
                     </x-card>
                     @endforeach
                     @else
@@ -43,7 +43,7 @@
                     @isset($phases)
                     @if ($phases->count() > 0)
                     @foreach($phases as $phase)
-                    <x-card :name="$phase->name" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :imageUrl="'storage/project_images/' . $phase->imageUrl" :status="$phase->getCompletionPercentage()">
+                    <x-card :name="$phase->name" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :fa_icon="'fa fa-tasks'" :status="$phase->getCompletionPercentage()">
                     </x-card>
                     @endforeach
                     @else
@@ -58,6 +58,28 @@
                     @endforeach
                     @else
                     <p>{{ __('No bugs/issues reported for this project.') }}</p>
+                    @endif
+                    @endisset
+                    @isset($tasks)
+                    @if ($tasks->count() > 0)
+                    <div x-data="{ tab: 'new' }">
+                        <div class="py-4">
+                            @foreach($statuses as $status)
+                            <x-button @click="tab = '{{ $status }}'" :class="{ 'active': tab === '{{ $status }}' }" class="px-2 rounded">
+                                {{ ucfirst($status) }}
+                            </x-button>
+                            @endforeach
+                        </div>
+                        <div class="task-container">
+                            @foreach($tasks as $task)
+                            <div x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
+                                <x-task-card :priority="$task->priority" :assignedUser="$task->user->name ?? 'Unassigned'" :title="$task->title" :subtitle="$task->description" :subtasks="$task->subTasks" :taskId="$task->id"></x-task-card>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @else
+                    <p>{{ __('No tasks') }}</p>
                     @endif
                     @endisset
                 </div>

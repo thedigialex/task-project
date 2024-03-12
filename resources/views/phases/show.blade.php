@@ -1,17 +1,21 @@
 <x-app-layout>
     <x-header :headerTitle="$phase->name" :linkUrl="route('phases.edit', ['phaseId' => $phase->id])" :subTitle="'Targeted Date: ' . $phase->targeted_end_date" :completedTaskTime="$completedTaskTime" :remainingTaskTime="$remainingTaskTime">
     </x-header>
+    
+    <x-index-section :title="'Tasks'" :linkText="'New Task'" :linkUrl=" route('tasks.create', ['phaseId' => $phase->id])" :tasks="$sortedTasks" :statuses="$statuses"></x-index-section>
     {{-- Task or Calendar selection --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{ activeTab: 'table' }">
         <div class="flex flex-row p-4 justify-evenly dark:text-gray-400 bg-gray-200 dark:bg-gray-700 space-x-4">
             <button @click="activeTab = 'table'" :class="{ 'bg-blue-500 text-white': activeTab === 'table' }" class="px-4 py-2 rounded">Task Table</button>
             <button @click="activeTab = 'calendar'" :class="{ 'bg-blue-500 text-white': activeTab === 'calendar' }" class="px-4 py-2 rounded">Calendar</button>
         </div>
+
+       
         <div x-show="activeTab === 'table'">
             <div class="py-12" x-data="{ taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
                 <x-round-div>
                     <div class="dark:text-gray-100 flex justify-between items-center">
-                        <h2 class="text-xl font-bold">{{ __('Tasks') }}</h2>
+                        <h2 class="text-xl font-bold">{{ __('Tasks') }}tt</h2>
                         <x-button>
                             <a href="{{ route('tasks.create', ['phaseId' => $phase->id]) }}">{{ __('New Task') }}</a>
                         </x-button>
@@ -34,6 +38,10 @@
                             </thead>
                             <tbody>
                                 @foreach($sortedTasks as $task)
+
+
+
+
                                 <tr x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
                                     <td class="border p-2 dark:text-gray-400">
                                         <button onclick="toggleSubTasks(this)">▼</button>
@@ -102,8 +110,6 @@
             $('#calendar').fullCalendar({
                 events: events,
             });
-        });
-        $(document).ready(function() {
             $('.toggle-status').on('click', function() {
                 var button = $(this);
                 var subtaskId = button.data('subtask-id');
@@ -128,5 +134,6 @@
                 });
             });
         });
+
     </script>
 </x-app-layout>
