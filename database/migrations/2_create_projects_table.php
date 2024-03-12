@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
             $table->text('description')->nullable();
-            $table->date('completion_date')->nullable();
+            $table->date('target_date')->nullable();
             $table->integer('hours')->nullable();
             $table->string('main_contact')->nullable();
             $table->text('notes')->nullable();

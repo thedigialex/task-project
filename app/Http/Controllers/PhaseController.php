@@ -59,7 +59,7 @@ class PhaseController extends Controller
     {
         return [
             'name' => 'required|string|max:255',
-            'targeted_end_date' => 'nullable|date',
+            'target_date' => 'nullable|date',
             'goal' => 'nullable|string',
         ];
     }
@@ -67,7 +67,7 @@ class PhaseController extends Controller
     private function createOrUpdatePhase(Phase $phase, Request $request)
     {
         $phase->name = $request->input('name');
-        $phase->targeted_end_date = $request->input('targeted_end_date');
+        $phase->target_date = $request->input('target_date');
         $phase->goal = $request->input('goal');
 
         return $phase;

@@ -8,7 +8,7 @@ class Phase extends Model
 {
     protected $fillable = [
         'name',
-        'targeted_end_date',
+        'target_date',
         'goal',
     ];
 

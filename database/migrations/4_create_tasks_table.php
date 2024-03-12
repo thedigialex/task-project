@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('hours_required');
             $table->string('technological_level');
             $table->string('image_path')->nullable();
-            $table->date('completion_expected_date')->nullable();
+            $table->date('target_date')->nullable();
             $table->foreignId('phase_id')->nullable()->constrained('phases');
             $table->timestamps();
         });

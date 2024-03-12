@@ -79,7 +79,7 @@ class TaskController extends Controller
             'status' => 'required|string|in:new,info,hold,progress,testing,approval,complete',
             'priority' => 'required|in:low,medium,high,urgent',
             'technological_level' => 'required|in:low,medium,high',
-            'completion_expected_date' => 'required|date',
+            'target_date' => 'required|date',
             'hours_required' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'user_id' => 'nullable|exists:users,id',
@@ -93,7 +93,7 @@ class TaskController extends Controller
         $task->status = $request->input('status');
         $task->priority = $request->input('priority');
         $task->technological_level = $request->input('technological_level');
-        $task->completion_expected_date = $request->input('completion_expected_date');
+        $task->target_date = $request->input('target_date');
         $task->hours_required = $request->input('hours_required');
         $image = $request->file('image');
         if ($image) {

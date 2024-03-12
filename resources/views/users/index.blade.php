@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-header :headerTitle="'Users'"></x-header>
     @isset($users)
-    <x-user-section :title="'Clients'" :users="$users"></x-user-section>
+    <x-index-section :title="'Clients'" :linkText="'New User'" :linkUrl="route('users.create')" :users="$users"></x-index-section>
     @else
-    <x-user-section :title="'Need Company'" :users="$usersNeedingCompany"></x-user-section>
-    <x-user-section :title="'Staff'" :users="$staffUsers"></x-user-section>
-    <x-user-section :title="'Assigned a company'" :users="$otherUsers"></x-user-section>
+    <x-index-section :title="'Need Company'" :linkText="'New User'" :linkUrl="route('users.create')" :users="$usersNeedingCompany"></x-index-section>
+    <x-index-section :title="'Staff'" :linkText="'New User'" :linkUrl="route('users.create')" :users="$staffUsers"></x-index-section>
+    <x-index-section :title="'Assigned a company'" :linkText="'New User'" :linkUrl="route('users.create')" :users="$otherUsers"></x-index-section>
     @endisset
 </x-app-layout>
