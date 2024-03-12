@@ -61,7 +61,7 @@ class ProjectController extends Controller
         return $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'completion_date' => 'nullable|date',
+            'target_date' => 'nullable|date',
             'hours' => 'nullable|int',
             'main_contact' => 'nullable|exists:users,id',
             'notes' => 'nullable|string',
@@ -84,7 +84,9 @@ class ProjectController extends Controller
                 return view('projects.index', compact('projects'));
             }
         }
-        return view('projects.show', compact('project', 'mainContactUser'));
+        $phases = $project->phases;
+        $bugs = $project->bugs;
+        return view('projects.show', compact('project', 'mainContactUser', 'phases', 'bugs'));
     }
 
     public function index()

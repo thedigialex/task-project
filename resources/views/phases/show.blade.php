@@ -37,12 +37,12 @@
                                 <tr x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
                                     <td class="border p-2 dark:text-gray-400">
                                         <button onclick="toggleSubTasks(this)">▼</button>
-                                        <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', completion_expected_date:'{{ $task->completion_expected_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-blue-500 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
+                                        <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', target_date:'{{ $task->target_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-blue-500 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
                                             {{ $task->title }}
                                         </a>
                                     </td>
                                     <td class="border p-2 dark:text-gray-400">{{ $task->user->name ?? 'Unassigned' }}</td>
-                                    <td class="border p-2 dark:text-gray-400">{{ $task->completion_expected_date }}</td>
+                                    <td class="border p-2 dark:text-gray-400">{{ $task->target_date }}</td>
                                 </tr>
                                 <tr class="hidden">
                                     <td colspan="4" class="border p-2 dark:text-gray-400">
@@ -89,14 +89,14 @@
     <script>
         $(document).ready(function() {
             var sortedTasks = JSON.parse('<?php echo json_encode($sortedTasks->toArray()); ?>');
-            var targetedEndDate = JSON.parse('<?php echo json_encode($phase->targeted_end_date); ?>');
+            var target_date = JSON.parse('<?php echo json_encode($phase->target_date); ?>');
             var events = sortedTasks.map(task => ({
                 title: task.title,
-                start: task.completion_expected_date,
+                start: task.target_date,
             }));
             events.push({
                 title: 'Targeted End Date',
-                start: targetedEndDate,
+                start: target_date,
                 color: '#ff0000',
             });
             $('#calendar').fullCalendar({

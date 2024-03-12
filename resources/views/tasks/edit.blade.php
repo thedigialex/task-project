@@ -67,8 +67,8 @@
 
                         </div>
                         <div class="mb-4">
-                            <label for="completion_expected_date" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Due Date:</label>
-                            <input type="date" name="completion_expected_date" id="completion_expected_date" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($task) ? $task->completion_expected_date : '' }}" required />
+                            <label for="target_date" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Target Date:</label>
+                            <input type="date" name="target_date" id="target_date" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($task) ? $task->target_date : '' }}" required />
                         </div>
                         <div class="mb-4">
                             <label for="hours_required" class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2">Hours Required:</label>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
             $table->foreignId('project_id')->constrained();
-            $table->date('targeted_end_date')->nullable();
+            $table->date('target_date')->nullable();
             $table->text('goal')->nullable();
         });
     }

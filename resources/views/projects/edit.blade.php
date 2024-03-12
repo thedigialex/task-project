@@ -24,8 +24,8 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="completion_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Completion Date') }}:</label>
-                        <input type="date" name="completion_date" id="completion_date" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($project) ? $project->completion_date : old('completion_date') }}" />
+                        <label for="target_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Target Date') }}:</label>
+                        <input type="date" name="target_date" id="target_date" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($project) ? $project->target_date : old('target_date') }}" />
                     </div>
 
                     <div class="mb-4">

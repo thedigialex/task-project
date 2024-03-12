@@ -6,7 +6,7 @@
             <p>{{ $company->other_information }}</p>
         </div>
     </div>
-    <x-user-section :title="'Users'" :users="$users"></x-user-section>
-    <x-projects-section :projects="$projects" :company="$company"></x-projects-section>
+    <x-index-section :title="'Users'" :linkText="'New User'" :linkUrl="route('users.create')" :users="$users"></x-index-section>
+    <x-index-section :title="'Projects'" :linkText="'New Project'" :linkUrl="route('projects.create')"  :projects="$projects"></x-index-section>
     </div>
 </x-app-layout>

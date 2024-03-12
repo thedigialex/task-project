@@ -10,7 +10,7 @@ class Task extends Model
         'title',
         'description',
         'priority',
-        'completion_expected_date',
+        'target_date',
         'hours_required',
         'technological_level',
         'status',

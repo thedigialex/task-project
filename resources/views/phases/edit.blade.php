@@ -23,8 +23,8 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="targeted_end_date" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Targeted End Date</label>
-                    <input type="date" name="targeted_end_date" id="targeted_end_date" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full" value="{{ old('targeted_end_date', isset($phase) ? $phase->targeted_end_date : '') }}" required>
+                    <label for="target_date" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Target Date</label>
+                    <input type="date" name="target_date" id="target_date" class="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md w-full" value="{{ old('target_date', isset($phase) ? $phase->target_date : '') }}" required>
                 </div>
 
                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
