@@ -1,7 +1,7 @@
 @props(['title', 'linkText', 'linkUrl', 'companies', 'projects', 'users', 'phases', 'bugs', 'tasks', 'statuses'])
-<div class="py-12">
+<div class="py-6">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
             <div class="p-6 flex justify-between items-center text-gray-900 dark:text-gray-100 border-b border-gray-200">
                 <h2 class="text-xl">{{ $title }}</h2>
                 <x-button>
@@ -73,7 +73,7 @@
                         <div class="task-container">
                             @foreach($tasks as $task)
                             <div x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
-                                <x-task-card :priority="$task->priority" :assignedUser="$task->user->name ?? 'Unassigned'" :title="$task->title" :subtitle="$task->description" :subtasks="$task->subTasks" :taskId="$task->id"></x-task-card>
+                                <x-task-card :task="$task"></x-task-card>
                             </div>
                             @endforeach
                         </div>

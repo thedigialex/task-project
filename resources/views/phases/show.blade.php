@@ -1,8 +1,11 @@
 <x-app-layout>
-    <x-header :headerTitle="$phase->name" :linkUrl="route('phases.edit', ['phaseId' => $phase->id])" :subTitle="'Targeted Date: ' . $phase->targeted_end_date" :completedTaskTime="$completedTaskTime" :remainingTaskTime="$remainingTaskTime">
+    <x-header :headerTitle="$phase->name" :linkUrl="route('phases.edit', ['phaseId' => $phase->id])" :subTitle="'Targeted Date: ' . $phase->target_date" :completedTaskTime="$completedTaskTime" :remainingTaskTime="$remainingTaskTime">
     </x-header>
-    
+
     <x-index-section :title="'Tasks'" :linkText="'New Task'" :linkUrl=" route('tasks.create', ['phaseId' => $phase->id])" :tasks="$sortedTasks" :statuses="$statuses"></x-index-section>
+
+
+    
     {{-- Task or Calendar selection --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{ activeTab: 'table' }">
         <div class="flex flex-row p-4 justify-evenly dark:text-gray-400 bg-gray-200 dark:bg-gray-700 space-x-4">
@@ -10,7 +13,7 @@
             <button @click="activeTab = 'calendar'" :class="{ 'bg-blue-500 text-white': activeTab === 'calendar' }" class="px-4 py-2 rounded">Calendar</button>
         </div>
 
-       
+
         <div x-show="activeTab === 'table'">
             <div class="py-12" x-data="{ taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
                 <x-round-div>
@@ -38,9 +41,6 @@
                             </thead>
                             <tbody>
                                 @foreach($sortedTasks as $task)
-
-
-
 
                                 <tr x-show="tab === '{{ $task->status }}'" x-transition.duration.300ms>
                                     <td class="border p-2 dark:text-gray-400">
@@ -110,30 +110,7 @@
             $('#calendar').fullCalendar({
                 events: events,
             });
-            $('.toggle-status').on('click', function() {
-                var button = $(this);
-                var subtaskId = button.data('subtask-id');
-                var isCompleted = button.data('subtask-status');
 
-                $.ajax({
-                    url: '/subtasks/' + subtaskId + '/toggle',
-                    type: 'POST',
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        _method: 'PATCH',
-                        is_completed: !isCompleted
-                    },
-                    success: function(response) {
-                        if (isCompleted) {
-                            button.removeClass('bg-green-500 hover:bg-green-600').addClass('bg-red-500 hover:bg-red-600');
-                        } else {
-                            button.removeClass('bg-red-500 hover:bg-red-600').addClass('bg-green-500 hover:bg-green-600');
-                        }
-                        button.data('subtask-status', !isCompleted);
-                    }
-                });
-            });
         });
-
     </script>
 </x-app-layout>

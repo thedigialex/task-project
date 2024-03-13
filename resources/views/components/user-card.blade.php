@@ -2,7 +2,7 @@
     <div class="flex items-center justify-center flex-col">
         <div class="flex-shrink-0 relative">
             <a href="mailto:{{ $email }}" class="group">
-                <i class="fas fa-user text-6xl text-gray-500 transition duration-300 transform hover:text-blue-500 hover:scale-110"></i>
+                <i class="fas fa-user text-4xl text-gray-500 transition duration-300 transform hover:text-blue-500 hover:scale-110"></i>
                 <span class="hidden group-hover:block absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded-md">Email</span>
             </a>
         </div>
