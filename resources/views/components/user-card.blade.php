@@ -1,4 +1,4 @@
-<div class="shadow-lg p-5 rounded-md transition-transform duration-200 w-48 shadow-lg hover:scale-105">
+<div class="shadow-lg p-5 rounded-md transition-transform duration-200 w-48 hover:scale-105">
     <div class="flex items-center justify-center flex-col">
         <div class="flex-shrink-0 relative">
             <a href="mailto:{{ $email }}" class="group">

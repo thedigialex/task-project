@@ -11,7 +11,6 @@ class Phase extends Model
         'target_date',
         'goal',
     ];
-
     public function getCompletionPercentage()
     {
         $totalTasks = $this->tasks->count();

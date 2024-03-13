@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Task extends Model
 {
@@ -31,5 +32,10 @@ class Task extends Model
     public function subTasks()
     {
         return $this->hasMany(SubTask::class);
+    }
+
+    public function truncatDescription($limit = 20)
+    {
+        return Str::of($this->description)->limit($limit);
     }
 }

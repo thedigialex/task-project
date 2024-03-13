@@ -1,7 +1,7 @@
 @props(['name', 'linkUrl', 'imageUrl', 'fa_icon', 'status'])
 
 <a href="{{ $linkUrl }}">
-    <div class="group shadow-lg p-5 rounded-md transition-transform duration-200 w-48 shadow-lg hover:scale-105">
+    <div class="group shadow-lg p-5 rounded-md transition-transform duration-200 w-48 hover:scale-105">
         <div class="text-center mb-4">
             @isset($fa_icon)
             <i class="{{ $fa_icon }} text-4xl text-gray-500 group-hover:text-blue-500"></i>
