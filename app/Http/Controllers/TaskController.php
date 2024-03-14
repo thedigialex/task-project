@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\Phase;
 use App\Models\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +24,7 @@ class TaskController extends Controller
         $sortedTasks = [];
         if($user->user_type == 'staff'){
             $sortedTasks = $user->tasks;
+            $projects = Project::all();
         }
         else{
             $projects = $user->company->projects;

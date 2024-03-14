@@ -1,8 +1,8 @@
 @props(['title', 'linkText', 'linkUrl', 'companies', 'projects', 'users', 'phases', 'bugs', 'tasks', 'statuses', 'projectId'])
 <div class="py-6">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
-            <div class="p-6 flex justify-between items-center text-gray-900 dark:text-gray-100 border-b border-gray-200">
+        <div class="bg-slate-900 overflow-hidden shadow-sm sm:rounded-lg p-4">
+            <div class="p-6 flex justify-between items-center text-cyan-400 border-b border-slate-700">
                 <h2 class="text-xl">{{ $title }}</h2>
                 @if(empty($projectId))
                 <x-button>
@@ -68,12 +68,12 @@
                 <div x-data="{ tab: 'new' }">
                     <div class="py-4">
                         @foreach($statuses as $status)
-                        <button @click="tab = '{{ $status }}'" :class="{ 'bg-white text-gray-800': tab === '{{ $status }}', 'bg-gray-100 text-gray-600': tab !== '{{ $status }}' }" class="px-4 py-2 focus:outline-none hover:bg-white hover:text-gray-800">
+                        <button @click="tab = '{{ $status }}'" :class="{ 'bg-cyan-400 text-slate-700': tab === '{{ $status }}', 'bg-slate-700 text-cyan-400': tab !== '{{ $status }}' }" class="px-4 py-2 focus:outline-none hover:bg-cyan-400 hover:text-slate-700 rounded-t">
                             {{ ucfirst($status) }}
                         </button>
                         @endforeach
                     </div>
-                    <div class="mt-2 flex flex-wrap">
+                    <div class="mt-2 flex flex-wrap ">
                         @foreach($tasks as $task)
                         @isset($projectId)
                         @if($projectId == $task->phase->project->id)
