@@ -15,7 +15,7 @@
                     @isset($companies)
                     @if ($companies->count() > 0)
                     @foreach($companies as $company)
-                    <x-card :name="$company->name" :linkUrl="route('companies.show', ['companyId' => $company->id])" :imageUrl="'storage/project_images/' . $company->imageUrl">
+                    <x-card :name="$company->name" :linkUrl="route('companies.show', ['companyId' => $company->id])" :fa_icon="'fa fa-building'">
                     </x-card>
                     @endforeach
                     @else
