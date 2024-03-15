@@ -2,14 +2,14 @@
 
 <div class="shadow-lg p-5 rounded-md transition-transform duration-200 w-56 bg-slate-800" x-data="{ taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
     <div class="flex items-center justify-between">
-        <span class="text-sm font-semibold">{{ $task->priority }}</span>
-        <span>{{ $task->user->name ?? 'Unassigned' }}</span>
+        <span class="text-sm font-semibold text-cyan-100">{{ $task->priority }}</span>
+        <span class="text-cyan-100">{{ $task->user->name ?? 'Unassigned' }}</span>
     </div>
     <div class="mt-4 text-center">
-        <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', target_date:'{{ $task->target_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-cyan-400 hover:text-blue-700 hover:cursor-pointer transition-colors ease-in-out">
+        <a @click="$dispatch('task-info-click', { id:{{ $task->id }}, title:'{{ $task->title }}', description:'{{ $task->description }}', priority:'{{ $task->priority }}', target_date:'{{ $task->target_date }}', hours_required:'{{ $task->hours_required }}', technological_level:'{{ $task->technological_level }}', image_path:'{{ $task->image_path }}'})" class="task-info-link font-bold text-lg text-cyan-400 hover:text-cyan-100 hover:cursor-pointer transition-colors ease-in-out">
             {{ $task->title }}
         </a>
-        <p class="text-sm text-gray-600">{{ $task->truncatDescription()}}</p>
+        <p class="text-sm text-cyan-300">{{ $task->truncatDescription()}}</p>
     </div>
     <hr class="my-4">
     <div class="flex flex-col" x-data="{ open: false }">

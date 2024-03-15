@@ -1,1 +1,1 @@
-<img src="{{ asset('storage/assets/Artemis.png') }}" class="{{ $attributes }}" alt="Application Logo" width="80" height="80">
+<img src="{{ asset('Artemis.png') }}" class="{{ $attributes }}" alt="Application Logo" width="80" height="80">

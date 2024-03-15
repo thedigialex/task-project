@@ -19,7 +19,7 @@
                     </x-card>
                     @endforeach
                     @else
-                    <p>{{ __('No Companies') }}</p>
+                    <p class="text-cyan-100">{{ __('No Companies') }}</p>
                     @endif
                     @endisset
                     @isset($projects)
@@ -29,7 +29,7 @@
                     </x-card>
                     @endforeach
                     @else
-                    <p>{{ __('No current projects') }}</p>
+                    <p class="text-cyan-100">{{ __('No current projects') }}</p>
                     @endif
                     @endisset
                     @isset($users)
@@ -39,7 +39,7 @@
                     </x-user-card>
                     @endforeach
                     @else
-                    <p>{{ __('No Users available for this company') }}</p>
+                    <p class="text-cyan-100">{{ __('No Users available for this company') }}</p>
                     @endif
                     @endisset
                     @isset($phases)
@@ -49,7 +49,7 @@
                     </x-card>
                     @endforeach
                     @else
-                    <p>{{ __('No phase currently for this project') }}</p>
+                    <p class="text-cyan-100">{{ __('No phase currently for this project') }}</p>
                     @endif
                     @endisset
                     @isset($bugs)
@@ -59,7 +59,7 @@
                     </x-card>
                     @endforeach
                     @else
-                    <p>{{ __('No bugs/issues reported for this project.') }}</p>
+                    <p class="text-cyan-100">{{ __('No bugs/issues reported for this project.') }}</p>
                     @endif
                     @endisset
                 </div>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 @else
-                <p>{{ __('No tasks') }}</p>
+                <p class="text-cyan-100">{{ __('No tasks') }}</p>
                 @endif
                 @endisset
             </div>
