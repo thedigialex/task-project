@@ -19,7 +19,7 @@
 
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium text-cyan-100">{{ __('Email Address') }}</label>
-                        <input type="email" name="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50 @error('email') border-red-500 @enderror" value="{{ old('email', isset($user) ? $user->email : '') }}" required>
+                        <input type="email" name="email" id="email" class="mt-1 block w-full rounded-md shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50 @error('email') border-red-500 @enderror" value="{{ old('email', isset($user) ? $user->email : '') }}" required>
 
                         @error('email')
                         <span class="text-red-500 text-sm" role="alert">
@@ -31,7 +31,7 @@
                     @unless(isset($user))
                     <div class="mb-4">
                         <label for="password" class="block text-sm font-medium text-cyan-100">{{ __('Password') }}</label>
-                        <input type="password" name="password" id="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50 @error('password') border-red-500 @enderror" required>
+                        <input type="password" name="password" id="password" class="mt-1 block w-full rounded-md shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50 @error('password') border-red-500 @enderror" required>
 
                         @error('password')
                         <span class="text-red-500 text-sm" role="alert">
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="mb-4" id="companyDropdown">
-                        <label for="company" class="block text-sm font-medium text-cyan-100">{{ __('Company') }}</label>
+                        <label for="company_id" class="block text-sm font-medium text-cyan-100">{{ __('Company') }}</label>
                         <select name="company_id" id="company_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50">
                             <option value="">N/A</option>
                             @foreach($companies as $company)

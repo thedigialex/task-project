@@ -34,8 +34,8 @@ class Task extends Model
         return $this->hasMany(SubTask::class);
     }
 
-    public function truncatDescription($limit = 20)
+    public function truncatString($string, $limit = 20)
     {
-        return Str::of($this->description)->limit($limit);
+        return Str::of($string)->limit($limit);
     }
 }

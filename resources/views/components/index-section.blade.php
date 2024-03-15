@@ -65,7 +65,7 @@
                 </div>
                 @isset($tasks)
                 @if ($tasks->count() > 0)
-                <div x-data="{ tab: 'new' }">
+                <div x-data="{ tab: 'new', taskButtonClicked: true }" @task-info-click.window="taskButtonClicked = true">
                     <div class="py-4">
                         @foreach($statuses as $status)
                         <button @click="tab = '{{ $status }}'" :class="{ 'bg-cyan-400 text-slate-700': tab === '{{ $status }}', 'bg-slate-700 text-cyan-400': tab !== '{{ $status }}' }" class="px-4 py-2 focus:outline-none hover:bg-cyan-400 hover:text-slate-700 rounded-t">
@@ -87,6 +87,9 @@
                         </div>
                         @endisset
                         @endforeach
+                        <template x-if="taskButtonClicked">
+                            @include('tasks.show', ['task'])
+                        </template>
                     </div>
                 </div>
                 @else

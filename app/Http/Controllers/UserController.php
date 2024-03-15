@@ -32,10 +32,6 @@ class UserController extends Controller
                 }
             }
 
-            $groupedOtherUsers = collect($otherUsers)->groupBy(function ($user) {
-                return $user->company->name ?? 'No Company';
-            });
-
             $usersNeedingCompany = collect($usersNeedingCompany);
             $staffUsers = collect($staffUsers);
             $otherUsers = collect($otherUsers);

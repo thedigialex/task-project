@@ -61,4 +61,5 @@
                 }
             }
         </script>
+    </div>>
 </x-app-layout>

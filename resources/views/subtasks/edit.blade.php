@@ -35,11 +35,10 @@
                             {{ isset($subtask) ? __('Save subtask') : __('Create subtask') }}
                         </x-button>
                     </div>
-
                 </form>
                 @if(isset($subtask))
                 <button type="button" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600" onclick="confirmDelete()">
-                    {{ __('Delete Project') }}
+                    {{ __('Delete Subtask') }}
                 </button>
                 <form id="delete-form" action="{{ route('subtasks.destroy', ['subtaskId' => $subtask->id]) }}" method="post" style="display: none;">
                     @csrf
