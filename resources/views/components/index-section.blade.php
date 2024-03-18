@@ -5,9 +5,11 @@
             <div class="p-6 flex justify-between items-center text-cyan-400 border-b border-slate-700">
                 <h2 class="text-xl">{{ $title }}</h2>
                 @if(empty($projectId))
-                <x-button>
-                    <a href="{{ $linkUrl }}">{{ $linkText }}</a>
-                </x-button>
+                <a href="{{ $linkUrl }}">
+                    <x-button>
+                        {{ $linkText }}
+                    </x-button>
+                </a>
                 @endif
             </div>
             <div class="p-6">
@@ -55,7 +57,7 @@
                     @isset($bugs)
                     @if ($bugs->count()> 0)
                     @foreach($bugs as $bug)
-                    <x-card :name="$bug->title" :linkUrl="route('bugs.edit', $bug->id)" :fa_icon="'fa fa-bug'" :description="$bug->description">
+                    <x-card :name="$bug->truncatString($bug->title)" :linkUrl="route('bugs.edit', $bug->id)" :fa_icon="'fa fa-bug'" :description="$bug->description">
                     </x-card>
                     @endforeach
                     @else

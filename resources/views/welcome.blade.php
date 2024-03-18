@@ -26,7 +26,7 @@
                 {{ __('Company') }}
             </x-nav-link>
             @else
-            <span>{{ __('Awaiting Company Registration') }}</span>
+            <span class="text-cyan-100 hover:text-cyan-400">{{ __('Awaiting Company Registration') }}</span>
             @endif
             @else
             <a href="{{ route('login') }}" class="font-semibold text-cyan-100 hover:text-cyan-400  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Log in') }}</a>
@@ -38,10 +38,11 @@
         </div>
         @endif
 
-
         <div class="container mx-auto text-center py-10">
             <h1 class="text-cyan-400 text-4xl font-bold mb-4">Welcome To</h1>
-            <x-application-logo class="w-20 h-20 fill-current" />
+            <div class="flex justify-center items-center">
+                <x-application-logo class="fill-current" width="400" height="400" />
+            </div>
 
             <div class="bg-slate-800 p-6 rounded-lg shadow-lg text-left text-cyan-400">
                 <h2 class="text-2xl font-semibold mb-3">Overview</h2>

@@ -15,7 +15,7 @@ class Phase extends Model
     {
         $totalTasks = $this->tasks->count();
         if ($totalTasks > 0) {
-            $completedTasks = $this->tasks->where('status', 'completed')->count();
+            $completedTasks = $this->tasks->where('status', 'complete')->count();
             return round(($completedTasks / $totalTasks) * 100);
         }
 
