@@ -19,9 +19,9 @@ class Bug extends Model
     {
         return $this->belongsTo(Project::class);
     }
-    
-    public function truncatString($string, $limit = 10)
+
+    public function truncatName($limit = 10)
     {
-        return Str::of($string)->limit($limit);
+        return Str::of($this->title)->limit($limit);
     }
 }

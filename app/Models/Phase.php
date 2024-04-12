@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Phase extends Model
 {
@@ -30,5 +31,10 @@ class Phase extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function truncatName($limit = 10)
+    {
+        return Str::of($this->name)->limit($limit);
     }
 }

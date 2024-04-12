@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class Project extends Model
 {
     protected $fillable = [
@@ -29,5 +29,10 @@ class Project extends Model
     public function bugs()
     {
         return $this->hasMany(Bug::class);
+    }
+
+    public function truncatName($limit = 10)
+    {
+        return Str::of($this->name)->limit($limit);
     }
 }
