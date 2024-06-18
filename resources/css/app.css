@@ -5,14 +5,17 @@
 .fc-row.fc-week.fc-widget-content {
     height: 100px !important;
 }
+
 .fc-scroller {
     height: 460px !important;
 }
+
 @media (prefers-color-scheme: dark) {
     .fc-toolbar {
         color: white;
     }
 }
+
 .stars-overlay {
     position: fixed;
     top: 0;
@@ -23,6 +26,7 @@
     pointer-events: none;
     z-index: 100;
 }
+
 .star {
     position: absolute;
     width: 2px;
@@ -31,7 +35,9 @@
     border-radius: 50%;
     animation: blink 3s linear infinite;
 }
+
 @keyframes blink {
+
     0%,
     100% {
         opacity: 0;
@@ -40,4 +46,13 @@
     50% {
         opacity: 1;
     }
+}
+
+
+.form-container {
+    display: none;
+}
+
+.form-container.active {
+    display: block;
 }

@@ -20,12 +20,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans ">
-    <div class="min-h-screen bg-slate-800">
-        <div class="sidebar">
-            @include('layouts.sidebar')
-        </div>
+<body class="font-sans bg-slate-800 selection:bg-cyan-500">
+    <div class="sidebar">
+        @include('layouts.sidebar')
     </div>
+    <main class="lg:pl-72">
+        {{ $slot }}
+    </main>
 </body>
 
 </html>
