@@ -9,7 +9,6 @@ use App\Http\Controllers\SubTaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\BugController;
-use App\Models\Bug;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +33,8 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
         Route::post('/company/store', [CompanyController::class, 'store'])->name('companies.store');
     });
 
+    Route::get('/info', function () {return view('info');})->name('info.show');
+
     Route::get('/company', [CompanyController::class, 'show'])->name('companies.show');
     Route::put('/company/update/{companyId}', [CompanyController::class, 'update'])->name('companies.update');
     Route::get('/company/edit/{companyId}', [CompanyController::class, 'edit'])->name('companies.edit');
@@ -41,7 +42,6 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
-    Route::get('/user', [UserController::class, 'index'])->name('users.index');
     Route::put('/user/update/{userId}', [UserController::class, 'update'])->name('users.update');
     Route::get('/user/edit/{userId}', [UserController::class, 'edit'])->name('users.edit');
 
@@ -50,7 +50,6 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('/project', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/project/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::post('/project/store', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/project/{projectId}', [ProjectController::class, 'show'])->name('projects.show');
