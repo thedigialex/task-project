@@ -86,24 +86,14 @@
         </div>
     </div>
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-r border-slate-600">
-        <div class="flex grow flex-col bg-slate-900 ">
-            <div class="border-b border-slate-600 p-4">
-                <div class="flex items-center border rounded p-2 border-slate-800">
-                    <div class="flex items-center space-x-2 w-5/6">
-                        <a href="{{ route('profile.edit') }}" class="flex items-center space-x-2 w-full">
-                            <div class="w-10 h-10 bg-cyan-400 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-slate-900"></i>
-                            </div>
-                            <x-highlight-header class="px-2">{{ Auth::user()->name }}</x-highlight-header>
-                        </a>
+        <div class="flex grow flex-col bg-slate-900">
+            <div class="border-b border-slate-600 p-4 flex items-center">
+                <a href="{{ route('profile.edit') }}" class="flex items-center space-x-2 w-full">
+                    <div class="w-10 h-10 bg-cyan-400 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-slate-900"></i>
                     </div>
-                    <form method="POST" action="{{ route('logout') }}" class="w-1/6">
-                        @csrf
-                        <button type="submit" class="p-2 text-cyan-100 hover:text-cyan-400">
-                            <i class="fas fa-sign-out-alt 2"></i>
-                        </button>
-                    </form>
-                </div>
+                    <x-highlight-header class="px-2">Artemis Trek</x-highlight-header>
+                </a>
             </div>
             <nav class="flex flex-1 flex-col p-4">
                 <ul role="list" class="flex flex-1 flex-col gap-y-1 mx-2 space-y-1">
@@ -160,6 +150,25 @@
                     </li>
                 </ul>
             </nav>
+            <div class="flex p-4">
+                <div class="flex items-center space-x-2 w-5/6">
+                    <a href="{{ route('profile.edit') }}" class="flex items-center space-x-2 w-full">
+                        <div class="w-10 h-10 bg-cyan-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-slate-900"></i>
+                        </div>
+                        <x-highlight-header class="px-2">{{ Auth::user()->name }}</x-highlight-header>
+                    </a>
+                </div>
+                <form method="POST" action="{{ route('logout') }}" class="w-1/6">
+                    @csrf
+                    <button type="submit" class="p-2 text-cyan-100 hover:text-cyan-400">
+                        <i class="fas fa-sign-out-alt 2"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="border-t border-slate-600 p-4 text-center text-cyan-100">
+                &copy; 2024
+            </div>
         </div>
     </div>
 </div>

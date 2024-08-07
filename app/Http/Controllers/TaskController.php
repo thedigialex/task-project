@@ -38,7 +38,7 @@ class TaskController extends Controller
                 }
             }
         }
-        $statuses = ['new', 'info', 'progress', 'testing', 'approval','complete'];
+        $statuses = ['new', 'progress', 'testing', 'complete'];
         $sortedTasks = collect($sortedTasks);
         
         return view('tasks.index', compact('sortedTasks', 'statuses', 'projects'));

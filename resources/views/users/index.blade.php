@@ -2,7 +2,7 @@
     <x-header :headerTitle="'Users'"></x-header>
     @isset($users)
     <x-container :title="'Team Members'" :linkText="'New User'" :linkUrl="route('users.create')">
-        <div class="flex flex-wrap gap-5">
+        <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($users)
             @if ($users->count() > 0)
             @foreach ($users as $user)
@@ -11,14 +11,15 @@
             @endforeach
             @else
             <x-paragraph>{{ __('No Users available for this company') }}</x-x-paragraph>
-            @endif
-            @endisset
+                @endif
+                @endisset
         </div>
     </x-container>
     @else
     <x-container :title="'All Users'" :linkText="'New User'" :linkUrl="route('users.create')">
         <x-sub-header>{{ 'Staff' }}</x-sub-header>
-        <div class="flex flex-wrap gap-5">
+        <hr>
+        <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($staffUsers)
             @if ($staffUsers->count() > 0)
             @foreach ($staffUsers as $user)
@@ -32,7 +33,8 @@
         </div>
         <br>
         <x-sub-header>{{ 'Unassigned Users' }}</x-sub-header>
-        <div class="flex flex-wrap gap-5">
+        <hr>
+        <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($usersNeedingCompany)
             @if ($usersNeedingCompany->count() > 0)
             @foreach ($usersNeedingCompany as $user)
@@ -46,7 +48,8 @@
         </div>
         <br>
         <x-sub-header>{{ 'Assigned Users' }}</x-sub-header>
-        <div class="flex flex-wrap gap-5">
+        <hr>
+        <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($otherUsers)
             @if ($otherUsers->count() > 0)
             @foreach ($otherUsers as $user)

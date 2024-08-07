@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-header :headerTitle="'Companies'"></x-header>
     <x-container :title="'Companies'" :linkText="'New Company'" :linkUrl=" route('companies.create') ">
-        <div class="flex flex-wrap gap-5">
+        <div class="flex flex-wrap gap-5 justify-center">
             @isset($companies)
             @if ($companies->count() > 0)
             @foreach($companies as $company)

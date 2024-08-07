@@ -14,9 +14,9 @@
                     </button>
                     @endforeach
                 </div>
-                <div class="mt-2 flex flex-wrap ">
+                <div class="mt-2 flex flex-col gap-4">
                     @foreach($phase->tasks as $task)
-                    <div x-show="tab === '{{ $task->status }}'" class="flex-none mr-2 mb-2">
+                    <div x-show="tab === '{{ $task->status }}'" class="flex-none">
                         <x-task-card :task="$task"></x-task-card>
                     </div>
                     @endforeach
