@@ -33,7 +33,7 @@ class Phase extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function truncatName($limit = 10)
+    public function truncateName($limit = 10)
     {
         return Str::of($this->name)->limit($limit);
     }

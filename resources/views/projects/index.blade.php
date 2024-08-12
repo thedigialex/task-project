@@ -5,7 +5,7 @@
             @isset($projects)
             @if ($projects->count() > 0)
             @foreach ($projects as $project)
-            <x-card :name="$project->truncatName()" :linkUrl="route('projects.show', ['projectId' => $project->id])" :fa_icon="'fa fa-sitemap'">
+            <x-card :name="$project->truncateName()" :linkUrl="route('projects.show', ['projectId' => $project->id])" :fa_icon="'fa fa-sitemap'">
             </x-card>
             @endforeach
             @else

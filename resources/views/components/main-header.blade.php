@@ -1,3 +1,3 @@
-<h1 class="text-cyan-400 text-4xl font-bold mb-4 text-cyan-400">
+<h1 class="text-accent text-4xl font-bold mb-4">
     {{ $slot }}
 </h1>

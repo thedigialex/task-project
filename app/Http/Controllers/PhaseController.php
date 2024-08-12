@@ -90,7 +90,9 @@ class PhaseController extends Controller
         $sortedTasks = $phase->tasks->sortBy(function ($task) {
             return array_search($task->priority, ['urgent', 'high', 'medium', 'low']);
         });
-        $statuses = ['new', 'info', 'progress', 'testing', 'approval','complete'];
+        
+        $statuses = ['new', 'progress', 'testing', 'complete'];
+
         
         return view('phases.show', compact('phase', 'project', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'sortedTasks', 'statuses'));
     }

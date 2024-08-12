@@ -24,7 +24,7 @@ class Company extends Model
         return $this->hasMany(User::class);
     }
     
-    public function truncatName($limit = 10)
+    public function truncateName($limit = 10)
     {
         return Str::of($this->name)->limit($limit);
     }

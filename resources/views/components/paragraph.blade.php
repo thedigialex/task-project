@@ -1,3 +1,3 @@
-<p class="text-cyan-100">
+<p class="text-text">
    {{ $slot }}
 </p>

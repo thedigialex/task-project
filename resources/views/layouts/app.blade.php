@@ -20,7 +20,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans bg-slate-800 selection:bg-cyan-500">
+<body class="font-sans bg-body">
     <div class="sidebar">
         @include('layouts.sidebar')
     </div>

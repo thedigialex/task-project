@@ -10,10 +10,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased selection:bg-cyan-500 h-screen bg-slate-800">
+<body class="antialiased selection:bg-cyan-500 h-screen bg-body">
     <div class="h-full flex flex-col lg:flex-row">
         <div class="w-full lg:w-1/2 flex flex-col justify-center p-6 lg:p-32">
-            <div class="bg-slate-600 p-4 lg:p-8 rounded">
+            <div class="bg-border p-4 lg:p-8 rounded">
                 <div id="login-form" class="form-container active">
                     <x-sub-header>Sign In</x-sub-header>
                     <x-paragraph>Welcome! Please enter your details.</x-paragraph>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="stars-overlay"></div>
-        <div class="hidden lg:flex flex-col lg:w-1/2 bg-slate-900 items-center justify-center">
+        <div class="hidden lg:flex flex-col lg:w-1/2 bg-header items-center justify-center">
             <x-application-logo class="fill-current" width="400" height="400" />
         </div>
     </div>

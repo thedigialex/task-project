@@ -1,87 +1,92 @@
 <x-app-layout>
     @if(isset($project))
-    <x-header :headerTitle="'Edit Project'"></x-header>
+        <x-header :headerTitle="'Edit Project'"></x-header>
     @else
-    <x-header :headerTitle="'Create Project'"></x-header>
+        <x-header :headerTitle="'Create Project'"></x-header>
     @endif
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-slate-900 overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <form method="POST" action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store') }}" class="w-full max-w-md mx-auto">
-                    @csrf
-                    @if(isset($project))
+
+    <x-container :title="'Project'">
+        <div class="flex flex-wrap gap-5 justify-center my-8">
+            <form method="POST" action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store') }}" class="w-full max-w-md mx-auto">
+                @csrf
+                @if(isset($project))
                     @method('PUT')
-                    @endif
+                @endif
 
-                    <div class="mb-4">
-                        <label for="name" class="block  text-cyan-100 text-sm font-bold mb-2">{{ __('Project Name') }}:</label>
-                        <input type="text" name="name" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50" value="{{ isset($project) ? $project->name : old('name') }}" required />
+                <!-- Project Name -->
+                <div class="mb-4">
+                    <x-input-label for="name" :value="__('Project Name')" />
+                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', isset($project) ? $project->name : '')" required />
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <x-input-label for="description" :value="__('Description')" />
+                    <textarea name="description" id="description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows="3">{{ isset($project) ? $project->description : old('description') }}</textarea>
+                </div>
+
+                <!-- Target Date and Hours -->
+                <div class="flex flex-wrap -mx-2 mb-4">
+                    <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                        <x-input-label for="target_date" :value="__('Target Date')" />
+                        <x-text-input id="target_date" class="block mt-1 w-full" type="date" name="target_date" :value="old('target_date', isset($project) ? $project->target_date : '')" />
                     </div>
 
-                    <div class="mb-4">
-                        <label for="description" class="block  text-cyan-100 text-sm font-bold mb-2">{{ __('Description') }}:</label>
-                        <textarea name="description" id="description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50" rows="3">{{ isset($project) ? $project->description : old('description') }}</textarea>
+                    <div class="w-full md:w-1/2 px-2">
+                        <x-input-label for="hours" :value="__('Hours')" />
+                        <x-text-input id="hours" class="block mt-1 w-full" type="number" name="hours" :value="old('hours', isset($project) ? $project->hours : '')" />
                     </div>
+                </div>
 
-                    <div class="flex flex-wrap -mx-2 mb-4">
-                        <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                            <label for="target_date" class="block  text-cyan-100 text-sm font-bold mb-2">{{ __('Target Date') }}:</label>
-                            <input type="date" name="target_date" id="target_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50" value="{{ isset($project) ? $project->target_date : old('target_date') }}" />
-                        </div>
-
-                        <div class="w-full md:w-1/2 px-2">
-                            <label for="hours" class="block  text-cyan-100 text-sm font-bold mb-2">{{ __('Hours') }}:</label>
-                            <input type="number" name="hours" id="hours" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50" value="{{ isset($project) ? $project->hours : old('hours') }}" />
-                        </div>
-                    </div>
-
-                    @isset($users)
-                    <div class="mb-4">
-                        <label for="main_contact" class="block  text-cyan-100 text-sm font-bold mb-2">{{ __('Main Contact') }}:</label>
-                        <select name="main_contact" id="main_contact" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50">
-                            <option value="">N/A</option>
-                            @foreach($users as $user)
+                <!-- Main Contact -->
+                @isset($users)
+                <div class="mb-4">
+                    <x-input-label for="main_contact" :value="__('Main Contact')" />
+                    <select name="main_contact" id="main_contact" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm">
+                        <option value="">N/A</option>
+                        @foreach($users as $user)
                             <option value="{{ $user->id }}" {{ (isset($project) && $project->main_contact == $user->id) ? 'selected' : '' }}>
                                 {{ $user->name }}
                             </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @endisset
+                        @endforeach
+                    </select>
+                </div>
+                @endisset
 
-                    @isset($companies)
-                    <div class="mb-4">
-                        <label for="company" class="block  text-cyan-100 text-sm font-bold mb-2">{{ __('Company') }}:</label>
-                        <select name="company" id="company" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-400 focus:ring focus:ring-cyan-100 focus:ring-opacity-50">
-                            <option value="">N/A</option>
-                            @foreach($companies as $company)
+                <!-- Company -->
+                @isset($companies)
+                <div class="mb-4">
+                    <x-input-label for="company" :value="__('Company')" />
+                    <select name="company" id="company" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm">
+                        <option value="">N/A</option>
+                        @foreach($companies as $company)
                             <option value="{{ $company->id }}">{{ $company->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @endisset
-                    <div class="flex justify-center">
-                        <x-button type="submit">
-                            @if(isset($project))
-                            {{ __('Update Project') }}
-                            @else
-                            {{ __('Create Project') }}
-                            @endif
-                        </x-button>
-                    </div>
-                </form>
-                @if(isset($project))
-                <button type="button" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600" onclick="confirmDelete()">
-                    {{ __('Delete Project') }}
-                </button>
-                <form id="delete-form" action="{{ route('projects.destroy', ['projectId' => $project->id]) }}" method="post" style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
-                @endif
-            </div>
+                        @endforeach
+                    </select>
+                </div>
+                @endisset
+
+                <!-- Submit Button -->
+                <div class="flex justify-center">
+                    <x-primary-button>
+                        {{ isset($project) ? __('Update Project') : __('Create Project') }}
+                    </x-primary-button>
+                </div>
+            </form>
+
+            <!-- Delete Project Button -->
+            @if(isset($project))
+            <button type="button" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600" onclick="confirmDelete()">
+                {{ __('Delete Project') }}
+            </button>
+            <form id="delete-form" action="{{ route('projects.destroy', ['projectId' => $project->id]) }}" method="post" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+            @endif
         </div>
-    </div>
+    </x-container>
+
     <script>
         function confirmDelete() {
             if (confirm('Are you sure you want to delete this project?')) {

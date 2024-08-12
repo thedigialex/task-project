@@ -6,7 +6,7 @@
             @isset($users)
             @if ($users->count() > 0)
             @foreach ($users as $user)
-            <x-user-card :name="$user->truncatName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
             </x-user-card>
             @endforeach
             @else
@@ -23,22 +23,7 @@
             @isset($staffUsers)
             @if ($staffUsers->count() > 0)
             @foreach ($staffUsers as $user)
-            <x-user-card :name="$user->truncatName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
-            </x-user-card>
-            @endforeach
-            @else
-            <x-paragraph>{{ __('No Users available for this company') }}</x-paragraph>
-            @endif
-            @endisset
-        </div>
-        <br>
-        <x-sub-header>{{ 'Unassigned Users' }}</x-sub-header>
-        <hr>
-        <div class="flex flex-wrap gap-5 justify-center my-8">
-            @isset($usersNeedingCompany)
-            @if ($usersNeedingCompany->count() > 0)
-            @foreach ($usersNeedingCompany as $user)
-            <x-user-card :name="$user->truncatName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
             </x-user-card>
             @endforeach
             @else
@@ -53,7 +38,7 @@
             @isset($otherUsers)
             @if ($otherUsers->count() > 0)
             @foreach ($otherUsers as $user)
-            <x-user-card :name="$user->truncatName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
             </x-user-card>
             @endforeach
             @else
@@ -61,6 +46,21 @@
             @endif
             @endisset
         </div>
+        <x-sub-header>{{ 'Unassigned Users' }}</x-sub-header>
+        <hr>
+        <div class="flex flex-wrap gap-5 justify-center my-8">
+            @isset($usersNeedingCompany)
+            @if ($usersNeedingCompany->count() > 0)
+            @foreach ($usersNeedingCompany as $user)
+            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            </x-user-card>
+            @endforeach
+            @else
+            <x-paragraph>{{ __('No Users available for this company') }}</x-paragraph>
+            @endif
+            @endisset
+        </div>
+        <br>
     </x-container>
     @endisset
 </x-app-layout>

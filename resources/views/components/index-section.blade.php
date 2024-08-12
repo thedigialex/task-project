@@ -19,7 +19,7 @@
                     @isset($phases)
                     @if ($phases->count() > 0)
                     @foreach($phases as $phase)
-                    <x-card :name="$phase->truncatName()" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :fa_icon="'fa fa-tasks'" :status="$phase->getCompletionPercentage()">
+                    <x-card :name="$phase->truncateName()" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :fa_icon="'fa fa-tasks'" :status="$phase->getCompletionPercentage()">
                     </x-card>
                     @endforeach
                     @else
@@ -29,7 +29,7 @@
                     @isset($bugs)
                     @if ($bugs->count()> 0)
                     @foreach($bugs as $bug)
-                    <x-card :name="$bug->truncatName()" :linkUrl="route('bugs.edit', $bug->id)" :fa_icon="'fa fa-bug'" :description="$bug->description">
+                    <x-card :name="$bug->truncateName()" :linkUrl="route('bugs.edit', $bug->id)" :fa_icon="'fa fa-bug'" :description="$bug->description">
                     </x-card>
                     @endforeach
                     @else

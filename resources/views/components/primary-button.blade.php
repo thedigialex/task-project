@@ -1,5 +1,5 @@
 <button {{ $attributes->merge([
-    'class' => 'hover:text-slate-700 hover:bg-cyan-400 bg-slate-700 text-cyan-400
+    'class' => 'hover:text-text hover:bg-highlight_accent bg-accent text-header
                rounded px-4 py-2 text-lg transition-transform duration-300
                hover:scale-105'
 ]) }}>
