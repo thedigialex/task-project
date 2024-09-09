@@ -1,15 +1,14 @@
 <x-app-layout>
     <x-header :headerTitle="'Companies'"></x-header>
-    <x-container :title="'Companies'" :linkText="'New Company'" :linkUrl=" route('companies.create') ">
+    <x-container :title="'Companies'" :linkText="'Add New'" :linkUrl=" route('companies.create') ">
         <div class="flex flex-wrap gap-5 justify-center">
             @isset($companies)
             @if ($companies->count() > 0)
-            @foreach($companies as $company)
-            <x-card :name="$company->truncateName()" :linkUrl="route('companies.show', ['companyId' => $company->id])" :fa_icon="'fa fa-building'">
-            </x-card>
+            @foreach ($companies as $company)
+            <x-cards.company-card :company="$company" />
             @endforeach
             @else
-            <x-paragraph>{{ __('No Companies') }}</x-paragraph>
+            <x-fonts.paragraph>{{ __('No current company') }}</x-fonts.paragraph>
             @endif
             @endisset
         </div>

@@ -33,9 +33,12 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
         Route::post('/company/store', [CompanyController::class, 'store'])->name('companies.store');
     });
 
-    Route::get('/info', function () {return view('info');})->name('info.show');
+    Route::get('/info', function () {
+        return view('info');
+    })->name('info.show');
 
-    Route::get('/company', [CompanyController::class, 'show'])->name('companies.show');
+    Route::match(['get', 'post'], '/company', [CompanyController::class, 'show'])->name('companies.show');
+
     Route::put('/company/update/{companyId}', [CompanyController::class, 'update'])->name('companies.update');
     Route::get('/company/edit/{companyId}', [CompanyController::class, 'edit'])->name('companies.edit');
 
@@ -43,7 +46,7 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
     Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
     Route::put('/user/update/{userId}', [UserController::class, 'update'])->name('users.update');
-    Route::get('/user/edit/{userId}', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/user/edit', [UserController::class, 'edit'])->name('users.edit');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -52,10 +55,18 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/project/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::post('/project/store', [ProjectController::class, 'store'])->name('projects.store');
-    Route::get('/project/{projectId}', [ProjectController::class, 'show'])->name('projects.show');
+
+    Route::match(['get', 'post'], '/project/show', [ProjectController::class, 'show'])->name('projects.show');
+
+    //Route::get('/project/{projectId}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/project/update/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/project/edit/{projectId}', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::delete('/project/delete/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+
+
+
+
 
     Route::get('/project/phase/create/{projectId}', [PhaseController::class, 'create'])->name('phases.create');
     Route::post('/project/phase/store/{projectId}', [PhaseController::class, 'store'])->name('phases.store');

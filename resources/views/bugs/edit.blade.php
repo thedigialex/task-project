@@ -6,7 +6,7 @@
     @endif
     <x-container :title="'User'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form method="POST" action="{{ isset($bug) ? route('bugs.update', ['bugId' => $bug->id]) : route('bugs.store', ['projectId' => $project->id]) }}" class="w-full max-w-md mx-auto">
+            <form method="POST" action="{{ isset($bug) ? route('bugs.update', ['bugId' => $bug->id]) : route('bugs.store', ['projectId' => $project->id]) }}" class="w-full max-w-md mx-auto bg-body p-4 rounded-md bg-body">
                 @csrf
                 @if(isset($bug))
                 @method('PUT')

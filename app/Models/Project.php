@@ -31,8 +31,13 @@ class Project extends Model
         return $this->hasMany(Bug::class);
     }
 
-    public function truncateName($limit = 10)
+    public function truncateName($limit = 20)
     {
         return Str::of($this->name)->limit($limit);
+    }
+
+    public function truncateDescription($limit = 100)
+    {
+        return Str::of($this->description)->limit($limit);
     }
 }

@@ -16,17 +16,17 @@
             <div class="bg-border p-4 lg:p-8 rounded">
                 <div id="login-form" class="form-container active">
                     <x-sub-header>Sign In</x-sub-header>
-                    <x-paragraph>Welcome! Please enter your details.</x-paragraph>
+                    <x-fonts.paragraph>Welcome! Please enter your details.</x-fonts.paragraph>
                     @include('auth.login')
                 </div>
                 <div id="register-form" class="form-container">
                     <x-sub-header>Sign Up</x-sub-header>
-                    <x-paragraph>Welcome! Please enter your details.</x-paragraph>
+                    <x-fonts.paragraph>Welcome! Please enter your details.</x-fonts.paragraph>
                     @include('auth.register')
                 </div>
                 <div id="forgot-password-form" class="form-container">
                     <x-sub-header>Forgot your password?</x-sub-header>
-                    <x-paragraph>Please enter your details.</x-paragraph>
+                    <x-fonts.paragraph>Please enter your details.</x-fonts.paragraph>
                     @include('auth.forgot-password')
                 </div>
 

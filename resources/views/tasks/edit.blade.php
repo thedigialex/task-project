@@ -7,7 +7,7 @@
 
     <x-container :title="'Task'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form action="{{ isset($task) ? route('tasks.update', ['taskId' => $task->id]) : route('tasks.store', ['phaseId' => $phaseId]) }}" method="post" enctype="multipart/form-data" class="w-full max-w-md mx-auto">
+            <form action="{{ isset($task) ? route('tasks.update', ['taskId' => $task->id]) : route('tasks.store', ['phaseId' => $phaseId]) }}" method="post" enctype="multipart/form-data" class="w-full max-w-md mx-auto bg-body p-4 rounded-md bg-body">
                 @csrf
                 @if(isset($task))
                     @method('PUT')
@@ -25,17 +25,6 @@
                     <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description', isset($task) ? $task->description : '')" required />
                 </div>
 
-                <!-- Assign to Staff -->
-                <div class="mb-4">
-                    <x-input-label for="user_id" :value="__('Assign to Staff')" />
-                    <select name="user_id" id="user_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
-                        <option value="">Select Staff</option>
-                        @foreach ($staffUsers as $user)
-                            <option value="{{ $user->id }}" {{ (isset($task) && $task->user_id == $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <!-- Target Date and Hours Required -->
                 <div class="flex flex-wrap -mx-2 mb-4">
                     <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
@@ -49,7 +38,7 @@
                     </div>
                 </div>
 
-                <!-- Status, Priority, and Technological Level -->
+                <!-- Status, Priority, and Staff -->
                 <div class="flex space-x-4">
                     <div class="mb-4 flex-1">
                         <x-input-label for="status" :value="__('Status')" />
@@ -71,12 +60,13 @@
                     </div>
 
                     <div class="mb-4 flex-1">
-                        <x-input-label for="technological_level" :value="__('Technological Level')" />
-                        <select name="technological_level" id="technological_level" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm " required>
-                            <option value="low" {{ isset($task) && $task->technological_level === 'low' ? 'selected' : '' }}>Low</option>
-                            <option value="medium" {{ isset($task) && $task->technological_level === 'medium' ? 'selected' : '' }}>Medium</option>
-                            <option value="high" {{ isset($task) && $task->technological_level === 'high' ? 'selected' : '' }}>High</option>
-                        </select>
+                    <x-input-label for="user_id" :value="__('Assign to Staff')" />
+                    <select name="user_id" id="user_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+                        <option value="">Select</option>
+                        @foreach ($staffUsers as $user)
+                            <option value="{{ $user->id }}" {{ (isset($task) && $task->user_id == $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
+                        @endforeach
+                    </select>
                     </div>
                 </div>
 

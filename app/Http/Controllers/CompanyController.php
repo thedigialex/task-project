@@ -7,14 +7,14 @@ use App\Models\Company;
 
 class CompanyController extends Controller
 {
-
     public function show(Request $request)
     {
         $user = auth()->user();
+        
         if ($user->user_type == 'client') {
             $company = $user->company;
         } else {
-            $companyId = $request->query('companyId');
+            $companyId = $request->input('company_id');
             $company = Company::find($companyId);
             if (!$company) {
                 $companies = Company::all();
@@ -75,7 +75,7 @@ class CompanyController extends Controller
         $company->save();
         $message = $company->wasRecentlyCreated ? 'Company created successfully' : 'Company updated successfully';
         if (auth()->user()->user_type == 'client') {
-            return redirect()->route('companies.show', ['companyId' => $company->id])->with('success', $message);
+            return redirect()->route('companies.show')->with('success', $message);
         }
         return redirect()->route('companies.index')->with('success', $message);
     }

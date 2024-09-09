@@ -7,7 +7,7 @@
 
     <x-container :title="'Phase'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form action="{{ isset($phase) ? route('phases.update', ['phaseId' => $phase->id]) : route('phases.store', ['projectId' => $project->id]) }}" method="post" class="w-full max-w-md mx-auto">
+            <form action="{{ isset($phase) ? route('phases.update', ['phaseId' => $phase->id]) : route('phases.store', ['projectId' => $project->id]) }}" method="post" class="w-full max-w-md mx-auto bg-body p-4 rounded-md bg-body">
                 @csrf
                 @if(isset($phase))
                     @method('PUT')

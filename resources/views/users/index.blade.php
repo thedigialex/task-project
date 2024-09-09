@@ -6,11 +6,11 @@
             @isset($users)
             @if ($users->count() > 0)
             @foreach ($users as $user)
-            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
-            </x-user-card>
+            <x-cards.user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            </x-cards.user-card>
             @endforeach
             @else
-            <x-paragraph>{{ __('No Users available for this company') }}</x-x-paragraph>
+            <x-fonts.paragraph>{{ __('No Users available for this company') }}</x-x-fonts.paragraph>
                 @endif
                 @endisset
         </div>
@@ -23,11 +23,11 @@
             @isset($staffUsers)
             @if ($staffUsers->count() > 0)
             @foreach ($staffUsers as $user)
-            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
-            </x-user-card>
+            <x-cards.user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            </x-cards.user-card>
             @endforeach
             @else
-            <x-paragraph>{{ __('No Users available for this company') }}</x-paragraph>
+            <x-fonts.paragraph>{{ __('No Users available for this company') }}</x-fonts.paragraph>
             @endif
             @endisset
         </div>
@@ -38,11 +38,11 @@
             @isset($otherUsers)
             @if ($otherUsers->count() > 0)
             @foreach ($otherUsers as $user)
-            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
-            </x-user-card>
+            <x-cards.user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            </x-cards.user-card>
             @endforeach
             @else
-            <x-paragraph>{{ __('No Users available for this company') }}</x-paragraph>
+            <x-fonts.paragraph>{{ __('No Users available for this company') }}</x-fonts.paragraph>
             @endif
             @endisset
         </div>
@@ -52,11 +52,11 @@
             @isset($usersNeedingCompany)
             @if ($usersNeedingCompany->count() > 0)
             @foreach ($usersNeedingCompany as $user)
-            <x-user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
-            </x-user-card>
+            <x-cards.user-card :name="$user->truncateName()" :email="$user->email" :editUrl="route('users.edit', ['userId' => $user->id])">
+            </x-cards.user-card>
             @endforeach
             @else
-            <x-paragraph>{{ __('No Users available for this company') }}</x-paragraph>
+            <x-fonts.paragraph>{{ __('No Users available for this company') }}</x-fonts.paragraph>
             @endif
             @endisset
         </div>

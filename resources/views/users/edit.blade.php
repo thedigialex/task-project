@@ -6,7 +6,7 @@
     @endif
     <x-container :title="'User'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form method="POST" action="{{ isset($user) ? route('users.update', ['userId' => $user->id]) : route('users.store') }}" class="w-full max-w-md mx-auto">
+            <form method="POST" action="{{ isset($user) ? route('users.update', ['userId' => $user->id]) : route('users.store') }}" class="w-full max-w-md mx-auto bg-body p-4 rounded-md bg-body">
                 @csrf
                 @if(isset($user))
                 @method('PUT')

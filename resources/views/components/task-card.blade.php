@@ -15,7 +15,7 @@
     </div>
     <div class="flex flex-col">
         <div x-show="open" class="w-full mt-4">
-            <x-paragraph>{{ $task->truncateString($task->description, 5) }}</x-paragraph>
+            <x-fonts.paragraph>{{ $task->truncateString($task->description, 5) }}</x-fonts.paragraph>
             <hr class="my-4">
             @foreach($task->subtasks as $subtask)
             <div class="flex items-center space-x-4 justify-center py-2">

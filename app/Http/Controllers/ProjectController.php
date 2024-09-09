@@ -45,7 +45,7 @@ class ProjectController extends Controller
         $project->company()->associate($company);
         $project->save();
 
-        return redirect()->route('projects.show', ['projectId' => $project->id]);
+        return redirect()->route('projects.show');
     }
 
     public function update(Request $request, $projectId)
@@ -53,7 +53,7 @@ class ProjectController extends Controller
         $validatedData = $this->validateProjectRequest($request);
         $project = Project::findOrFail($projectId);
         $project->update($validatedData);
-        return redirect()->route('projects.show', ['projectId' => $project->id]);
+        return redirect()->route('projects.show');
     }
 
     private function validateProjectRequest(Request $request)
@@ -73,9 +73,10 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function show($projectId)
+    public function show(Request $request)
     {
         $user = auth()->user();
+        $projectId = $request->input('project_id');
         $project = Project::findOrFail($projectId);
         $mainContactUser = User::find($project->main_contact);
         if ($user->user_type == 'client') {

@@ -85,14 +85,14 @@
             </div>
         </div>
     </div>
-    <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-r border-border">
+    <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col ">
         <div class="flex grow flex-col bg-header">
             <div class="border-b border-border p-4 flex items-center">
                 <a href="{{ route('profile.edit') }}" class="flex items-center space-x-2 w-full">
                     <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
                         <i class="fas fa-user text-text"></i>
                     </div>
-                    <x-highlight-header class="px-2">Artemis Trek</x-highlight-header>
+                    <x-fonts.highlight-header class="px-2">Artemis Trek</x-fonts.highlight-header>
                 </a>
             </div>
             <nav class="flex flex-1 flex-col p-4">
@@ -156,7 +156,7 @@
                         <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
                             <i class="fas fa-user text-text"></i>
                         </div>
-                        <x-highlight-header class="px-2">{{ Auth::user()->name }}</x-highlight-header>
+                        <x-fonts.highlight-header class="px-2">{{ Auth::user()->name }}</x-fonts.highlight-header>
                     </a>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="w-1/6">

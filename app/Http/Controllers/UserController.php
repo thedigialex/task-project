@@ -46,26 +46,39 @@ class UserController extends Controller
         return view('users.edit', compact('companies'));
     }
 
-    public function edit($userId)
+    public function edit(Request $request)
     {
+        $userId = $request->input('user_id');
         $userEditor = auth()->user();
+
+        // Find the user by ID
+        $user = User::find($userId);
+
+        // Redirect if the user doesn't exist
+        if (!$user) {
+            return redirect()->route('users.index')->with('error', 'User not found.');
+        }
+
+        // If the user is a client
         if ($userEditor->user_type == 'client') {
             $company = $userEditor->company;
             $users = $company->users;
-            $user = User::find($userId);
-            if ($user && $users->contains($user)) {
+
+            // Check if the user belongs to the company
+            if ($users->contains($user)) {
                 return view('users.edit', compact('user'));
             } else {
-                return redirect()->route('users.index');
+                return redirect()->route('users.index')->with('error', 'You are not authorized to edit this user.');
             }
         }
+
+        // For non-client users, get all companies
         $companies = Company::all();
-        $user = User::find($userId);
-        if (!$user) {
-            return redirect()->route('users.index');
-        }
+
+        // Return the edit view with the user and companies data
         return view('users.edit', compact('user', 'companies'));
     }
+
 
     private function saveUser(Request $request, $user = null)
     {

@@ -19,8 +19,8 @@
                     @isset($phases)
                     @if ($phases->count() > 0)
                     @foreach($phases as $phase)
-                    <x-card :name="$phase->truncateName()" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :fa_icon="'fa fa-tasks'" :status="$phase->getCompletionPercentage()">
-                    </x-card>
+                    <x-cards.card :name="$phase->truncateName()" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :fa_icon="'fa fa-tasks'" :status="$phase->getCompletionPercentage()">
+                    </x-cards.card>
                     @endforeach
                     @else
                     <p class="text-cyan-100">{{ __('No phase currently for this project') }}</p>
@@ -29,8 +29,8 @@
                     @isset($bugs)
                     @if ($bugs->count()> 0)
                     @foreach($bugs as $bug)
-                    <x-card :name="$bug->truncateName()" :linkUrl="route('bugs.edit', $bug->id)" :fa_icon="'fa fa-bug'" :description="$bug->description">
-                    </x-card>
+                    <x-cards.card :name="$bug->truncateName()" :linkUrl="route('bugs.edit', $bug->id)" :fa_icon="'fa fa-bug'" :description="$bug->description">
+                    </x-cards.card>
                     @endforeach
                     @else
                     <p class="text-cyan-100">{{ __('No bugs/issues reported for this project.') }}</p>

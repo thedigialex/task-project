@@ -7,7 +7,7 @@
 
     <x-container :title="'Subtask'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form action="{{ isset($subtask) ? route('subtasks.update', ['subtaskId' => $subtask->id]) : route('subtasks.store', ['taskId' => $taskId]) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-md mx-auto">
+            <form action="{{ isset($subtask) ? route('subtasks.update', ['subtaskId' => $subtask->id]) : route('subtasks.store', ['taskId' => $taskId]) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-md mx-auto bg-body p-4 rounded-md bg-body">
                 @csrf
                 @if(isset($subtask))
                     @method('PUT')
