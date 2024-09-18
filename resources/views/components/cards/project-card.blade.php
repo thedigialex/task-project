@@ -1,6 +1,6 @@
 @props(['project'])
 
-<form action="{{ route('projects.show') }}" method="POST" class="w-full md:w-1/3 p-2">
+<form action="{{ route('projects.show') }}" method="POST" class="w-full md:w-1/4 p-2">
     @csrf
     <input type="hidden" name="project_id" value="{{ $project->id }}">
     <div class="shadow-lg p-6 rounded-md bg-header h-[228px] flex flex-col justify-between">

@@ -5,31 +5,34 @@
         <!-- Tab Navigation -->
         <div class="flex justify-center bg-border pt-4">
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'projects', 'text-text': activeTab !== 'projects'}"
-                class="py-2 px-4 focus:outline-none"
+                :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'projects', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'projects'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'projects'">
                 Projects
             </button>
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'team-members', 'text-text': activeTab !== 'team-members'}"
-                class="py-2 px-4 focus:outline-none"
+                :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'team-members', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'team-members'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'team-members'">
-                Team Members
+                Team
             </button>
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'settings', 'text-text': activeTab !== 'settings'}"
-                class="py-2 px-4 focus:outline-none"
+                :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'settings', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'settings'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'settings'">
                 Settings
             </button>
         </div>
 
         <!-- Tab Content -->
-        <div class="mt-8">
+        <div>
             <!-- Projects Tab -->
             <div x-show="activeTab === 'projects'">
                 <x-container :title="'Projects'" :linkText="'Add New'" :linkUrl="route('projects.create')">
-                    <div class="flex flex-wrap gap-5 justify-center">
+                    <div class="flex flex-wrap gap-4 justify-center">
                         @isset($projects)
                         @if ($projects->count() > 0)
                         @foreach ($projects as $project)

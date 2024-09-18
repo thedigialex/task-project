@@ -17,7 +17,7 @@
     </x-container>
     @else
     <x-container :title="'All Users'" :linkText="'New User'" :linkUrl="route('users.create')">
-        <x-sub-header>{{ 'Staff' }}</x-sub-header>
+        <x-fonts.sub-header>{{ 'Staff' }}</x-fonts.sub-header>
         <hr>
         <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($staffUsers)
@@ -32,7 +32,7 @@
             @endisset
         </div>
         <br>
-        <x-sub-header>{{ 'Assigned Users' }}</x-sub-header>
+        <x-fonts.sub-header>{{ 'Assigned Users' }}</x-fonts.sub-header>
         <hr>
         <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($otherUsers)
@@ -46,7 +46,7 @@
             @endif
             @endisset
         </div>
-        <x-sub-header>{{ 'Unassigned Users' }}</x-sub-header>
+        <x-fonts.sub-header>{{ 'Unassigned Users' }}</x-fonts.sub-header>
         <hr>
         <div class="flex flex-wrap gap-5 justify-center my-8">
             @isset($usersNeedingCompany)

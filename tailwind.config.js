@@ -19,7 +19,7 @@ export default {
                 body: '#848484',
                 border: '#2d2d2d',
                 accent: '#4FA8C0',  
-                highlight_accent: '#63b2c7',
+                highlight_accent: '#3A8CA2',
                 text: '#FAFAFA',
               },
         },

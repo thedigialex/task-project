@@ -5,32 +5,36 @@
         <!-- Tab Navigation -->
         <div class="flex justify-center bg-border pt-4">
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'details', 'text-text': activeTab !== 'details'}"
-                class="py-2 px-4 focus:outline-none"
+            :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'details', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'details'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'details'">
                 Details
             </button>
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'phases', 'text-text': activeTab !== 'phases'}"
-                class="py-2 px-4 focus:outline-none"
+            :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'phases', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'phases'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'phases'">
                 Phases
             </button>
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'bugs', 'text-text': activeTab !== 'bugs'}"
-                class="py-2 px-4 focus:outline-none"
+            :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'bugs', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'bugs'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'bugs'">
                 Bugs
             </button>
             <button
-                :class="{'border-b-2 border-accent text-accent': activeTab === 'settings', 'text-text': activeTab !== 'settings'}"
-                class="py-2 px-4 focus:outline-none"
+            :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'settings', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'settings'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
                 @click="activeTab = 'settings'">
                 Settings
             </button>
         </div>
 
-        <div class="mt-8">
+        <div >
             <div x-show="activeTab === 'details'">
                 <x-container :title="'Project Details'">
                     <x-fonts.paragraph>{{ $project->description }}</x-fonts.paragraph>

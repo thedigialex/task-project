@@ -1,6 +1,6 @@
 @props(['user'])
 
-<form action="{{ route('users.edit') }}" method="POST" class="w-full md:w-1/3 lg:w-1/4 xl:w-1/4 p-2" >
+<form action="{{ route('users.edit') }}" method="POST" class="w-full md:w-1/4 p-2">
     @csrf
     <input type="hidden" name="user_id" value="{{ $user->id }}">
     <div class="shadow-lg p-6 rounded-md bg-header h-[228px] flex flex-col justify-between">

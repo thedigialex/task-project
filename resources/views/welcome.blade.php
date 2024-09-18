@@ -15,17 +15,17 @@
         <div class="w-full lg:w-1/2 flex flex-col justify-center p-6 lg:p-32">
             <div class="bg-border p-4 lg:p-8 rounded">
                 <div id="login-form" class="form-container active">
-                    <x-sub-header>Sign In</x-sub-header>
+                    <x-fonts.sub-header>Sign In</x-fonts.sub-header>
                     <x-fonts.paragraph>Welcome! Please enter your details.</x-fonts.paragraph>
                     @include('auth.login')
                 </div>
                 <div id="register-form" class="form-container">
-                    <x-sub-header>Sign Up</x-sub-header>
+                    <x-fonts.sub-header>Sign Up</x-fonts.sub-header>
                     <x-fonts.paragraph>Welcome! Please enter your details.</x-fonts.paragraph>
                     @include('auth.register')
                 </div>
                 <div id="forgot-password-form" class="form-container">
-                    <x-sub-header>Forgot your password?</x-sub-header>
+                    <x-fonts.sub-header>Forgot your password?</x-fonts.sub-header>
                     <x-fonts.paragraph>Please enter your details.</x-fonts.paragraph>
                     @include('auth.forgot-password')
                 </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="stars-overlay"></div>
+        <div class="stars-overlay "></div>
         <div class="hidden lg:flex flex-col lg:w-1/2 bg-header items-center justify-center">
             <x-application-logo class="fill-current" width="400" height="400" />
         </div>

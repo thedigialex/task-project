@@ -2,7 +2,7 @@
 <div class="flex flex-col bg-header sticky top-0 z-10 border-l border-border p-4">
     <div class="flex flex-row items-center justify-between w-full h-10">
         <div class="flex items-center">
-            <x-sub-header>{{ $headerTitle }}</x-sub-header>
+            <x-fonts.sub-header>{{ $headerTitle }}</x-fonts.sub-header>
         </div>
         @isset($subTitle)
         <div class="flex items-center ml-4">
