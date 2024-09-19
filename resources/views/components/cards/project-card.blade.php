@@ -5,7 +5,6 @@
     <input type="hidden" name="project_id" value="{{ $project->id }}">
     <div class="shadow-lg p-6 rounded-md bg-header h-[228px] flex flex-col justify-between">
 
-        <!-- Title at the top, centered -->
         <div class="text-center mb-4">
             <x-fonts.highlight-header>{{ $project->truncateName() }}</x-fonts.highlight-header>
             <hr class="border-t-2 border-accent">

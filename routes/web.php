@@ -58,19 +58,13 @@ Route::middleware(['auth', 'verified', 'client.company'])->group(function () {
 
     Route::match(['get', 'post'], '/project/show', [ProjectController::class, 'show'])->name('projects.show');
 
-    //Route::get('/project/{projectId}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/project/update/{projectId}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/project/edit/{projectId}', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::delete('/project/delete/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-
-
-
-
-
     Route::get('/project/phase/create/{projectId}', [PhaseController::class, 'create'])->name('phases.create');
     Route::post('/project/phase/store/{projectId}', [PhaseController::class, 'store'])->name('phases.store');
-    Route::get('/project/phase/show/{phaseId}', [PhaseController::class, 'show'])->name('phases.show');
+    Route::post('/project/phase/show', [PhaseController::class, 'show'])->name('phases.show');
     Route::put('/project/phases/update/{phaseId}', [PhaseController::class, 'update'])->name('phases.update');
     Route::get('/project/phase/edit/{phaseId}', [PhaseController::class, 'edit'])->name('phases.edit');
     Route::delete('/phase/delete/{phaseId}', [PhaseController::class, 'destroy'])->name('phases.destroy');

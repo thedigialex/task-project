@@ -3,7 +3,7 @@
 
     <div x-data="{ activeTab: 'projects' }">
         <!-- Tab Navigation -->
-        <div class="flex justify-center bg-border pt-4">
+        <div class="flex justify-center bg-border pt-4 px-0 md:px-8">
             <button
                 :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'projects', 
             'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'projects'}"

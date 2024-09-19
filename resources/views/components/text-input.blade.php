@@ -1,3 +1,7 @@
 @props(['disabled' => false])
 
-<input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'mt-1 block w-full rounded-md border-border shadow-sm']) !!}>
+<input {{ $disabled ? 'disabled' : '' }}
+    {!! $attributes->merge([
+'class' => 'bg-text w-full rounded-md shadow-sm focus:ring-2 focus:ring-accent focus:border-accent'
+]) !!}
+>

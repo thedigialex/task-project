@@ -3,7 +3,7 @@
     </x-header>
     <div x-data="{ activeTab: 'details' }">
         <!-- Tab Navigation -->
-        <div class="flex justify-center bg-border pt-4">
+        <div class="flex justify-center bg-border pt-4 px-0 md:px-8">
             <button
             :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'details', 
             'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'details'}"
@@ -38,13 +38,6 @@
             <div x-show="activeTab === 'details'">
                 <x-container :title="'Project Details'">
                     <x-fonts.paragraph>{{ $project->description }}</x-fonts.paragraph>
-                    <br>
-                    <x-fonts.highlight-header>{{ __('Main Contact') }}</x-fonts.highlight-header>
-                    <x-fonts.paragraph> @if($mainContactUser)
-                        <a href="mailto:{{ $mainContactUser->email }}" class="text-cyan-100 hover:underline">{{ $mainContactUser->name }}</a>
-                        @else
-                        <span>No contact available</span>
-                        @endif</x-fonts.paragraph>
                 </x-container>
             </div>
 
@@ -54,8 +47,8 @@
                         @isset($phases)
                         @if ($phases->count() > 0)
                         @foreach ($phases as $phase)
-                        <x-cards.card :name="$project->truncateName()" :linkUrl="route('phases.show', ['phaseId' => $phase->id])" :fa_icon="'fa fa-project-diagram'">
-                        </x-cards.card>
+                        <x-cards.phase-card :phase="$phase">
+                        </x-cards.phase-card>
                         @endforeach
                         @else
                         <x-fonts.paragraph>{{ __('No Current Phases') }}</x-fonts.paragraph>

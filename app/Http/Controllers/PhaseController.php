@@ -73,9 +73,10 @@ class PhaseController extends Controller
         return $phase;
     }
 
-    public function show($phaseId)
+    public function show(Request $request)
     {
         $user = auth()->user();
+        $phaseId = $request->input('phase_id');
         $phase = Phase::with('tasks')->findOrFail($phaseId);
         $completedTaskTime = $phase->tasks->filter(fn($task) => $task->status == 'complete')->sum('hours_required');
         $remainingTaskTime = $phase->tasks->filter(fn($task) => $task->status != 'complete')->sum('hours_required');

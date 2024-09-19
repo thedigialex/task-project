@@ -1,6 +1,6 @@
 <x-container :title="'Project'">
     <div class="flex flex-wrap gap-5 justify-center my-8 ">
-        <form method="POST" action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store') }}" class="w-full max-w-md mx-auto bg-header p-4 rounded-md">
+        <form method="POST" action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
             @csrf
             @if(isset($project))
             @method('PUT')
