@@ -44,16 +44,16 @@ class ProjectController extends Controller
         $company = $request->input('company', auth()->user()->company);
         $project->company()->associate($company);
         $project->save();
-
-        return redirect()->route('projects.show');
+        $request->merge(['project_id' => $project->id]);
+        return $this->show($request);
     }
 
-    public function update(Request $request, $projectId)
+    public function update(Request $request)
     {
         $validatedData = $this->validateProjectRequest($request);
-        $project = Project::findOrFail($projectId);
+        $project = Project::findOrFail($request->input('project_id'));
         $project->update($validatedData);
-        return redirect()->route('projects.show');
+        return $this->show($request);
     }
 
     private function validateProjectRequest(Request $request)

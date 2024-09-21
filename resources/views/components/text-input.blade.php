@@ -2,6 +2,6 @@
 
 <input {{ $disabled ? 'disabled' : '' }}
     {!! $attributes->merge([
-'class' => 'bg-text w-full rounded-md shadow-sm focus:ring-2 focus:ring-accent focus:border-accent'
+'class' => 'bg-body w-full rounded-md shadow-sm focus:ring-2 focus:ring-accent focus:border-accent'
 ]) !!}
 >

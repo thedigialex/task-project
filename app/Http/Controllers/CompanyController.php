@@ -37,21 +37,6 @@ class CompanyController extends Controller
         return view('companies.edit');
     }
 
-    public function edit($companyId)
-    {
-        $user = auth()->user();
-        if ($user->user_type == 'client') {
-            $company = $user->company;
-        } else {
-            $company = Company::find($companyId);
-            if (!$company) {
-                $companies = Company::all();
-                return view('companies.index', compact('companies'));
-            }
-        }
-        return view('companies.edit', compact('company'));
-    }
-
     public function store(Request $request)
     {
         return $this->saveCompany($request);

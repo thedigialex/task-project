@@ -87,13 +87,11 @@
     </div>
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col ">
         <div class="flex grow flex-col bg-header">
-            <div class="border-b border-border p-4 flex items-center">
-                <a href="{{ route('profile.edit') }}" class="flex items-center space-x-2 w-full">
-                    <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-text"></i>
-                    </div>
-                    <x-fonts.highlight-header class="px-2">Artemis Trek</x-fonts.highlight-header>
-                </a>
+            <div class="border-b border-border p-4 flex items-center space-x-2 w-full">
+                <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                    <img src="/favicon.ico" alt="Favicon" class="w-full h-full object-contain">
+                </div>
+                <x-fonts.highlight-header class="px-2">Artemis Trek</x-fonts.highlight-header>
             </div>
             <nav class="flex flex-1 flex-col p-4">
                 <ul role="list" class="flex flex-1 flex-col gap-y-1 mx-2 space-y-1">

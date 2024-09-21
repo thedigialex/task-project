@@ -1,34 +1,28 @@
 <x-container :title="'Project'">
     <div class="flex flex-wrap gap-5 justify-center my-8 ">
-        <form method="POST" action="{{ isset($project) ? route('projects.update', ['projectId' => $project->id]) : route('projects.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
+        <form method="POST" action="{{ isset($project) ? route('projects.update') : route('projects.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
             @csrf
             @if(isset($project))
+            <input type="hidden" name="project_id" value="{{ $project->id }}">
             @method('PUT')
             @endif
 
-            <!-- Project Name -->
-            <div class="mb-4">
-                <x-input-label for="name" :value="__('Project Name')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', isset($project) ? $project->name : '')" required />
-            </div>
-
-            <!-- Target Date and Hours -->
-            <div class="flex flex-wrap -mx-2 mb-4">
-                <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+            <!-- Target Date -->
+            <div class="flex flex-wrap">
+            <div class="w-full md:w-1/2 mb-4 md:mb-0 md:pr-4">
+                    <x-input-label for="name" :value="__('Project Name')" />
+                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', isset($project) ? $project->name : '')" required />
+                </div>
+                <div class="w-full md:w-1/2 mb-4 md:mb-0 md:pl-4">
                     <x-input-label for="target_date" :value="__('Target Date')" />
                     <x-text-input id="target_date" class="block mt-1 w-full" type="date" name="target_date" :value="old('target_date', isset($project) ? $project->target_date : '')" />
-                </div>
-
-                <div class="w-full md:w-1/2 px-2">
-                    <x-input-label for="hours" :value="__('Hours')" />
-                    <x-text-input id="hours" class="block mt-1 w-full" type="number" name="hours" :value="old('hours', isset($project) ? $project->hours : '')" />
                 </div>
             </div>
 
             <!-- Description -->
-            <div class="mb-4">
+            <div class="my-4">
                 <x-input-label for="description" :value="__('Description')" />
-                <textarea name="description" id="description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows="3">{{ isset($project) ? $project->description : old('description') }}</textarea>
+                <textarea name="description" id="description" class="mt-1 bg-body w-full rounded-md shadow-sm focus:ring-2 focus:ring-accent focus:border-accent" rows="3">{{ isset($project) ? $project->description : old('description') }}</textarea>
             </div>
 
             <!-- Main Contact -->
