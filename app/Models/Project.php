@@ -11,8 +11,6 @@ class Project extends Model
         'name',
         'description',
         'target_date',
-        'hours',
-        'main_contact',
         'notes'
     ];
 

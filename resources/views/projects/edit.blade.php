@@ -4,6 +4,6 @@
     <x-forms.project-form :project="$project"></x-forms.project-form>
     @else
     <x-header :headerTitle="'Create Project'"></x-header>
-    <x-forms.project-form ></x-forms.project-form>
+    <x-forms.project-form :companies="$companies"></x-forms.project-form>
     @endif
 </x-app-layout>

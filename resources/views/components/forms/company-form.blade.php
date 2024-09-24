@@ -3,6 +3,7 @@
         <form method="POST" action="{{ isset($company) ? route('companies.update', ['companyId' => $company->id]) : route('companies.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
             @csrf
             @if(isset($company))
+            <input type="hidden" name="company_id" value="{{ $company->id }}">
             @method('PUT')
             @endif
 

@@ -33,7 +33,7 @@
                             <ul role="list" class="flex flex-1 flex-col gap-y-7 mx-2 space-y-1">
                                 <li>
                                     <ul>
-                                        @if(auth()->user()->user_type == 'client')
+                                        @if(auth()->user()->user_type != 'admin')
                                         <li>
                                             <a href="{{ route('companies.show') }}" class="{{ request()->is('*compan*') ? 'bg-border text-accent' : 'text-text' }} hover:bg-border hover:text-accent group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                                 <svg class="h-6 w-6 {{ request()->is('*compan*') ? 'text-accent' : 'text-text' }} group-hover:text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -95,7 +95,8 @@
             </div>
             <nav class="flex flex-1 flex-col p-4">
                 <ul role="list" class="flex flex-1 flex-col gap-y-1 mx-2 space-y-1">
-                    @if(auth()->user()->user_type == 'client')
+                @if(auth()->user()->company != null || auth()->user()->user_type == 'admin')
+                    @if(auth()->user()->user_type != 'admin')
                     <li>
                         <a href="{{ route('companies.show') }}" class="{{ request()->is('*compan*') ? 'bg-border  text-accent' : 'text-text' }} hover:bg-border hover:text-accent group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                             <svg class="h-6 w-6 {{ request()->is('*compan*') ? 'text-accent' : 'text-text' }} group-hover:text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" aria-hidden="true">
@@ -138,6 +139,7 @@
                             Users
                         </a>
                     </li>
+                    @endif
                     <li>
                         <a href="{{ route('info.show') }}" class="{{ request()->is('*info*') ? 'bg-border text-accent' : 'text-text' }} hover:bg-border hover:text-accent group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                             <svg class="h-6 w-6 {{ request()->is('*info*') ? 'text-accent' : 'text-text' }} group-hover:text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" aria-hidden="true">

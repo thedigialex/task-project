@@ -7,7 +7,7 @@
 
         <!-- Title at the top, centered -->
         <div class="text-center mb-4 w-full">
-            <x-fonts.highlight-header>{{ $company->name }}</x-fonts.highlight-header>
+            <x-fonts.highlight-header>{{ $company->truncateName() }}</x-fonts.highlight-header>
             <hr class="border-t-2 border-accent">
         </div>
 

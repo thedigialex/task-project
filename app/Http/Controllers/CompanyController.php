@@ -42,8 +42,9 @@ class CompanyController extends Controller
         return $this->saveCompany($request);
     }
 
-    public function update(Request $request, $companyId)
+    public function update(Request $request)
     {
+        $companyId = $request->input('company_id');
         $company = Company::findOrFail($companyId);
         return $this->saveCompany($request, $company);
     }

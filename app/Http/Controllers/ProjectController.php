@@ -62,8 +62,6 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'target_date' => 'nullable|date',
-            'hours' => 'nullable|int',
-            'main_contact' => 'nullable|exists:users,id',
             'notes' => 'nullable|string',
             'company' => function ($attribute, $value, $fail) use ($request) {
                 if ($request->has('company') && is_null($value)) {

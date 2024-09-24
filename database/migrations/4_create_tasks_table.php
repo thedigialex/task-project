@@ -18,11 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('status');
-            $table->string('priority');
-            $table->integer('hours_required');
-            $table->string('technological_level');
             $table->string('image_path')->nullable();
-            $table->date('target_date')->nullable();
             $table->foreignId('phase_id')->nullable()->constrained('phases');
             $table->timestamps();
         });

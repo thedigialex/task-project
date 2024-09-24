@@ -94,7 +94,6 @@ class PhaseController extends Controller
         
         $statuses = ['new', 'progress', 'testing', 'complete'];
 
-        
         return view('phases.show', compact('phase', 'project', 'remainingTaskTime', 'completedTaskTime', 'mainContactUser', 'sortedTasks', 'statuses'));
     }
 

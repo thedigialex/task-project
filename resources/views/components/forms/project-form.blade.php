@@ -9,7 +9,7 @@
 
             <!-- Target Date -->
             <div class="flex flex-wrap">
-            <div class="w-full md:w-1/2 mb-4 md:mb-0 md:pr-4">
+                <div class="w-full md:w-1/2 mb-4 md:mb-0 md:pr-4">
                     <x-input-label for="name" :value="__('Project Name')" />
                     <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', isset($project) ? $project->name : '')" required />
                 </div>
@@ -25,26 +25,11 @@
                 <textarea name="description" id="description" class="mt-1 bg-body w-full rounded-md shadow-sm focus:ring-2 focus:ring-accent focus:border-accent" rows="3">{{ isset($project) ? $project->description : old('description') }}</textarea>
             </div>
 
-            <!-- Main Contact -->
-            @isset($users)
-            <div class="mb-4">
-                <x-input-label for="main_contact" :value="__('Main Contact')" />
-                <select name="main_contact" id="main_contact" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm">
-                    <option value="">N/A</option>
-                    @foreach($users as $user)
-                    <option value="{{ $user->id }}" {{ (isset($project) && $project->main_contact == $user->id) ? 'selected' : '' }}>
-                        {{ $user->name }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-            @endisset
-
             <!-- Company -->
             @isset($companies)
             <div class="mb-4">
                 <x-input-label for="company" :value="__('Company')" />
-                <select name="company" id="company" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm">
+                <select name="company" id="company" class="block mt-1 w-full bg-body rounded-md border-gray-300 shadow-sm">
                     <option value="">N/A</option>
                     @foreach($companies as $company)
                     <option value="{{ $company->id }}">{{ $company->name }}</option>

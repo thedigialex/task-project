@@ -11,19 +11,16 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $showWarning = ($user->company == null && $user->user_type != 'admin');
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'showWarning' => $showWarning,
         ]);
     }
-
-    /**
-     * Update the user's profile information.
-     */
+    
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());

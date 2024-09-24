@@ -27,12 +27,12 @@
                         @include('auth.forgot-password')
                     </div>
                 </div>
-                <div class="flex justify-center space-x-4 pt-8">
+            </div>
+            <div class="rounded-b bg-header w-full py-2 px-4 text-center rounded-b-md shadow-md hidden sm:block">
+                <div class="flex justify-center space-x-4 py-4">
                     <x-primary-button id="toggle-button" onclick="toggleForms()" class="w-64">Register</x-primary-button>
                     <x-primary-button onclick="showForm('forgot-form')" class="w-64">Forgot Password?</x-primary-button>
                 </div>
-            </div>
-            <div class="rounded-b bg-header w-full py-2 px-4 text-center rounded-b-md shadow-md hidden sm:block">
                 <x-fonts.paragraph>&copy; TheDigiAlex 2024</x-fonts.paragraph>
             </div>
         </div>

@@ -5,8 +5,7 @@
             @isset($projects)
             @if ($projects->count() > 0)
             @foreach ($projects as $project)
-            <x-cards.card :name="$project->truncateName()" :linkUrl="route('projects.show', ['projectId' => $project->id])" :fa_icon="'fa fa-sitemap'">
-            </x-cards.card>
+            <x-cards.project-card :project="$project" />
             @endforeach
             @else
             <x-fonts.paragraph>{{ __('No current projects') }}</x-fonts.paragraph>
