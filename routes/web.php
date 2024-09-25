@@ -42,24 +42,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/company', [CompanyController::class, 'show'])->name('companies.show');
         Route::put('/company/update', [CompanyController::class, 'update'])->name('companies.update');
 
-        Route::get('/users', [UserController::class, 'index'])->name('users.index');
-        Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
-        Route::put('/user/update', [UserController::class, 'update'])->name('users.update');
-        Route::post('/user/edit', [UserController::class, 'edit'])->name('users.edit');
-
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+
         Route::get('/project/create', [ProjectController::class, 'create'])->name('projects.create');
         Route::post('/project/show', [ProjectController::class, 'show'])->name('projects.show');
         Route::post('/project', [ProjectController::class, 'store'])->name('projects.store');
         Route::put('/project', [ProjectController::class, 'update'])->name('projects.update');
         Route::delete('/project/delete/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-        Route::get('/project/phase/create/{projectId}', [PhaseController::class, 'create'])->name('phases.create');
-        Route::post('/project/phase/store/{projectId}', [PhaseController::class, 'store'])->name('phases.store');
+        Route::post('/project/phase/create', [PhaseController::class, 'create'])->name('phases.create');
         Route::post('/project/phase/show', [PhaseController::class, 'show'])->name('phases.show');
-        Route::put('/project/phases/update/{phaseId}', [PhaseController::class, 'update'])->name('phases.update');
-        Route::get('/project/phase/edit/{phaseId}', [PhaseController::class, 'edit'])->name('phases.edit');
+        Route::post('/project/phase', [PhaseController::class, 'store'])->name('phases.store');
+        Route::put('/project/phase', [PhaseController::class, 'update'])->name('phases.update');
         Route::delete('/phase/delete/{phaseId}', [PhaseController::class, 'destroy'])->name('phases.destroy');
 
         Route::get('/bug/create/{projectId}', [BugController::class, 'create'])->name('bugs.create');
@@ -81,6 +75,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/subtasks/update/{subtaskId}', [SubTaskController::class, 'update'])->name('subtasks.update');
         Route::delete('/subtasks/delete/{subtaskId}', [SubTaskController::class, 'destroy'])->name('subtasks.destroy');
         Route::patch('/subtasks/toggle/{subtask}',  [SubTaskController::class, 'toggleComplete'])->name('subtasks.toggleComplete');
+
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
+        Route::put('/user/update', [UserController::class, 'update'])->name('users.update');
+        Route::post('/user/edit', [UserController::class, 'edit'])->name('users.edit');
     });
 });
 

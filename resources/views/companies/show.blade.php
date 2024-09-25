@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-header :headerTitle="$company->name"></x-header>
+    <x-header :headerTitle="'Company: ' . $company->name"></x-header>
 
     <div x-data="{ activeTab: 'projects' }">
         <!-- Tab Navigation -->

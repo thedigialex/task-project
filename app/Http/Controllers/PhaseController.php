@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 class PhaseController extends Controller
 {
-    public function create($projectId)
+    public function create(Request $request)
     {
-        $project = Project::find($projectId);
+        $project = Project::findOrFail($request->input('project_id'));
         return view('phases.edit', compact('project'));
     }
 

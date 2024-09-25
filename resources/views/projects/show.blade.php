@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-header :headerTitle="$project->name" :subTitle="'Target Date: ' . $project->target_date">
+    <x-header :headerTitle="'Project: ' . $project->name" :subTitle="'Target Date: ' . $project->target_date">
     </x-header>
     <div x-data="{ activeTab: 'details' }">
         <!-- Tab Navigation -->
@@ -45,7 +45,12 @@
         </div>
 
         <div x-show="activeTab === 'phases'">
-            <x-container :title="'Phases'" :linkText="'New Phase'" :linkUrl="route('phases.create', ['projectId' => $project->id])">
+            <x-container
+                :title="'Phases'"
+                :linkText="'Add New'"
+                :formAction="route('phases.create')"
+                :hiddenInputName="'project_id'"
+                :hiddenInputValue="$project->id">
                 <div class="flex flex-wrap gap-5 justify-center">
                     @isset($phases)
                     @if ($phases->count() > 0)
@@ -81,6 +86,5 @@
         <div x-show="activeTab === 'settings'">
             <x-forms.project-form :project="$project"></x-forms.project-form>
         </div>
-    </div>
     </div>
 </x-app-layout>
