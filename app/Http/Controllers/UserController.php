@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         if ($user->user_type === 'client') {
             $users = $user->company->users;
             return view('users.index', compact('users'));
@@ -43,79 +44,58 @@ class UserController extends Controller
     public function create()
     {
         $companies = Company::all();
-        return view('users.edit', compact('companies'));
+        $isAdmin = Auth::user()->user_type == 'admin';
+        return view('users.edit', compact('companies', 'isAdmin'));
     }
 
     public function edit(Request $request)
     {
-        $userId = $request->input('user_id');
-        $userEditor = auth()->user();
-
-        // Find the user by ID
+        $userId = $request->input('id');
         $user = User::find($userId);
-
-        // Redirect if the user doesn't exist
-        if (!$user) {
-            return redirect()->route('users.index')->with('error', 'User not found.');
-        }
-
-        // If the user is a client
-        if ($userEditor->user_type == 'client') {
-            $company = $userEditor->company;
-            $users = $company->users;
-
-            // Check if the user belongs to the company
-            if ($users->contains($user)) {
-                return view('users.edit', compact('user'));
-            } else {
-                return redirect()->route('users.index')->with('error', 'You are not authorized to edit this user.');
-            }
-        }
-
-        // For non-client users, get all companies
-        $companies = Company::all();
-
-        // Return the edit view with the user and companies data
-        return view('users.edit', compact('user', 'companies'));
+        $isAdmin = Auth::user()->user_type == 'admin';
+        $companies = ($isAdmin) ? Company::all() : $user->company;
+        return view('users.edit', compact('user', 'companies', 'isAdmin'));
     }
 
-
-    private function saveUser(Request $request, $user = null)
-    {
-        $rules = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : ''),
-            'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
+    public function update(Request $request)
+{
+    $userId = $request->input('id'); // Get the user ID from the form
+    $user = User::find($userId); // Find the user by ID
+    
+    // Define validation rules
+    $rules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . ($user ? $user->id : ''),
+        'password' => $request->isMethod('post') ? 'required|min:8' : 'nullable|min:8',
+    ];
+    
+    if (Auth::user()->user_type == 'admin') {
+        $rules += [
+            'user_type' => 'required|in:client,staff',
+            'company_id' => 'nullable|exists:companies,id',
         ];
-        if (auth()->user()->user_type !== 'client') {
-            $rules += [
-                'user_type' => 'required|in:client,staff',
-                'company_id' => 'nullable|exists:companies,id',
-            ];
+    }
+
+    // Validate the request data
+    $validatedData = $request->validate($rules);
+
+    // If user does not exist, create a new user (for create scenarios)
+    if (!$user) {
+        $user = new User();
+        $user->password = Hash::make($validatedData['password']);
+
+        if (Auth::user()->user_type === 'client') {
+            $user->user_type = Auth::user()->user_type;
+            $user->company_id = Auth::user()->company->id;
         }
-        $validatedData = $request->validate($rules);
-        if (!$user) {
-            $user = new User();
-            $user->password = Hash::make($validatedData['password']);
-
-            if (auth()->user()->user_type === 'client') {
-                $user->user_type = auth()->user()->user_type;
-                $user->company_id = auth()->user()->company->id;
-            }
-        }
-        $user->fill($validatedData);
-        $user->save();
-        return redirect()->route('users.index');
     }
 
-    public function store(Request $request)
-    {
-        return $this->saveUser($request);
-    }
+    // Update the user with validated data
+    $user->fill($validatedData);
+    $user->save();
 
-    public function update(Request $request, $userId)
-    {
-        $user = User::findOrFail($userId);
-        return $this->saveUser($request, $user);
-    }
+    // Redirect to the edit page
+    return redirect()->route('users.edit', ['id' => $user->id]);
+}
+
 }

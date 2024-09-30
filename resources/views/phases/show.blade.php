@@ -12,6 +12,13 @@
                 Tasks
             </button>
             <button
+                :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'details', 
+            'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'details'}"
+                class="py-2 px-4 focus:outline-none flex-grow"
+                @click="activeTab = 'details'">
+                Goal
+            </button>
+            <button
                 :class="{'bg-accent text-header rounded-t-lg border-b-2 border-accent font-bold': activeTab === 'settings', 
             'hover:border-b-2 hover:border-accent hover:text-accent text-text': activeTab !== 'settings'}"
                 class="py-2 px-4 focus:outline-none flex-grow"
@@ -19,7 +26,6 @@
                 Settings
             </button>
         </div>
-
         <div>
             <div x-show="activeTab === 'tasks'">
                 <x-container :title="'Tasks'" :linkText="'New Task'" :linkUrl=" route('tasks.create', ['phaseId' => $phase->id])">
@@ -41,11 +47,16 @@
                     </div>
                 </x-container>
             </div>
+            <div x-show="activeTab === 'settings'">
+                <x-forms.phase-form :phase="$phase"></x-forms.phase-form>
+            </div>
+            <div x-show="activeTab === 'details'">
+                <x-container :title="'Phase Goal'">
+                    <div class="w-full lg:w-1/2 mx-auto bg-header p-8 rounded-md">
+                        <x-fonts.sub-header>Goal</x-fonts.sub-header>
+                        <x-fonts.paragraph>{{ $phase->goal }}</x-fonts.paragraph>
+                </x-container>
+            </div>
         </div>
-
-        <div x-show="activeTab === 'settings'">
-            <x-forms.phase-form :phase="$phase"></x-forms.phase-form>
-        </div>
-    </div>
     </div>
 </x-app-layout>

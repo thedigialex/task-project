@@ -4,14 +4,15 @@
     @else
     <x-header :headerTitle="'Create Bug'"></x-header>
     @endif
-    <x-container :title="'User'">
+    <x-container :title="'Bug'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form method="POST" action="{{ isset($bug) ? route('bugs.update', ['bugId' => $bug->id]) : route('bugs.store', ['projectId' => $project->id]) }}" class="w-full max-w-md mx-auto bg-body p-4 rounded-md bg-body">
-                @csrf
+            <form method="POST" action="{{ isset($bug) ? route('bugs.update') : route('bugs.store', ['projectId' => $project->id]) }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
                 @if(isset($bug))
+                <input type="hidden" name="bug_id" value="{{ $bug->id }}">
                 @method('PUT')
+                @else
+                <input type="hidden" name="project_id" value="{{ $project->id }}">
                 @endif
-
                 <!-- Bug Title -->
                 <div class="mb-4">
                     <x-input-label for="title" :value="__('Bug Title')" />
@@ -21,20 +22,19 @@
                 <!-- Description -->
                 <div class="mb-4">
                     <x-input-label for="description" :value="__('Description')" />
-                    <textarea id="description" class="block mt-1 w-full" name="description" required>{{ old('description', isset($bug) ? $bug->description : '') }}</textarea>
+                    <textarea id="description" class="mt-1 bg-body w-full rounded-md shadow-sm focus:ring-2 focus:ring-accent focus:border-accent" name="description" rows="3" required>{{ old('description', isset($bug) ? $bug->description : '') }}</textarea>
                 </div>
 
                 <!-- Status -->
                 <div class="mb-4">
                     <x-input-label for="status" :value="__('Status')" />
-                    <select name="status" id="status" class="block mt-1 w-full rounded-md border-border shadow-sm" required>
+                    <select name="status" id="status" class="block mt-1 w-full bg-body rounded-md border-border shadow-sm focus:ring-2 focus:ring-accent focus:border-accent" required>
                         <option value="reported" {{ (isset($bug) && $bug->status == 'reported') ? 'selected' : '' }}>Reported</option>
-                        <option value="researching" {{ (isset($bug) && $bug->status == 'researching') ? 'selected' : '' }}>Researching</option>
-                        <option value="testing" {{ (isset($bug) && $bug->status == 'testing') ? 'selected' : '' }}>Testing</option>
-                        <option value="patched" {{ (isset($bug) && $bug->status == 'patched') ? 'selected' : '' }}>Patched</option>
+                        <option value="repairing" {{ (isset($bug) && $bug->status == 'repairing') ? 'selected' : '' }}>Repairing</option>
+                        <option value="resolved" {{ (isset($bug) && $bug->status == 'resolved') ? 'selected' : '' }}>Resolved</option>
                     </select>
                 </div>
-                <br>
+
                 <!-- Submit Button -->
                 <div class="flex justify-center">
                     <x-primary-button>

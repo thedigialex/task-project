@@ -1,9 +1,12 @@
 <x-container :title="'Phase'">
     <div class="flex flex-wrap gap-5 justify-center my-8">
-        <form action="{{ isset($phase) ? route('phases.update', ['phaseId' => $phase->id]) : route('phases.store', ['projectId' => $project->id]) }}" method="post" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
+        <form method="POST" action="{{ isset($phase) ? route('phases.update') : route('phases.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
             @csrf
             @if(isset($phase))
+            <input type="hidden" name="phase_id" value="{{ $phase->id }}">
             @method('PUT')
+            @else
+            <input type="hidden" name="project_id" value="{{ $project->id }}">
             @endif
 
             <!-- Target Date -->

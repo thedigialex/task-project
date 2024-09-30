@@ -72,8 +72,8 @@
                     @isset($bugs)
                     @if ($bugs->count() > 0)
                     @foreach ($bugs as $bug)
-                    <x-cards.card :name="$bug->truncateName()" :linkUrl="route('bugs.edit', ['bugId' => $bug->id])" :fa_icon="'fa fa-bug'">
-                    </x-cards.card>
+                    <x-cards.bug-card :bug="$bug" :linkUrl="route('bugs.edit', ['bugId' => $bug->id])" :fa_icon="'fa fa-bug'">
+                    </x-cards.bug-card>
                     @endforeach
                     @else
                     <x-fonts.paragraph>{{ __('No Current Bugs') }}</x-fonts.paragraph>

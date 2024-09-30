@@ -26,7 +26,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
     Route::get('/info', function () { return view('info'); })->name('info.show');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -35,20 +34,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
         Route::get('/company/create', [CompanyController::class, 'create'])->name('companies.create');
-        Route::post('/company/store', [CompanyController::class, 'store'])->name('companies.store');
     });
 
     Route::middleware(['client.company'])->group(function () {
         Route::post('/company', [CompanyController::class, 'show'])->name('companies.show');
-        Route::put('/company/update', [CompanyController::class, 'update'])->name('companies.update');
+        Route::post('/company/update', [CompanyController::class, 'update'])->name('companies.update');
 
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-
         Route::get('/project/create', [ProjectController::class, 'create'])->name('projects.create');
-        Route::post('/project/show', [ProjectController::class, 'show'])->name('projects.show');
-        Route::post('/project', [ProjectController::class, 'store'])->name('projects.store');
-        Route::put('/project', [ProjectController::class, 'update'])->name('projects.update');
-        Route::delete('/project/delete/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+        Route::post('/project', [ProjectController::class, 'show'])->name('projects.show');
+        Route::post('/project/update', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/project/delete', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
         Route::post('/project/phase/create', [PhaseController::class, 'create'])->name('phases.create');
         Route::post('/project/phase/show', [PhaseController::class, 'show'])->name('phases.show');
@@ -58,8 +54,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/bug/create/{projectId}', [BugController::class, 'create'])->name('bugs.create');
         Route::post('/bug/store/{projectId}', [BugController::class, 'store'])->name('bugs.store');
-        Route::put('/bug/update/{bugId}', [BugController::class, 'update'])->name('bugs.update');
-        Route::get('/bug/edit/{bugId}', [BugController::class, 'edit'])->name('bugs.edit');
+        Route::put('/bug/update', [BugController::class, 'update'])->name('bugs.update');
+        Route::post('/bug/edit', [BugController::class, 'edit'])->name('bugs.edit');
         Route::delete('/bugs/delete/{bugId}', [BugController::class, 'destroy'])->name('bugs.destroy');
 
         Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
@@ -78,8 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
-        Route::put('/user/update', [UserController::class, 'update'])->name('users.update');
+        Route::post('/user/update', [UserController::class, 'update'])->name('users.update');
         Route::post('/user/edit', [UserController::class, 'edit'])->name('users.edit');
     });
 });

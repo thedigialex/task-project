@@ -1,10 +1,10 @@
 <x-container :title="'Project'">
     <div class="flex flex-wrap gap-5 justify-center my-8 ">
-        <form method="POST" action="{{ isset($project) ? route('projects.update') : route('projects.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
+        <form method="POST" action="{{ route('projects.update') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
             @csrf
             @if(isset($project))
-            <input type="hidden" name="project_id" value="{{ $project->id }}">
-            @method('PUT')
+            <input type="hidden" name="id" value="{{ $project->id }}">
+
             @endif
 
             <!-- Target Date -->
@@ -29,7 +29,7 @@
             @isset($companies)
             <div class="mb-4">
                 <x-input-label for="company" :value="__('Company')" />
-                <select name="company" id="company" class="block mt-1 w-full bg-body rounded-md border-gray-300 shadow-sm">
+                <select name="company" id="company" class="block mt-1 w-full bg-body rounded-md  shadow-sm focus:ring-2 focus:ring-accent focus:border-accent">
                     <option value="">N/A</option>
                     @foreach($companies as $company)
                     <option value="{{ $company->id }}">{{ $company->name }}</option>

@@ -4,23 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
     public function show(Request $request)
     {
-        $user = auth()->user();
-        
-        if ($user->user_type == 'client') {
-            $company = $user->company;
-        } else {
-            $companyId = $request->input('company_id');
-            $company = Company::find($companyId);
-            if (!$company) {
-                $companies = Company::all();
-                return view('companies.index', compact('companies'));
-            }
-        }
+        $user = Auth::user();
+        $company = $user->user_type != 'admin' ? $user->company : Company::find($request->input('id'));
         $projects = $company->projects;
         $users = $company->users;
         return view('companies.show', compact('company', 'projects', 'users'));
@@ -37,32 +28,21 @@ class CompanyController extends Controller
         return view('companies.edit');
     }
 
-    public function store(Request $request)
-    {
-        return $this->saveCompany($request);
-    }
-
     public function update(Request $request)
-    {
-        $companyId = $request->input('company_id');
-        $company = Company::findOrFail($companyId);
-        return $this->saveCompany($request, $company);
-    }
-
-    private function saveCompany(Request $request, $company = null)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
         ]);
-        if (!$company) {
-            $company = new Company();
+
+        $companyId = $request->input('id');
+
+        if ($companyId) {
+            $company = Company::findOrFail($companyId);
+            $company->update($validatedData);
+        } else {
+            $company = Company::create($validatedData);
         }
-        $company->fill($validatedData);
-        $company->save();
-        $message = $company->wasRecentlyCreated ? 'Company created successfully' : 'Company updated successfully';
-        if (auth()->user()->user_type == 'client') {
-            return redirect()->route('companies.show')->with('success', $message);
-        }
-        return redirect()->route('companies.index')->with('success', $message);
+        $request->merge(['id' => $company->id]);
+        return $this->show($request);
     }
 }

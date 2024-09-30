@@ -30,29 +30,28 @@ class PhaseController extends Controller
         return view('phases.edit', compact('phase'));
     }
 
-    public function store(Request $request, $projectId)
+    public function store(Request $request)
     {
         $rules = $this->getValidationRules();
         $request->validate($rules);
+        $project = Project::findOrFail($request->input('project_id'));
         $phase = $this->createOrUpdatePhase(new Phase, $request);
-        $project = Project::find($projectId);
         $phase->project()->associate($project);
         $phase->save();
-
-        return redirect()->route('projects.show', ['projectId' => $projectId])
-            ->with('success', 'Phase created successfully');
+        $request->merge(['phase_id' => $phase->id]);
+        return $this->show($request);
     }
 
-    public function update(Request $request, $phaseId)
+    public function update(Request $request)
     {
         $rules = $this->getValidationRules();
         $request->validate($rules);
+        $phaseId = $request->input('phase_id');
         $phase = Phase::findOrFail($phaseId);
         $this->createOrUpdatePhase($phase, $request);
         $phase->save();
 
-        return redirect()->route('projects.show', ['projectId' => $phase->project->id])
-            ->with('success', 'Phase created successfully');
+        return $this->show($request);
     }
 
     private function getValidationRules()

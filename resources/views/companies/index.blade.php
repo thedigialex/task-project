@@ -5,7 +5,11 @@
             @isset($companies)
             @if ($companies->count() > 0)
             @foreach ($companies as $company)
-            <x-cards.company-card :company="$company" />
+            <x-cards.basic-card
+                :model="$company"
+                route="companies.show"
+                faIcon="fas fa-building"
+                buttonName="Company" />
             @endforeach
             @else
             <x-fonts.paragraph>{{ __('No current company') }}</x-fonts.paragraph>

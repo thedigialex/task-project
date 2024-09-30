@@ -14,8 +14,9 @@ class BugController extends Controller
 
         return view('bugs.edit', compact('project'));
     }
-    public function edit($bugId)
+    public function edit(Request $request)
     {
+        $bugId = $request->input('bug_id');
         $bug = Bug::findOrFail($bugId);
         $user = auth()->user();
         if ($user->user_type == 'client') {
@@ -39,15 +40,18 @@ class BugController extends Controller
             ->with('success', 'Bug reported successfully');
     }
 
-    public function update(Request $request, $bugId)
+    public function update(Request $request)
     {
         $validatedData = $this->validateProjectRequest($request);
+        $bugId = $request->input('bug_id');
         $bug = Bug::findOrFail($bugId);
         $bug->update($validatedData);
         $message = 'Bug updated successfully';
 
+        // Redirect to the project show route, passing the project id and the original request data
         return redirect()->route('projects.show', ['projectId' => $bug->project->id])
-            ->with('success', $message);
+            ->with('success', $message)
+            ->withInput($request->all());
     }
 
     private function validateProjectRequest(Request $request)

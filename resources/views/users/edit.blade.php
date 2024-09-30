@@ -6,10 +6,10 @@
     @endif
     <x-container :title="'User'">
         <div class="flex flex-wrap gap-5 justify-center my-8">
-            <form method="POST" action="{{ isset($user) ? route('users.update', ['userId' => $user->id]) : route('users.store') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
+            <form method="POST" action="{{ route('users.update') }}" class="w-full lg:w-1/2 mx-auto bg-header p-4 rounded-md">
                 @csrf
                 @if(isset($user))
-                @method('PUT')
+                <input type="hidden" name="id" value="{{ $user->id }}">
                 @endif
 
                 <!-- Name -->
@@ -40,23 +40,24 @@
                 </div>
                 @endunless
 
-                @if(auth()->user()->user_type == 'staff')
+                @if($isAdmin)
                 <!-- Role -->
                 <div class="mb-4">
                     <x-input-label for="user_type" :value="__('Role')" />
-                    <select name="user_type" id="user_type" class="block mt-1 w-full rounded-md border-border shadow-sm">
-                        <option value="client" {{ old('role', isset($user) && $user->user_type === 'client' ? 'selected' : '') }}>Client</option>
-                        <option value="staff" {{ old('role', isset($user) && $user->user_type === 'staff' ? 'selected' : '') }}>Staff</option>
+                    <select name="user_type" id="user_type" class="block mt-1 w-full bg-body rounded-md border-border shadow-sm focus:ring-2 focus:ring-accent focus:border-accent">
+                        <option value="admin" {{ old('user_type', isset($user) && $user->user_type === 'admin' ? 'selected' : '') }}>Admin</option>
+                        <option value="client" {{ old('user_type', isset($user) && $user->user_type === 'client' ? 'selected' : '') }}>Client</option>
+                        <option value="manager" {{ old('user_type', isset($user) && $user->user_type === 'manager' ? 'selected' : '') }}>Manager</option>
                     </select>
                 </div>
 
                 <!-- Company -->
                 <div class="mb-4" id="companyDropdown">
                     <x-input-label for="company_id" :value="__('Company')" />
-                    <select name="company_id" id="company_id" class="block mt-1 w-full rounded-md border-border shadow-sm">
+                    <select name="company_id" id="company_id" class="block mt-1 w-full bg-body rounded-md border-border shadow-sm focus:ring-2 focus:ring-accent focus:border-accent">
                         <option value="">N/A</option>
                         @foreach($companies as $company)
-                        <option value="{{ $company->id }}" {{ old('company', isset($user) && $user->company_id == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
+                        <option value="{{ $company->id }}" {{ old('company_id', isset($user) && $user->company_id == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
                         @endforeach
                     </select>
                 </div>
